@@ -1,6 +1,6 @@
 # Library-specific files
 clank.local.config.ts
-packages/clankgsters-sync-integration-tests/sandboxes/.tests/
+packages/clankgsters-sync-e2e/sandboxes/.tests/
 
 # Ignore root-level Claude and Cursor plugin dirs (sync scripts; do not commit)
 # Note: plugin dirs under .agents/ (e.g. .agents/plugins/*/.claude-plugin/) remain tracked (as required by plugins/marketplace system)

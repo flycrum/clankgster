@@ -19,6 +19,6 @@ So, welcome to **Clankgsters**—your badass solution to:
 This repository is a **pnpm workspace** organized around the publishable sync package **[`@clankgsters/sync`](packages/clankgsters-sync/README.md)** (`packages/clankgsters-sync`). Tooling follows **[Vite+](https://viteplus.dev/)**—the unified **`vp`** CLI for install, check, test, pack/build, and monorepo tasks—so day-to-day work looks like `vp install`, `vp check`, and `vp test` from the repo root.
 
 - **`packages/clankgsters-sync`** — Node + TypeScript (`tsx` scripts, `vp pack` for npm)
-- **`packages/clankgsters-sync-integration-tests`** — private integration harness and tests against the sync package
+- **`packages/clankgsters-sync-e2e`** — private e2e harness and tests against the sync package (`@clankgsters/sync-e2e`)
 
 Prereqs: **Node 22.12+** and global **`vp`** ([install](https://viteplus.dev/guide/)). Then: `vp install`, `vp check`, `vp test`.

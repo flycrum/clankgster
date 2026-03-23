@@ -1,0 +1,16 @@
+## Purpose
+
+Root monorepo scripts coordinate package-level sync and e2e test flows.
+
+## Script Contracts
+
+- `clankgsters-sync:clear` delegates clear mode in `@clankgsters/sync`.
+- `clankgsters-sync:start` delegates to `@clankgsters/sync` and is the primary local/manual run entry.
+- `test:e2e` delegates to `@clankgsters/sync-e2e`.
+- Keep script names stable because e2e docs and AI agents reference these names directly.
+- Keep `scripts`, `dependencies`, `devDependencies`, and `peerDependencies` alpha-numerically sorted.
+
+## Notes
+
+- Prefer package-filter delegates (`pnpm -F`) so root scripts stay thin and package ownership is explicit.
+- Keep `test` and `build` orchestration compatible with Vite+ workspace task execution.

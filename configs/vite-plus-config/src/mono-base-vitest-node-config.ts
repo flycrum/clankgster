@@ -4,7 +4,7 @@
  */
 export const monoBaseVitestNodeConfig = {
   test: {
-    include: ['tests/**/*.test.ts'],
+    include: ['**/*.test.ts', '**/*.spec.ts'],
     environment: 'node',
   },
 };

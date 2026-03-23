@@ -5,9 +5,12 @@
   "description": "Monorepo for Clankgsters agent tooling (Vite+).",
   "type": "module",
   "scripts": {
+    "build": "vp run -r build",
     "check": "vp check",
+    "clankgsters-sync:clear": "pnpm -F @clankgsters/sync run clankgsters-sync:clear",
+    "clankgsters-sync:start": "pnpm -F @clankgsters/sync run clankgsters-sync:start",
     "test": "vp run @clankgsters/sync#build && vp run -r test",
-    "build": "vp run -r build"
+    "test:e2e": "pnpm -F @clankgsters/sync-e2e run test"
   },
   "devDependencies": {
     "@clankgsters/vite-plus-config": "workspace:*",

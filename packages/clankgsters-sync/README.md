@@ -23,7 +23,6 @@ Node-first package for Clankgsters sync logic: **TypeScript `scripts/`** run wit
 ## Commands (from repo root)
 
 ```bash
-vp run --filter @clankgsters/sync sync:hello
 vp run --filter @clankgsters/sync test
 vp run --filter @clankgsters/sync build
 ```

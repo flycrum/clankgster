@@ -9,6 +9,7 @@
     "directory": "packages/clankgsters-sync"
   },
   "files": [
+    "config",
     "dist",
     "scripts"
   ],
@@ -23,10 +24,18 @@
   "scripts": {
     "build": "vp pack",
     "check": "vp check",
+    "clankgsters-sync:clear": "tsx scripts/clankgsters-sync.clear.ts",
+    "clankgsters-sync:start": "tsx scripts/clankgsters-sync.start.ts",
     "dev": "vp pack --watch",
-    "sync:hello": "tsx scripts/hello.ts",
-    "test": "vp test",
-    "prepublishOnly": "vp pack"
+    "prepublishOnly": "vp pack",
+    "test": "vp test"
+  },
+  "dependencies": {
+    "chalk": "catalog:",
+    "neverthrow": "catalog:",
+    "pino": "catalog:",
+    "xstate": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@clankgsters/typescript-config": "workspace:*",
