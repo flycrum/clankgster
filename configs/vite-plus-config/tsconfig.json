@@ -1,0 +1,8 @@
+{
+  "extends": "@clankgsters/typescript-config/node-tools.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "src"
+  },
+  "include": ["src/**/*.ts"]
+}
