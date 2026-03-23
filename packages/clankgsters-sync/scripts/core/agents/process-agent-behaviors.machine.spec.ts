@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vite-plus/test';
 import { createActor } from 'xstate';
 import { actorHelpers } from '../../common/actor-helpers.js';
+import { clankgstersIdentity } from '../../common/clankgsters-identity.js';
 import { processAgentBehaviorsMachine } from './process-agent-behaviors.machine.js';
 
 describe('processAgentBehaviorsMachine', () => {
@@ -8,9 +9,33 @@ describe('processAgentBehaviorsMachine', () => {
     const actor = createActor(processAgentBehaviorsMachine, {
       input: {
         agentName: 'cursor',
-        behaviors: ['rules', 'commands'],
+        behaviors: [
+          { enabled: true, manifestKey: 'rulesSymlink', name: 'rulesSymlink', options: {} },
+          { enabled: true, manifestKey: 'skillsSync', name: 'skillsSync', options: {} },
+        ],
+        discoveredMarketplaces: [],
         enabled: true,
+        excluded: [],
+        manifestByBehavior: {},
         mode: 'sync',
+        outputRoot: process.cwd(),
+        registerManifestEntry: () => {},
+        repoRoot: process.cwd(),
+        resolvedConfig: {
+          agents: {},
+          excluded: [],
+          loggingEnabled: false,
+          sourceDefaults: {
+            localMarketplaceName: clankgstersIdentity.LOCAL_MARKETPLACE_NAME,
+            pluginsDir: 'plugins',
+            markdownContextFileName: 'CLANK.md',
+            skillFileName: 'SKILL.md',
+            skillsDir: 'skills',
+            sourceDir: '.clank',
+          },
+          syncManifestPath: '.clank/sync-manifest.json',
+        },
+        sharedState: new Map<string, unknown>(),
       },
     });
     actor.start();

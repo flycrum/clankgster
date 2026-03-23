@@ -1,12 +1,30 @@
 import { describe, expect, test } from 'vite-plus/test';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { syncManifest } from './sync-manifest.js';
 
 describe('syncManifest', () => {
-  test('registerEntry appends to agent list', () => {
+  test('registerEntry upserts by behavior key', () => {
     const initial = syncManifest.emptyManifest();
-    const result = syncManifest.registerEntry(initial, 'cursor', { behavior: 'rules' });
+    const result = syncManifest.registerEntry(initial, 'cursor', 'rulesSymlink', true);
     expect(result.isOk()).toBe(true);
     if (result.isErr()) return;
-    expect(result.value.cursor).toHaveLength(1);
+    expect(result.value.cursor?.rulesSymlink).toBe(true);
+  });
+
+  test('writes and reads unified manifest json', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'clank-sync-manifest-'));
+    const manifestPath = path.join(tempDir, '.clank/sync-manifest.json');
+    const writeResult = syncManifest.write(manifestPath, {
+      claude: {
+        settingsSync: true,
+      },
+    });
+    expect(writeResult.isOk()).toBe(true);
+    const loadResult = syncManifest.load(manifestPath);
+    expect(loadResult.isOk()).toBe(true);
+    if (loadResult.isErr()) return;
+    expect(loadResult.value.claude?.settingsSync).toBe(true);
   });
 });

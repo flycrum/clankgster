@@ -3,8 +3,10 @@ packages:
   - configs/*
 
 catalog:
+  '@types/lodash-es': ^4.17.12
   '@types/node': ^24
   chalk: ^5.6.2
+  lodash-es: ^4.17.23
   neverthrow: ^8.2.0
   pino: ^10.3.1
   typescript: ^5

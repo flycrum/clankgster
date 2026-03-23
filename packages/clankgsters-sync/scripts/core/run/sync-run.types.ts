@@ -1,5 +1,7 @@
 import type { AgentQueueOutcome } from '../agents/agent-queue-outcome.js';
-import type { ClankConfig } from '../configs/schema/clank-config.schema.js';
+import type { ClankgstersConfig } from '../configs/clankgsters-config.schema.js';
+import type { DiscoveredMarketplace } from './sync-discover-agents.js';
+import type { SyncManifest } from './sync-manifest.js';
 
 export interface SyncRunObservationEvent {
   /** Stable hook name for logging or tests (e.g. `sync.boot`). */
@@ -24,8 +26,12 @@ export interface SyncRunMachineContext {
   input: SyncRunMachineInput;
   /** Per-agent results after the agent queue stage completes. */
   outcomes: AgentQueueOutcome[];
+  /** Plugin marketplaces discovered from configured source directories. */
+  discoveredMarketplaces: DiscoveredMarketplace[];
   /** Merged config after resolution, or `null` until resolution finishes. */
-  resolvedConfig: ClankConfig | null;
+  resolvedConfig: ClankgstersConfig | null;
+  /** In-memory unified manifest being updated during this run. */
+  manifest: SyncManifest;
 }
 
 export type SyncRunMachineEvent = { type: 'xstate.init' };

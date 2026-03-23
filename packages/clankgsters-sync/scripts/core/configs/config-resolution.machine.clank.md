@@ -4,7 +4,7 @@ State machine for config loading lifecycle: source resolution, merge, and valida
 
 ## Invariants
 
-- The machine output is always a validated `ClankConfigResolutionDetails`.
+- The machine output is always a validated `ClankgstersConfigResolutionDetails`.
 - Errors remain in machine state for observability and retry support.
 
 ## Testing Guidance

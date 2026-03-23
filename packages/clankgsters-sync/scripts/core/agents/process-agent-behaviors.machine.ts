@@ -1,6 +1,12 @@
 import { assign, createActor, fromPromise, setup } from 'xstate';
 import { actorHelpers } from '../../common/actor-helpers.js';
-import type { BehaviorOutcome } from '../sync-behaviors/behavior-outcome.js';
+import type {
+  ClankgstersBehaviorConfig,
+  ClankgstersConfig,
+} from '../configs/clankgsters-config.schema.js';
+import type { DiscoveredMarketplace } from '../run/sync-discover-agents.js';
+import type { SyncManifestEntry } from '../run/sync-manifest.js';
+import type { SyncBehaviorOutcome } from '../sync-behaviors/behavior-outcome.js';
 import {
   perBehaviorMachine,
   type PerBehaviorObservation,
@@ -16,14 +22,26 @@ export interface ProcessAgentBehaviorsObservation {
 
 export interface ProcessAgentBehaviorsMachineInput {
   agentName: string;
-  behaviors: string[];
+  behaviors: ClankgstersBehaviorConfig[];
+  discoveredMarketplaces: DiscoveredMarketplace[];
   enabled: boolean;
+  excluded: string[];
+  manifestByBehavior: Record<string, SyncManifestEntry>;
   mode: 'sync' | 'clear';
   onObservation?: (event: ProcessAgentBehaviorsObservation | PerBehaviorObservation) => void;
+  outputRoot: string;
+  registerManifestEntry: (
+    agentName: string,
+    behaviorManifestKey: string,
+    entry: SyncManifestEntry
+  ) => void;
+  repoRoot: string;
+  resolvedConfig: ClankgstersConfig;
+  sharedState: Map<string, unknown>;
 }
 
 interface ProcessAgentBehaviorsMachineContext {
-  behaviorOutcomes: BehaviorOutcome[];
+  behaviorOutcomes: SyncBehaviorOutcome[];
   errorMessage: string | null;
   index: number;
   input: ProcessAgentBehaviorsMachineInput;
@@ -57,7 +75,7 @@ export const processAgentBehaviorsMachine = setup({
     context: {} as ProcessAgentBehaviorsMachineContext,
     events: {} as ProcessAgentBehaviorsMachineEvent,
     input: {} as ProcessAgentBehaviorsMachineInput,
-    output: {} as { behaviorOutcomes: BehaviorOutcome[]; outcome: AgentQueueOutcome },
+    output: {} as { behaviorOutcomes: SyncBehaviorOutcome[]; outcome: AgentQueueOutcome },
   },
   actors: {
     runAdapterLifecycle: fromPromise(
@@ -76,24 +94,33 @@ export const processAgentBehaviorsMachine = setup({
         input,
       }: {
         input: {
-          behaviorName: string;
+          behavior: ClankgstersBehaviorConfig;
           behaviorsInput: ProcessAgentBehaviorsMachineInput;
         };
       }) => {
         emitObservation(input.behaviorsInput, 'agent.runBehavior', {
-          behaviorName: input.behaviorName,
+          behaviorName: input.behavior.name,
         });
+        const behaviorManifestKey = input.behavior.manifestKey ?? input.behavior.name;
         const actor = createActor(perBehaviorMachine, {
           input: {
             agentName: input.behaviorsInput.agentName,
-            behaviorName: input.behaviorName,
+            behavior: input.behavior,
+            discoveredMarketplaces: input.behaviorsInput.discoveredMarketplaces,
+            excluded: input.behaviorsInput.excluded,
+            manifestEntry: input.behaviorsInput.manifestByBehavior[behaviorManifestKey],
             mode: input.behaviorsInput.mode,
             onObservation: input.behaviorsInput.onObservation,
+            outputRoot: input.behaviorsInput.outputRoot,
+            registerManifestEntry: input.behaviorsInput.registerManifestEntry,
+            repoRoot: input.behaviorsInput.repoRoot,
+            resolvedConfig: input.behaviorsInput.resolvedConfig,
+            sharedState: input.behaviorsInput.sharedState,
           },
         });
         actor.start();
         const output = await actorHelpers.awaitOutput<
-          | BehaviorOutcome
+          | SyncBehaviorOutcome
           | { input: { agentName: string; behaviorName: string }; errorMessage: string | null }
         >(actor);
         if ('success' in output) return output;
@@ -141,7 +168,7 @@ export const processAgentBehaviorsMachine = setup({
       invoke: {
         src: 'runQueuedBehavior',
         input: ({ context }) => ({
-          behaviorName: context.input.behaviors[context.index] as string,
+          behavior: context.input.behaviors[context.index] as ClankgstersBehaviorConfig,
           behaviorsInput: context.input,
         }),
         onDone: {

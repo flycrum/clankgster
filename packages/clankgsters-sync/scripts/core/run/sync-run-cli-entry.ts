@@ -9,7 +9,10 @@ import {
 import { syncRunMachine } from './sync-run.machine.js';
 
 export const syncRunCli = {
-  /** Runs the top-level sync-run machine for the given CLI mode. Exits with code 1 when machine output reports non-success so callers can treat failures as fatal. */
+  /**
+   * Runs the top-level sync-run machine for the given CLI mode. Exits with code 1 when machine output reports non-success so callers can treat failures as fatal.
+   * Uses `pathHelpers.getRepoRoot()` from `path-helpers.ts` for `repoRoot` (not raw `process.cwd()`), so workspace-filtered `pnpm` scripts and published installs resolve config against the real project root.
+   */
   async run(mode: 'sync' | 'clear'): Promise<void> {
     const repoRoot = pathHelpers.getRepoRoot();
     const actor = createActor(syncRunMachine, {

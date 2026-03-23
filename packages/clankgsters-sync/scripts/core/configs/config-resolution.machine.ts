@@ -1,5 +1,8 @@
 import { assign, fromPromise, setup } from 'xstate';
-import { clankConfigResolver, type ClankConfigResolutionDetails } from './config-resolver.js';
+import {
+  clankgstersConfigResolver,
+  type ClankgstersConfigResolutionDetails,
+} from './config-resolver.js';
 
 export interface ConfigResolutionMachineInput {
   mode: 'sync' | 'clear';
@@ -7,7 +10,7 @@ export interface ConfigResolutionMachineInput {
 }
 
 export interface ConfigResolutionMachineContext {
-  details: ClankConfigResolutionDetails | null;
+  details: ClankgstersConfigResolutionDetails | null;
   errorMessage: string | null;
   input: ConfigResolutionMachineInput;
 }
@@ -19,11 +22,11 @@ export const configResolutionMachine = setup({
     context: {} as ConfigResolutionMachineContext,
     events: {} as ConfigResolutionMachineEvent,
     input: {} as ConfigResolutionMachineInput,
-    output: {} as ClankConfigResolutionDetails,
+    output: {} as ClankgstersConfigResolutionDetails,
   },
   actors: {
     resolveConfig: fromPromise(async ({ input }: { input: ConfigResolutionMachineInput }) => {
-      const result = await clankConfigResolver.resolve(input);
+      const result = await clankgstersConfigResolver.resolve(input);
       if (result.isErr()) throw result.error;
       return result.value;
     }),
@@ -67,7 +70,7 @@ export const configResolutionMachine = setup({
     },
     done: {
       type: 'final',
-      output: ({ context }) => context.details as ClankConfigResolutionDetails,
+      output: ({ context }) => context.details as ClankgstersConfigResolutionDetails,
     },
     failed: {
       on: {

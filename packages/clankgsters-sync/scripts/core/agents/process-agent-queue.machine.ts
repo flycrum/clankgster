@@ -1,17 +1,24 @@
 import { assign, createActor, fromPromise, setup } from 'xstate';
 import { actorHelpers } from '../../common/actor-helpers.js';
-import type { ClankConfig } from '../configs/schema/clank-config.schema.js';
+import type { ClankgstersConfig } from '../configs/clankgsters-config.schema.js';
+import type { DiscoveredMarketplace } from '../run/sync-discover-agents.js';
+import { syncManifest, type SyncManifest, type SyncManifestEntry } from '../run/sync-manifest.js';
 import type { AgentQueueOutcome } from './agent-queue-outcome.js';
-import { agentTypes, type ClankDefinedAgent } from './agent-types.js';
+import { agentTypes, type ClankgstersDefinedAgent } from './agent-types.js';
 import {
   processAgentBehaviorsMachine,
   type ProcessAgentBehaviorsObservation,
 } from './process-agent-behaviors.machine.js';
 
 export interface ProcessAgentQueueMachineInput {
+  discoveredMarketplaces: DiscoveredMarketplace[];
+  excluded: string[];
+  manifest: SyncManifest;
   mode: 'sync' | 'clear';
   onObservation?: (event: ProcessAgentBehaviorsObservation) => void;
-  resolvedConfig: ClankConfig;
+  outputRoot: string;
+  repoRoot: string;
+  resolvedConfig: ClankgstersConfig;
 }
 
 interface ProcessAgentQueueMachineContext {
@@ -19,7 +26,8 @@ interface ProcessAgentQueueMachineContext {
   index: number;
   input: ProcessAgentQueueMachineInput;
   outcomes: AgentQueueOutcome[];
-  queue: ClankDefinedAgent[];
+  queue: ClankgstersDefinedAgent[];
+  sharedState: Map<string, unknown>;
 }
 
 type ProcessAgentQueueMachineEvent = { type: 'xstate.init' };
@@ -28,7 +36,7 @@ type ProcessAgentQueueMachineEvent = { type: 'xstate.init' };
  * Processes the agent queue: each entry in `resolvedConfig.agents` **in order**, one at a time (no overlap between agents).
  *
  * **Queue:** `agentTypes.buildQueue(resolvedConfig)` turns `resolvedConfig.agents` (named entries in
- * `clank.config` / `clank.local.config`, e.g. per–coding-agent front-ends) into a deterministic list. Each item
+ * `clankgsters.config.ts` / `clankgsters.local.config.ts`, e.g. per–coding-agent front-ends) into a deterministic list. Each item
  * is handed to {@link processAgentBehaviorsMachine}, which runs that agent’s sync behaviors for the current `mode` (`sync` or
  * `clear`).
  *
@@ -44,7 +52,7 @@ export const processAgentQueueMachine = setup({
     context: {} as ProcessAgentQueueMachineContext,
     events: {} as ProcessAgentQueueMachineEvent,
     input: {} as ProcessAgentQueueMachineInput,
-    output: {} as AgentQueueOutcome[],
+    output: {} as { manifest: SyncManifest; outcomes: AgentQueueOutcome[] },
   },
   actors: {
     runQueuedAgent: fromPromise(
@@ -53,17 +61,37 @@ export const processAgentQueueMachine = setup({
       }: {
         input: {
           mode: 'sync' | 'clear';
+          discoveredMarketplaces: DiscoveredMarketplace[];
+          excluded: string[];
+          manifestByBehavior: Record<string, SyncManifestEntry>;
           onObservation?: (event: ProcessAgentBehaviorsObservation) => void;
-          queueItem: ClankDefinedAgent;
+          outputRoot: string;
+          queueItem: ClankgstersDefinedAgent;
+          registerManifestEntry: (
+            agentName: string,
+            behaviorManifestKey: string,
+            entry: SyncManifestEntry
+          ) => void;
+          repoRoot: string;
+          resolvedConfig: ClankgstersConfig;
+          sharedState: Map<string, unknown>;
         };
       }) => {
         const actor = createActor(processAgentBehaviorsMachine, {
           input: {
             agentName: input.queueItem.name,
             behaviors: input.queueItem.config.behaviors ?? [],
+            discoveredMarketplaces: input.discoveredMarketplaces,
             enabled: input.queueItem.config.enabled ?? true,
+            excluded: input.excluded,
+            manifestByBehavior: input.manifestByBehavior,
             mode: input.mode,
             onObservation: input.onObservation,
+            outputRoot: input.outputRoot,
+            registerManifestEntry: input.registerManifestEntry,
+            repoRoot: input.repoRoot,
+            resolvedConfig: input.resolvedConfig,
+            sharedState: input.sharedState,
           },
         });
         actor.start();
@@ -98,6 +126,7 @@ export const processAgentQueueMachine = setup({
     input,
     outcomes: [],
     queue: agentTypes.buildQueue(input.resolvedConfig),
+    sharedState: new Map<string, unknown>(),
   }),
   initial: 'dispatch',
   states: {
@@ -108,9 +137,25 @@ export const processAgentQueueMachine = setup({
       invoke: {
         src: 'runQueuedAgent',
         input: ({ context }) => ({
-          mode: context.input.mode,
+          discoveredMarketplaces: context.input.discoveredMarketplaces,
+          excluded: context.input.excluded,
+          manifestByBehavior:
+            context.input.manifest[context.queue[context.index]?.name ?? ''] ?? {},
+          mode:
+            context.queue[context.index]?.config.enabled === false ? 'clear' : context.input.mode,
           onObservation: context.input.onObservation,
-          queueItem: context.queue[context.index] as ClankDefinedAgent,
+          outputRoot: context.input.outputRoot,
+          queueItem: context.queue[context.index] as ClankgstersDefinedAgent,
+          registerManifestEntry: (agentName, behaviorManifestKey, entry) => {
+            const currentAgentManifest = context.input.manifest[agentName] ?? {};
+            context.input.manifest[agentName] = {
+              ...currentAgentManifest,
+              [behaviorManifestKey]: entry,
+            };
+          },
+          repoRoot: context.input.repoRoot,
+          resolvedConfig: context.input.resolvedConfig,
+          sharedState: context.sharedState,
         }),
         onDone: {
           target: 'dispatch',
@@ -129,11 +174,23 @@ export const processAgentQueueMachine = setup({
     },
     done: {
       type: 'final',
-      output: ({ context }) => context.outcomes,
+      output: ({ context }) => ({
+        manifest:
+          context.input.mode === 'clear'
+            ? context.outcomes.reduce<SyncManifest>((acc, outcome) => {
+                if (!outcome.success) return acc;
+                return syncManifest.clearAgent(acc, outcome.agent);
+              }, context.input.manifest)
+            : context.input.manifest,
+        outcomes: context.outcomes,
+      }),
     },
     failed: {
       type: 'final',
-      output: ({ context }) => context.outcomes,
+      output: ({ context }) => ({
+        manifest: context.input.manifest,
+        outcomes: context.outcomes,
+      }),
     },
   },
 });

@@ -23,6 +23,10 @@ export interface RunOneE2eCaseResult {
 }
 
 export const e2eCaseRunnerConfig = {
+  /** Canonical sandbox config filename injected per test case. */
+  configFileName: 'clankgsters.config.ts',
+  /** Relative manifest path written by sync inside each sandbox. */
+  manifestRelativePath: '.clank/sync-manifest.json',
   /** When true, runs `clankgsters-sync:clear` before `clankgsters-sync:start` for each case. */
   runClearFirst: true,
 };

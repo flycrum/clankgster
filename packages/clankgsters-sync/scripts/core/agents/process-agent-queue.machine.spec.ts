@@ -1,29 +1,48 @@
 import { describe, expect, test } from 'vite-plus/test';
 import { createActor } from 'xstate';
 import { actorHelpers } from '../../common/actor-helpers.js';
+import { clankgstersIdentity } from '../../common/clankgsters-identity.js';
 import { processAgentQueueMachine } from './process-agent-queue.machine.js';
 
 describe('processAgentQueueMachine', () => {
   test('runs configured agents in order', async () => {
     const actor = createActor(processAgentQueueMachine, {
       input: {
+        discoveredMarketplaces: [],
+        excluded: [],
+        manifest: {},
         mode: 'sync',
+        outputRoot: process.cwd(),
+        repoRoot: process.cwd(),
         resolvedConfig: {
           loggingEnabled: false,
           agents: {
-            cursor: { enabled: true, behaviors: ['rules'] },
+            cursor: {
+              enabled: true,
+              behaviors: [
+                { enabled: true, manifestKey: 'rulesSymlink', name: 'rulesSymlink', options: {} },
+              ],
+            },
           },
           excluded: [],
-          syncManifestPath: '.clankgsters/sync-manifest.json',
+          sourceDefaults: {
+            localMarketplaceName: clankgstersIdentity.LOCAL_MARKETPLACE_NAME,
+            pluginsDir: 'plugins',
+            markdownContextFileName: 'CLANK.md',
+            skillFileName: 'SKILL.md',
+            skillsDir: 'skills',
+            sourceDir: '.clank',
+          },
+          syncManifestPath: '.clank/sync-manifest.json',
         },
       },
     });
     actor.start();
-    const output = await actorHelpers.awaitOutput<
-      | Array<{ agent: string; success: boolean }>
-      | { outcomes: Array<{ agent: string; success: boolean }> }
-    >(actor);
-    const outcomes = Array.isArray(output) ? output : output.outcomes;
+    const output = await actorHelpers.awaitOutput<{
+      manifest: Record<string, Record<string, unknown>>;
+      outcomes: Array<{ agent: string; success: boolean }>;
+    }>(actor);
+    const outcomes = output.outcomes;
     expect(outcomes).toHaveLength(1);
     expect(outcomes[0]?.agent).toBe('cursor');
   });

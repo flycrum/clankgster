@@ -8,7 +8,8 @@
   "scripts": {
     "build": "node --eval \"process.exit(0)\"",
     "check": "vp check",
-    "test": "tsx scripts/e2e-harness.ts",
+    "test": "vp test",
+    "test:e2e": "tsx scripts/e2e-harness.ts",
     "test:unit": "vp test"
   },
   "dependencies": {

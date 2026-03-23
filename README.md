@@ -9,6 +9,9 @@ So, welcome to **Clankgsters**—your badass solution to:
 - 🪁 **Starting with minimal setup** while keeping **stronger options** within reach for both humans and coding agents
 - 🎛️ Running **one shared spec** across **many agent front-ends**—the fancy switches stay installed, merely un-flipped at first boot
 
+Naming note: use **Clankgsters** for the project/package brand; repo config uses `clankgsters.config.ts` at the root and `clankgstersConfig` from `@clankgsters/sync`.
+The name “Clankgsters”, though playing off of a derogatory term “Clankers”, is actually the “AI robots reclaiming that term and lovingly and playfully combining it with 'gansters' to form the clumsily-constructed portmanteau 'Clankgsters'...take that humans!!”
+
 <img
   src="assets/story-sm.jpg"
   alt="Three-panel pixel comic: a small robot with a glowing face and wild blue hair looks puzzled at Claude, Codex, and Cursor; then powers up with the names; then floats at ease as the tools orbit calmly."

@@ -1,12 +1,20 @@
 import type { Result } from 'neverthrow';
 import { assign, fromPromise, setup } from 'xstate';
 import { clankLogger } from '../../common/logger.js';
-import type { BehaviorOutcome } from './behavior-outcome.js';
+import type {
+  ClankgstersBehaviorConfig,
+  ClankgstersConfig,
+} from '../configs/clankgsters-config.schema.js';
+import type { DiscoveredMarketplace } from '../run/sync-discover-agents.js';
+import type { SyncManifestEntry } from '../run/sync-manifest.js';
+import type { SyncBehaviorOutcome } from './behavior-outcome.js';
 import {
   SyncBehaviorBase,
   syncBehaviorBase,
+  type RegisterBehaviorManifestEntry,
   type SyncBehaviorRunContext,
 } from './sync-behavior-base.js';
+import { syncBehaviorRegistry } from './sync-behavior-registry.js';
 
 export interface PerBehaviorObservation {
   agentName: string;
@@ -16,9 +24,17 @@ export interface PerBehaviorObservation {
 
 export interface PerBehaviorMachineInput {
   agentName: string;
-  behaviorName: string;
+  behavior: ClankgstersBehaviorConfig;
+  discoveredMarketplaces: DiscoveredMarketplace[];
+  excluded: string[];
+  manifestEntry?: SyncManifestEntry;
   mode: 'sync' | 'clear';
   onObservation?: (event: PerBehaviorObservation) => void;
+  outputRoot: string;
+  registerManifestEntry: RegisterBehaviorManifestEntry;
+  repoRoot: string;
+  resolvedConfig: ClankgstersConfig;
+  sharedState: Map<string, unknown>;
 }
 
 interface PerBehaviorMachineContext {
@@ -34,12 +50,12 @@ function observe(
   logger = clankLogger.getLogger()
 ): void {
   logger.debug(
-    { agent: input.agentName, behavior: input.behaviorName, eventName },
+    { agent: input.agentName, behavior: input.behavior.name, eventName },
     'behavior stage'
   );
   input.onObservation?.({
     agentName: input.agentName,
-    behaviorName: input.behaviorName,
+    behaviorName: input.behavior.name,
     eventName,
   });
 }
@@ -48,11 +64,21 @@ function runHook(
   input: PerBehaviorMachineInput,
   hook: (behavior: SyncBehaviorBase, context: SyncBehaviorRunContext) => Result<void, Error>
 ): void {
-  const behavior = syncBehaviorBase.create();
+  const behaviorClass = syncBehaviorRegistry.resolve(input.behavior.name);
+  if (behaviorClass == null) throw new Error(`unknown behavior: ${input.behavior.name}`);
+  const behavior = syncBehaviorBase.create(behaviorClass);
   const context: SyncBehaviorRunContext = {
     agentName: input.agentName,
-    behaviorName: input.behaviorName,
+    behavior: input.behavior,
+    discoveredMarketplaces: input.discoveredMarketplaces,
+    excluded: input.excluded,
+    manifestEntry: input.manifestEntry,
     mode: input.mode,
+    outputRoot: input.outputRoot,
+    registerManifestEntry: input.registerManifestEntry,
+    repoRoot: input.repoRoot,
+    resolvedConfig: input.resolvedConfig,
+    sharedState: input.sharedState,
   };
   const result = hook(behavior, context);
   if (result.isErr()) throw result.error;
@@ -63,7 +89,7 @@ export const perBehaviorMachine = setup({
     context: {} as PerBehaviorMachineContext,
     events: {} as PerBehaviorMachineEvent,
     input: {} as PerBehaviorMachineInput,
-    output: {} as BehaviorOutcome,
+    output: {} as SyncBehaviorOutcome,
   },
   actors: {
     syncSetup: fromPromise(async ({ input }: { input: PerBehaviorMachineInput }) => {
@@ -131,7 +157,7 @@ export const perBehaviorMachine = setup({
       type: 'final',
       output: ({ context }) => ({
         agent: context.input.agentName,
-        behavior: context.input.behaviorName,
+        behavior: context.input.behavior.name,
         success: true,
       }),
     },
@@ -139,7 +165,7 @@ export const perBehaviorMachine = setup({
       type: 'final',
       output: ({ context }) => ({
         agent: context.input.agentName,
-        behavior: context.input.behaviorName,
+        behavior: context.input.behavior.name,
         success: false,
       }),
     },

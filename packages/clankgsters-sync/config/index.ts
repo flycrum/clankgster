@@ -1,7 +1,10 @@
-export { clankConfigDefinition } from "../scripts/core/configs/config-definition.js";
-export { clankConfigResolver } from "../scripts/core/configs/config-resolver.js";
-export { clankConfigSchema } from "../scripts/core/configs/schema/clank-config.schema.js";
+export { clankgstersIdentity } from '../scripts/common/clankgsters-identity.js';
+export { clankgstersConfig } from '../scripts/core/configs/clankgsters-config.js';
+export { clankgstersConfigResolver } from '../scripts/core/configs/config-resolver.js';
+export { clankgstersConfigSchema } from '../scripts/core/configs/clankgsters-config.schema.js';
 export type {
-  ClankAgentConfig,
-  ClankConfig,
-} from "../scripts/core/configs/schema/clank-config.schema.js";
+  ClankgstersAgentConfig,
+  ClankgstersBehaviorConfig,
+  ClankgstersConfig,
+  ClankgstersSourceDefaultsConfig,
+} from '../scripts/core/configs/clankgsters-config.schema.js';

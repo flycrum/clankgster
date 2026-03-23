@@ -1,4 +1,7 @@
-import type { ClankAgentConfig } from '../configs/schema/clank-config.schema.js';
+import type { ClankgstersAgentConfig } from '../configs/clankgsters-config.schema.js';
+import { claudeAgentPreset } from './agent-presets/claude-agent-preset.js';
+import { codexAgentPreset } from './agent-presets/codex-agent-preset.js';
+import { cursorAgentPreset } from './agent-presets/cursor-agent-preset.js';
 
 /**
  * Default preset definitions for common coding agents.
@@ -8,16 +11,7 @@ import type { ClankAgentConfig } from '../configs/schema/clank-config.schema.js'
  * - Presets should be overridable by config layers.
  */
 export const agentPresets = {
-  claude: {
-    enabled: true,
-    behaviors: ['rules', 'commands', 'skills'],
-  },
-  cursor: {
-    enabled: true,
-    behaviors: ['rules', 'commands', 'skills'],
-  },
-  codex: {
-    enabled: true,
-    behaviors: ['rules', 'commands', 'skills'],
-  },
-} satisfies Record<string, ClankAgentConfig>;
+  claude: claudeAgentPreset,
+  cursor: cursorAgentPreset,
+  codex: codexAgentPreset,
+} satisfies Record<string, ClankgstersAgentConfig>;

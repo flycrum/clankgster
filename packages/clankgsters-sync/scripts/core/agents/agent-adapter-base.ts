@@ -1,11 +1,11 @@
-import { ok, type Result } from "neverthrow";
-import { clankLogger } from "../../common/logger.js";
+import { ok, type Result } from 'neverthrow';
+import { clankLogger } from '../../common/logger.js';
 
 export interface AgentLifecycleContext {
-  /** Agent key from config (`ClankConfig.agents`). */
+  /** Agent key from config (`ClankgstersConfig.agents`). */
   agentName: string;
   /** Sync run mode passed through from the top-level machine. */
-  mode: "sync" | "clear";
+  mode: 'sync' | 'clear';
 }
 
 /** Chains `Result<void, Error>` steps with `andThen` (short-circuits on first `Err`). */
@@ -52,7 +52,7 @@ export class AgentAdapterBase {
   runLifecycle(context: AgentLifecycleContext): Result<void, Error> {
     clankLogger
       .getLogger()
-      .info({ agent: context.agentName, mode: context.mode }, "agent lifecycle");
+      .info({ agent: context.agentName, mode: context.mode }, 'agent lifecycle');
     return new LifecycleChain()
       .run(() => this.syncSetupBefore(context))
       .run(() => this.syncRun(context))

@@ -1,5 +1,5 @@
 /**
- * Shared Vitest fragment for Node packages (mirrors @mmaappss/vitest-config `environment: 'node'`).
+ * Shared Vitest fragment for Node packages.
  * Tests still import from `vite-plus/test` (no `globals: true` needed).
  */
 export const monoBaseVitestNodeConfig = {

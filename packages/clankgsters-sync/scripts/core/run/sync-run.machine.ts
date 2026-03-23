@@ -1,11 +1,11 @@
 import { assign, createActor, fromPromise, setup } from 'xstate';
-import { processAgentQueueMachine } from '../agents/process-agent-queue.machine.js';
-import { configResolutionMachine } from '../configs/config-resolution.machine.js';
 import { actorHelpers } from '../../common/actor-helpers.js';
 import { clankLogger } from '../../common/logger.js';
-import { syncDiscover } from './sync-discover-agents.js';
-import { syncManifest } from './sync-manifest.js';
 import type { AgentQueueOutcome } from '../agents/agent-queue-outcome.js';
+import { processAgentQueueMachine } from '../agents/process-agent-queue.machine.js';
+import { configResolutionMachine } from '../configs/config-resolution.machine.js';
+import { syncDiscover } from './sync-discover-agents.js';
+import { syncManifest, type SyncManifest } from './sync-manifest.js';
 import type {
   SyncRunMachineContext,
   SyncRunMachineEvent,
@@ -55,16 +55,24 @@ export const syncRunMachine = setup({
       }: {
         input: {
           mode: 'sync' | 'clear';
+          discoveredMarketplaces: SyncRunMachineContext['discoveredMarketplaces'];
+          excluded: string[];
+          manifest: SyncManifest;
           resolvedConfig: NonNullable<SyncRunMachineContext['resolvedConfig']>;
+          repoRoot: string;
+          outputRoot: string;
         };
       }) => {
         const actor = createActor(processAgentQueueMachine, { input });
         actor.start();
         const output = await actorHelpers.awaitOutput<
-          AgentQueueOutcome[] | { outcomes: AgentQueueOutcome[] }
+          | { manifest: SyncManifest; outcomes: AgentQueueOutcome[] }
+          | AgentQueueOutcome[]
+          | { outcomes: AgentQueueOutcome[] }
         >(actor);
-        if (Array.isArray(output)) return output;
-        return output.outcomes;
+        if (Array.isArray(output)) return { manifest: input.manifest, outcomes: output };
+        if ('manifest' in output) return output;
+        return { manifest: input.manifest, outcomes: output.outcomes };
       }
     ),
   },
@@ -75,36 +83,53 @@ export const syncRunMachine = setup({
       });
       observe(context.input, 'sync.boot');
     },
-    persistManifestStub: ({ context }) => {
-      if (context.resolvedConfig == null) return;
-      const syncDiscoverResult = syncDiscover.discoverAgents();
-      if (syncDiscoverResult.isErr()) {
-        clankLogger.getLogger().error({ error: syncDiscoverResult.error }, 'syncDiscover failed');
-        return;
+    prepareManifestAndDiscovery: assign(({ context }) => {
+      if (context.resolvedConfig == null) return {};
+      const discoveryResult = syncDiscover.discoverMarketplaces({
+        agentNames: Object.keys(context.resolvedConfig.agents),
+        excluded: context.resolvedConfig.excluded,
+        repoRoot: context.input.repoRoot,
+        sourceDefaults: context.resolvedConfig.sourceDefaults,
+      });
+      if (discoveryResult.isErr()) {
+        throw discoveryResult.error;
       }
-
       const manifestPath = syncManifest.getManifestPath(
         context.input.repoRoot,
         context.resolvedConfig.syncManifestPath
       );
       const manifestResult = syncManifest.load(manifestPath);
       if (manifestResult.isErr()) {
-        clankLogger.getLogger().error({ error: manifestResult.error }, 'manifest load failed');
-        return;
+        throw manifestResult.error;
       }
-      const writeResult = syncManifest.write(manifestPath, manifestResult.value);
-      if (writeResult.isErr()) {
-        clankLogger.getLogger().error({ error: writeResult.error }, 'manifest write failed');
-      }
+      observe(context.input, 'sync.discovery', {
+        marketplacesCount: discoveryResult.value.length,
+      });
       observe(context.input, 'sync.persistManifest', { manifestPath });
+      return {
+        discoveredMarketplaces: discoveryResult.value,
+        manifest: manifestResult.value,
+      };
+    }),
+    persistManifest: ({ context }) => {
+      if (context.resolvedConfig == null) return;
+      const manifestPath = syncManifest.getManifestPath(
+        context.input.repoRoot,
+        context.resolvedConfig.syncManifestPath
+      );
+      const writeResult = syncManifest.write(manifestPath, context.manifest);
+      if (writeResult.isErr()) throw writeResult.error;
     },
   },
 }).createMachine({
+  /** @xstate-layout N4IgpgJg5mDOIC5SwJ4DsDGAlArmgsgIYYAWAlmmAHQBGA9nQC4DEA2gAwC6ioADnbDKMydNDxAAPRACYAbAEYqAZgCs8lbOkqANCBSJ58gBxUA7HI1aAvld2pMuAsXKUqAJzh0ANgDcwAYVEAMzIoZghRagofOgBrantsPCJSCmoPWG8-QLQQqARougxCYVEOTnLxfkFSsSRJRFl2WSppUyUAFiVTHT0ZQyp2aU7ulRs7dCSnVNcMrIDg0OYwNzc6NypeLxKg9YBbKkTHFJd0z18F3NCCtBji2vLK+uqhETrQKQQmlraRnt19AgjIoxrYQEdks40u48ABBGBoRiwcKRKiFeKHSbHKGzOEIpE3O4lN6PLhVASvUTiT7ydgATnYgxUHVkRn+fQQSnkpio3LprJ643BWMhM3SeLAiORKzWGy2O32mIcotOMLQ8MlBMK9xJXCefAptWpBnpjPYzIFvUB0mGZgsmlBE2V01VvBWglgjCIaDIQTgLH1IBeRvqNLUPNMHWkxnZgM6jPUDpsYLQdAgcHEEJdaXJNTexoQAFpZADEMWhVmTtD6Exc5T3g0EFHSwg6R1WvbrGDKzizpkLjk8nWQx9EKoWl1Y4g2x3ZJZHcLnVXcer8fBnob86HEEYFFQjNJgVoW8MJyouV2nVNl9Q3W4PV7CD6-Z7h1vRwh5NJ+a0rWP1FQc5Jt2IrZq4ESUG+VLbp+CjSPuh5fn+nLdFQDLAVe2JilQQSEGQXiQFBDY0t+PzIbSdL7nSSg2nS8iyAxjGyMmVhAA */
   id: 'syncRunMachine',
   context: ({ input }) => ({
     errorMessage: null,
     input,
     outcomes: [],
+    discoveredMarketplaces: [],
+    manifest: {},
     resolvedConfig: null,
   }),
   initial: 'boot',
@@ -133,6 +158,7 @@ export const syncRunMachine = setup({
                   }
                 ).resolvedConfig,
             }),
+            'prepareManifestAndDiscovery',
             ({ context, event }) => {
               const output = event.output as {
                 resolvedConfig: NonNullable<SyncRunMachineContext['resolvedConfig']>;
@@ -162,16 +188,28 @@ export const syncRunMachine = setup({
       invoke: {
         src: 'runAgentsActor',
         input: ({ context }) => ({
+          discoveredMarketplaces: context.discoveredMarketplaces,
+          excluded: context.resolvedConfig?.excluded ?? [],
+          manifest: context.manifest,
           mode: context.input.mode,
+          outputRoot: context.resolvedConfig?.syncOutputRoot ?? context.input.repoRoot,
+          repoRoot: context.input.repoRoot,
           resolvedConfig: context.resolvedConfig as NonNullable<
             SyncRunMachineContext['resolvedConfig']
           >,
         }),
         onDone: {
           target: 'persistManifest',
-          actions: assign({
-            outcomes: ({ event }) => event.output as AgentQueueOutcome[],
-          }),
+          actions: [
+            assign({
+              manifest: ({ context, event }) =>
+                (event.output as { manifest: SyncManifest; outcomes: AgentQueueOutcome[] })
+                  .manifest ?? context.manifest,
+              outcomes: ({ event }) =>
+                (event.output as { manifest: SyncManifest; outcomes: AgentQueueOutcome[] })
+                  .outcomes,
+            }),
+          ],
         },
         onError: {
           target: 'failed',
@@ -182,7 +220,7 @@ export const syncRunMachine = setup({
       },
     },
     persistManifest: {
-      entry: 'persistManifestStub',
+      entry: 'persistManifest',
       always: {
         target: 'done',
       },

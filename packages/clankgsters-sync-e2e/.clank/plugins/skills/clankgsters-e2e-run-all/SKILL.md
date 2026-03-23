@@ -1,0 +1,38 @@
+---
+name: clankgsters-e2e-run-all
+description: Run all @clankgsters/sync e2e tests. Use when you need the full sandbox + manifest suite.
+---
+
+# Run all e2e tests
+
+Use when you need **every** config-driven case under `scripts/test-cases/`.
+
+## When to use
+
+- User asks to run all e2e tests for sync
+- After changing sync behaviors, config, or manifest logic
+
+## How to run
+
+From **monorepo root**:
+
+```bash
+pnpm test:e2e
+```
+
+Or:
+
+```bash
+pnpm -F @clankgsters/sync-e2e run test:e2e
+```
+
+From **`packages/clankgsters-sync-e2e`**:
+
+```bash
+pnpm run test:e2e
+```
+
+## Reference
+
+- [e2e-tests-overview.md](../references/e2e-tests-overview.md)
+- Cases: `scripts/test-cases/` — see package [README.md](../../../README.md)

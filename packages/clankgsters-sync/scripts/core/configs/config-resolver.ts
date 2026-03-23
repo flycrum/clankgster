@@ -1,22 +1,24 @@
-import { err, ok, type Result } from "neverthrow";
+import { err, ok, type Result } from 'neverthrow';
+import { clankgstersConfig } from './clankgsters-config.js';
 import {
-  clankConfigSource,
-  type ClankConfigResolutionContext,
-  type ClankConfigSource,
-} from "./config-source.js";
-import { clankConfigSources } from "./config-sources.js";
-import { clankConfigSchema, type ClankConfig } from "./schema/clank-config.schema.js";
+  clankgstersConfigSource,
+  type ClankgstersConfigResolutionContext,
+  type ClankgstersConfigSource,
+} from './config-source.js';
+import { clankgstersConfigSources } from './config-sources.js';
+import { clankgstersConfigSchema, type ClankgstersConfig } from './clankgsters-config.schema.js';
 
-/** Output of {@link clankConfigResolver.resolve}: merged partial layers, schema-validated config, and which sources contributed. */
-export interface ClankConfigResolutionDetails {
-  mergedConfig: Partial<ClankConfig>;
-  resolvedConfig: ClankConfig;
+/** Output of {@link clankgstersConfigResolver.resolve}: merged partial layers, schema-validated config, and which sources contributed. */
+export interface ClankgstersConfigResolutionDetails {
+  mergedConfig: Partial<ClankgstersConfig>;
+  resolvedConfig: ClankgstersConfig;
   sourcesLoaded: string[];
 }
 
-/** Deep-merges config layers in order: top-level keys shallow-merge; `agents` merges by key; `excluded` uses the latest layer that sets it. */
-function mergeConfigLayers(layers: Partial<ClankConfig>[]): Partial<ClankConfig> {
-  return layers.reduce<Partial<ClankConfig>>((acc, layer) => {
+/** Deep-merges config layers in order: top-level keys shallow-merge; `agents` merges by key; `sourceDefaults` deep-merges; `excluded` uses the latest layer that sets it. One {@link clankgstersConfig.define} pass at the end applies defaults without clobbering prior `sourceDefaults` keys. */
+function mergeConfigLayers(layers: Partial<ClankgstersConfig>[]): Partial<ClankgstersConfig> {
+  const merged = layers.reduce<Partial<ClankgstersConfig>>((acc, layer) => {
+    if (layer == null) return acc;
     return {
       ...acc,
       ...layer,
@@ -24,16 +26,21 @@ function mergeConfigLayers(layers: Partial<ClankConfig>[]): Partial<ClankConfig>
         ...acc.agents,
         ...layer.agents,
       },
+      sourceDefaults: {
+        ...acc.sourceDefaults,
+        ...layer.sourceDefaults,
+      },
       excluded: layer.excluded ?? acc.excluded,
-    };
+    } as Partial<ClankgstersConfig>;
   }, {});
+  return clankgstersConfig.define(merged as Parameters<typeof clankgstersConfig.define>[0]);
 }
 
 /** Invokes `source.load` and maps failures into a `Result` with the source id in the error message. */
 async function loadSource(
-  source: ClankConfigSource,
-  context: ClankConfigResolutionContext,
-): Promise<Result<Partial<ClankConfig> | null, Error>> {
+  source: ClankgstersConfigSource,
+  context: ClankgstersConfigResolutionContext
+): Promise<Result<Partial<ClankgstersConfig> | null, Error>> {
   try {
     const loaded = await source.load(context);
     return ok(loaded);
@@ -43,23 +50,25 @@ async function loadSource(
   }
 }
 
-/** Parses partial config through `clankConfigSchema.config` and returns a full `ClankConfig` or a parse error. */
-function validateShape(config: Partial<ClankConfig>): Result<ClankConfig, Error> {
-  const parsed = clankConfigSchema.config.safeParse(config);
+/** Parses partial config through `clankgstersConfigSchema.config` and returns a full `ClankgstersConfig` or a parse error. */
+function validateShape(config: Partial<ClankgstersConfig>): Result<ClankgstersConfig, Error> {
+  const parsed = clankgstersConfigSchema.config.safeParse(config);
   if (!parsed.success) {
     return err(new Error(parsed.error.message));
   }
   return ok(parsed.data);
 }
 
-export const clankConfigResolver = {
-  /** Loads sources in priority order, merges non-null layers, validates with the schema, and returns details (defaults to `clankConfigSources.defaults()` when `sources` is omitted). */
+export const clankgstersConfigResolver = {
+  /** Loads sources in priority order, merges non-null layers, validates with the schema, and returns details (defaults to `clankgstersConfigSources.defaults()` when `sources` is omitted). */
   async resolve(
-    context: ClankConfigResolutionContext,
-    sources = clankConfigSources.defaults(),
-  ): Promise<Result<ClankConfigResolutionDetails, Error>> {
-    const sortedSources = [...sources].sort((a, b) => clankConfigSource.comparePriority(a, b));
-    const loadedLayers: Partial<ClankConfig>[] = [];
+    context: ClankgstersConfigResolutionContext,
+    sources = clankgstersConfigSources.defaults()
+  ): Promise<Result<ClankgstersConfigResolutionDetails, Error>> {
+    const sortedSources = [...sources].sort((a, b) =>
+      clankgstersConfigSource.comparePriority(a, b)
+    );
+    const loadedLayers: Partial<ClankgstersConfig>[] = [];
     const loadedSourceIds: string[] = [];
 
     for (const source of sortedSources) {

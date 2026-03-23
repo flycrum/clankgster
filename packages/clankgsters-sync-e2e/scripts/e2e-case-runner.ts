@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { clankgstersIdentity } from '../../clankgsters-sync/config/index.js';
 import {
   e2eCaseRunnerConfig,
   type RunOneE2eCaseOptions,
@@ -41,7 +42,7 @@ export async function runOneE2eCase(options: RunOneE2eCaseOptions): Promise<RunO
 
   const imported = await import(pathToFileURL(options.testCaseTsPath).href);
   const testCase = imported.testCase;
-  const configPath = path.join(options.outputRoot, 'clank.config.ts');
+  const configPath = path.join(options.outputRoot, e2eCaseRunnerConfig.configFileName);
   fs.writeFileSync(configPath, toConfigFileContents(testCase.config), 'utf8');
 
   const commandEnv = {
@@ -71,8 +72,10 @@ export async function runOneE2eCase(options: RunOneE2eCaseOptions): Promise<RunO
     errorLines.push(printLine.error(`${options.name}: sync failed with exit code ${syncCode}`));
   }
 
-  const expected = JSON.parse(fs.readFileSync(options.expectedManifestPath, 'utf8'));
-  const manifestPath = path.join(options.outputRoot, '.clankgsters', 'sync-manifest.json');
+  const expected = clankgstersIdentity.resolveFixtureStrings(
+    JSON.parse(fs.readFileSync(options.expectedManifestPath, 'utf8'))
+  ) as Record<string, unknown>;
+  const manifestPath = path.join(options.outputRoot, e2eCaseRunnerConfig.manifestRelativePath);
   const actual = fs.existsSync(manifestPath)
     ? JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
     : {};

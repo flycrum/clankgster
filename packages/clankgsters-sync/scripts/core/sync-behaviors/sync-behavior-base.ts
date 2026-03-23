@@ -1,9 +1,36 @@
 import { ok, type Result } from 'neverthrow';
+import type {
+  ClankgstersBehaviorConfig,
+  ClankgstersConfig,
+} from '../configs/clankgsters-config.schema.js';
+import type { DiscoveredMarketplace } from '../run/sync-discover-agents.js';
+import type { SyncManifestEntry } from '../run/sync-manifest.js';
 
+/** Callback used by sync behaviors to upsert one manifest entry during `sync` mode. */
+export type RegisterBehaviorManifestEntry = (
+  agentName: string,
+  behaviorManifestKey: string,
+  entry: SyncManifestEntry
+) => void;
+
+/** Runtime context passed to every sync behavior hook execution. */
 export interface SyncBehaviorRunContext {
   agentName: string;
-  behaviorName: string;
+  behavior: ClankgstersBehaviorConfig;
+  excluded: string[];
+  manifestEntry: SyncManifestEntry | undefined;
   mode: 'sync' | 'clear';
+  outputRoot: string;
+  registerManifestEntry: RegisterBehaviorManifestEntry;
+  repoRoot: string;
+  resolvedConfig: ClankgstersConfig;
+  sharedState: Map<string, unknown>;
+  discoveredMarketplaces: DiscoveredMarketplace[];
+}
+
+/** Constructor signature for a concrete sync behavior class in the behavior registry. */
+export interface SyncBehaviorClassRef {
+  new (): SyncBehaviorBase;
 }
 
 export class SyncBehaviorBase {
@@ -25,7 +52,7 @@ export class SyncBehaviorBase {
 
 export const syncBehaviorBase = {
   /** Returns a fresh `SyncBehaviorBase` instance. */
-  create(): SyncBehaviorBase {
-    return new SyncBehaviorBase();
+  create(behaviorClass: SyncBehaviorClassRef): SyncBehaviorBase {
+    return new behaviorClass();
   },
 };

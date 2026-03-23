@@ -1,26 +1,26 @@
-import type { ClankConfig } from "./schema/clank-config.schema.js";
+import type { ClankgstersConfig } from './clankgsters-config.schema.js';
 
-export interface ClankConfigResolutionContext {
+export interface ClankgstersConfigResolutionContext {
   /** Current sync run mode (e.g. apply rules vs clear). */
-  mode: "sync" | "clear";
+  mode: 'sync' | 'clear';
   /** Absolute path to the repository root being configured. */
   repoRoot: string;
 }
 
-export interface ClankConfigSource {
+export interface ClankgstersConfigSource {
   /** Stable id for this source (logging, merge diagnostics). */
   id: string;
-  /** Merge order: lower values load first; compare with `clankConfigSource.comparePriority`. */
+  /** Merge order: lower values load first; compare with `clankgstersConfigSource.comparePriority`. */
   priority: number;
   /** Returns partial config for the repo, sync or async; `null`/`undefined` layers are skipped. */
   load: (
-    context: ClankConfigResolutionContext,
-  ) => Promise<Partial<ClankConfig> | null> | Partial<ClankConfig> | null;
+    context: ClankgstersConfigResolutionContext
+  ) => Promise<Partial<ClankgstersConfig> | null> | Partial<ClankgstersConfig> | null;
 }
 
-export const clankConfigSource = {
+export const clankgstersConfigSource = {
   /** Comparator for sorting sources: lower `priority` values order first (`a.priority - b.priority`). */
-  comparePriority(a: ClankConfigSource, b: ClankConfigSource): number {
+  comparePriority(a: ClankgstersConfigSource, b: ClankgstersConfigSource): number {
     return a.priority - b.priority;
   },
 };

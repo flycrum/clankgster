@@ -6,12 +6,18 @@ settings:
 
 catalogs:
   default:
+    '@types/lodash-es':
+      specifier: ^4.17.12
+      version: 4.17.12
     '@types/node':
       specifier: ^24
       version: 24.12.0
     chalk:
       specifier: ^5.6.2
       version: 5.6.2
+    lodash-es:
+      specifier: ^4.17.23
+      version: 4.17.23
     neverthrow:
       specifier: ^8.2.0
       version: 8.2.0
@@ -68,15 +74,24 @@ importers:
 
   packages/clankgsters-sync:
     dependencies:
+      '@types/lodash-es':
+        specifier: 'catalog:'
+        version: 4.17.12
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
+      lodash-es:
+        specifier: 'catalog:'
+        version: 4.17.23
       neverthrow:
         specifier: 'catalog:'
         version: 8.2.0
       pino:
         specifier: 'catalog:'
         version: 10.3.1
+      tsx:
+        specifier: ^4.19.0
+        version: 4.21.0
       xstate:
         specifier: 'catalog:'
         version: 5.28.0
@@ -96,9 +111,6 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260316.1
         version: 7.0.0-dev.20260316.1
-      tsx:
-        specifier: ^4.19.0
-        version: 4.21.0
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -707,6 +719,12 @@ packages:
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
+  '@types/lodash-es@4.17.12':
+    resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
+
+  '@types/lodash@4.17.24':
+    resolution: {integrity: sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ==}
+
   '@types/node@24.12.0':
     resolution: {integrity: sha512-GYDxsZi3ChgmckRT9HPU0WEhKLP08ev/Yfcq2AstjrDASOYCSXeyjDsHg4v5t4jOj7cyDX3vmprafKlWIG9MXQ==}
 
@@ -997,6 +1015,9 @@ packages:
   lightningcss@1.32.0:
     resolution: {integrity: sha512-NXYBzinNrblfraPGyrbPoD19C1h9lfI/1mzgWYvXUTe414Gz/X1FD2XBZSZM7rRTrMA8JL3OtAaGifrIKhQ5yQ==}
     engines: {node: '>= 12.0.0'}
+
+  lodash-es@4.17.23:
+    resolution: {integrity: sha512-kVI48u3PZr38HdYz98UmfPnXl2DXrpdctLrFLCd3kOx1xUkOmpFPx7gCWWM5MPkL/fD8zb+Ph0QzjGFs4+hHWg==}
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -1537,6 +1558,12 @@ snapshots:
 
   '@types/deep-eql@4.0.2': {}
 
+  '@types/lodash-es@4.17.12':
+    dependencies:
+      '@types/lodash': 4.17.24
+
+  '@types/lodash@4.17.24': {}
+
   '@types/node@24.12.0':
     dependencies:
       undici-types: 7.16.0
@@ -1750,6 +1777,8 @@ snapshots:
       lightningcss-linux-x64-musl: 1.32.0
       lightningcss-win32-arm64-msvc: 1.32.0
       lightningcss-win32-x64-msvc: 1.32.0
+
+  lodash-es@4.17.23: {}
 
   mrmime@2.0.1: {}
 

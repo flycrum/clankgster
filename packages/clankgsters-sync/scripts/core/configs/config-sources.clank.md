@@ -4,8 +4,8 @@ Defines concrete config providers for team TS config, local TS config, and env o
 
 ## Priority Order
 
-- `clank.config.ts` (team)
-- `clank.local.config.ts` (developer override)
+- `clankgsters.config.ts` (team)
+- `clankgsters.local.config.ts` (developer override)
 - environment variables (highest priority)
 
 ## Invariants
