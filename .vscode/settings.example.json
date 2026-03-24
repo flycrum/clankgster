@@ -52,6 +52,16 @@
   "oxc.fmt.configPath": "./.oxfmtrc.jsonc",
   // Disable Prettier in this workspace to avoid transient reformat flicker on save.
   "prettier.enable": false,
+  // Node 22.6+: strip types for `node` / `vp` / `pnpm` in the integrated terminal (does not target the Oxc extension host — see comment on vitest.nodeEnv)
+  "terminal.integrated.env.osx": {
+    "NODE_OPTIONS": "--experimental-strip-types"
+  },
+  "terminal.integrated.env.linux": {
+    "NODE_OPTIONS": "--experimental-strip-types"
+  },
+  "terminal.integrated.env.windows": {
+    "NODE_OPTIONS": "--experimental-strip-types"
+  },
   // Vitest extension: let Node strip types when resolving workspace `.ts` imports from `vite.config.ts` (see @clankgsters/vite-plus-config). Node 22.6+; try removing after 22.18+ if default behavior suffices
   "vitest.nodeEnv": {
     "NODE_OPTIONS": "--experimental-strip-types"
