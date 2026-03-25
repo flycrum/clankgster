@@ -1,6 +1,7 @@
 import { err, ok, type Result } from 'neverthrow';
 import fs from 'node:fs';
 import path from 'node:path';
+import { clankLogger } from '../../../common/logger.js';
 import { agentPresetConfigs } from '../../agents/agent-presets/agent-preset-configs.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
@@ -50,7 +51,13 @@ export class AgentSettingsSyncPreset extends SyncBehaviorBase {
       try {
         parsed = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Record<string, unknown>;
       } catch (e) {
-        return err(settingsIoError(settingsRelPath, 'Failed to read or parse', e));
+        clankLogger
+          .getLogger()
+          .warn(
+            { err: e, settingsRelPath },
+            'agent settings JSON unreadable or invalid; merging from empty object'
+          );
+        parsed = {};
       }
     } else {
       try {
