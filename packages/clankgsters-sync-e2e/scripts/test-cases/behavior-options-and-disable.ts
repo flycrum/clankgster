@@ -1,4 +1,7 @@
-import { clankgstersConfig } from '../../../clankgsters-sync/config/index.js';
+import {
+  clankgstersConfig,
+  clankgstersConfigDefaults,
+} from '../../../clankgsters-sync/config/index.js';
 import { e2eTestCase } from '../define-e2e-test-case.js';
 
 const config = clankgstersConfig.define({
@@ -9,7 +12,7 @@ const config = clankgstersConfig.define({
           behaviorName: 'MarkdownSymlinkSyncPreset',
           enabled: true,
           options: {
-            sourceFile: 'CLANK.md',
+            sourceFile: clankgstersConfigDefaults.CONSTANTS.sourceDefaults.markdownContextFileName,
           },
         },
         {

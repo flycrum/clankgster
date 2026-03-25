@@ -1,9 +1,13 @@
+import {
+  clankgstersConfigDefaults,
+  clankgstersIdentity,
+} from '../../../../clankgsters-sync/config/index.js';
 import { AgentPluginJsonPrefab } from '../agent-plugin-json.prefab.js';
 import { PluginCommandMarkdownPrefab } from '../plugin-command-markdown.prefab.js';
 import { PluginRuleMarkdownPrefab } from '../plugin-rule-markdown.prefab.js';
 import { PluginSkillFilePrefab } from '../plugin-skill-file.prefab.js';
-import { SkillFileNamePrefab } from '../skill-file-name.prefab.js';
 import type { PrefabExecutable } from '../prefab-types.js';
+import { SkillFileNamePrefab } from '../skill-file-name.prefab.js';
 import { PrefabPresetBase } from './prefab-preset-base.js';
 
 export type PluginsSkillsScenarioMode = 'root-only' | 'nested-only-1' | 'root-and-nested-1';
@@ -24,22 +28,25 @@ export class PluginsSkillsScenarioPreset extends PrefabPresetBase<PluginsSkillsS
     const mode = this.options.scenarioMode ?? 'root-and-nested-1';
     const includeRoot = mode === 'root-only' || mode === 'root-and-nested-1';
     const includeNested = mode === 'nested-only-1' || mode === 'root-and-nested-1';
-    const sourceDirName = this.options.sourceDirName ?? '.clank';
-    const pluginsDirName = this.options.pluginsDirName ?? 'plugins';
-    const skillsDirName = this.options.skillsDirName ?? 'skills';
+    const sourceDirName =
+      this.options.sourceDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.sourceDir;
+    const pluginsDirName =
+      this.options.pluginsDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.pluginsDir;
+    const skillsDirName =
+      this.options.skillsDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.skillsDir;
     const prefabs: PrefabExecutable[] = [];
 
     if (includeRoot) {
       prefabs.push(
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           pluginDirName: 'root',
-          pluginManifestDirName: '.claude-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME,
           pluginsDirName,
           sourceDirName,
         }),
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           pluginDirName: 'root',
-          pluginManifestDirName: '.cursor-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CURSOR_PLUGIN_DIR_NAME,
           pluginsDirName,
           sourceDirName,
         }),
@@ -74,14 +81,14 @@ export class PluginsSkillsScenarioPreset extends PrefabPresetBase<PluginsSkillsS
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           parentPaths,
           pluginDirName: 'nested',
-          pluginManifestDirName: '.claude-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME,
           pluginsDirName,
           sourceDirName,
         }),
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           parentPaths,
           pluginDirName: 'nested',
-          pluginManifestDirName: '.cursor-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CURSOR_PLUGIN_DIR_NAME,
           pluginsDirName,
           sourceDirName,
         }),

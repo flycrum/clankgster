@@ -1,3 +1,7 @@
+import {
+  clankgstersConfigDefaults,
+  clankgstersIdentity,
+} from '../../../../clankgsters-sync/config/index.js';
 import { AgentPluginJsonPrefab } from '../agent-plugin-json.prefab.js';
 import { DirectoryPrefab } from '../directory-prefab.js';
 import type { PrefabExecutable } from '../prefab-types.js';
@@ -29,9 +33,12 @@ function toShorthandBase(sourceDir: string): string {
 /** Seeds plugin/skills roots across nested and shorthand regular/local layout variants. */
 export class SourceLayoutVariantsPreset extends PrefabPresetBase<SourceLayoutVariantsPresetOptions> {
   protected override createPrefabs(): PrefabExecutable[] {
-    const sourceDirName = this.options.sourceDirName ?? '.clank';
-    const pluginsDirName = this.options.pluginsDirName ?? 'plugins';
-    const skillsDirName = this.options.skillsDirName ?? 'skills';
+    const sourceDirName =
+      this.options.sourceDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.sourceDir;
+    const pluginsDirName =
+      this.options.pluginsDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.pluginsDir;
+    const skillsDirName =
+      this.options.skillsDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.skillsDir;
     const shorthandBase = toShorthandBase(sourceDirName);
     const includeNestedRegular = this.options.includeNestedRegular ?? true;
     const includeNestedLocal = this.options.includeNestedLocal ?? true;
@@ -47,7 +54,7 @@ export class SourceLayoutVariantsPreset extends PrefabPresetBase<SourceLayoutVar
         }),
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           pluginDirName: 'root-nested-regular',
-          pluginManifestDirName: '.claude-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME,
           pluginsDirName,
           sourceDirName,
         }),
@@ -66,7 +73,7 @@ export class SourceLayoutVariantsPreset extends PrefabPresetBase<SourceLayoutVar
         }),
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           pluginDirName: 'root-nested-local',
-          pluginManifestDirName: '.claude-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME,
           pluginsDirName: `${pluginsDirName}.local`,
           sourceDirName,
         }),
@@ -88,7 +95,7 @@ export class SourceLayoutVariantsPreset extends PrefabPresetBase<SourceLayoutVar
         new DirectoryPrefab(this.sandboxDirectoryName, { dirName: shorthandPluginsDir }),
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           pluginDirName: 'root-shorthand-regular',
-          pluginManifestDirName: '.claude-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME,
           pluginsDirName: shorthandPluginsDir,
           sourceDirName: '.',
         }),
@@ -107,7 +114,7 @@ export class SourceLayoutVariantsPreset extends PrefabPresetBase<SourceLayoutVar
         new DirectoryPrefab(this.sandboxDirectoryName, { dirName: shorthandPluginsLocalDir }),
         new AgentPluginJsonPrefab(this.sandboxDirectoryName, {
           pluginDirName: 'root-shorthand-local',
-          pluginManifestDirName: '.claude-plugin',
+          pluginManifestDirName: clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME,
           pluginsDirName: shorthandPluginsLocalDir,
           sourceDirName: '.',
         }),

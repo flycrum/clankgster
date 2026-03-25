@@ -1,4 +1,7 @@
-import { clankgstersConfigDefaults } from '../../../clankgsters-sync/config/index.js';
+import {
+  clankgstersConfigDefaults,
+  clankgstersIdentity,
+} from '../../../clankgsters-sync/config/index.js';
 import { JsonFilePrefab } from './json-file-prefab.js';
 
 export interface LocalMarketplaceNamePrefabOptions {
@@ -14,7 +17,9 @@ export class LocalMarketplaceNamePrefab extends JsonFilePrefab {
     const localMarketplaceName =
       options.localMarketplaceName ??
       clankgstersConfigDefaults.CONSTANTS.sourceDefaults.localMarketplaceName;
-    const marketplaceFilePath = options.marketplaceFilePath ?? '.claude-plugin/marketplace.json';
+    const marketplaceFilePath =
+      options.marketplaceFilePath ??
+      `${clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME}/marketplace.json`;
     const pathSegments = marketplaceFilePath.split('/').filter((segment) => segment.length > 0);
     const fileName = pathSegments.pop() ?? 'marketplace.json';
     super(sandboxDirectoryName, {

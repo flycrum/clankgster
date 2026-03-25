@@ -5,6 +5,12 @@ import { clankgstersConfigDefaults } from '../core/configs/clankgsters-config.de
  * Import this module instead of inlining `clankgsters-sync` so renames stay consistent.
  */
 export const clankgstersIdentity = {
+  /** Agent plugin manifest directory used by Claude plugin discovery/writes. */
+  AGENT_CLAUDE_PLUGIN_DIR_NAME: '.claude-plugin',
+
+  /** Agent plugin manifest directory used by Cursor plugin discovery/writes. */
+  AGENT_CURSOR_PLUGIN_DIR_NAME: '.cursor-plugin',
+
   /**
    * `name` field in generated local marketplace JSON (e.g. `.claude-plugin/marketplace.json`).
    * Matches the published CLI binary name (`package.json` → `bin`).

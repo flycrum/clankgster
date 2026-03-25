@@ -1,3 +1,4 @@
+import { clankgstersConfigDefaults } from '../../../clankgsters-sync/config/index.js';
 import { JsonFilePrefab } from './json-file-prefab.js';
 
 export interface AgentPluginJsonPrefabOptions {
@@ -22,8 +23,10 @@ export interface AgentPluginJsonPrefabOptions {
 /** Writes one agent-specific plugin manifest JSON used by marketplace discovery. */
 export class AgentPluginJsonPrefab extends JsonFilePrefab {
   constructor(sandboxDirectoryName: string, options: AgentPluginJsonPrefabOptions) {
-    const sourceDirName = options.sourceDirName ?? '.clank';
-    const pluginsDirName = options.pluginsDirName ?? 'plugins';
+    const sourceDirName =
+      options.sourceDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.sourceDir;
+    const pluginsDirName =
+      options.pluginsDirName ?? clankgstersConfigDefaults.CONSTANTS.sourceDefaults.pluginsDir;
     super(sandboxDirectoryName, {
       fileName: 'plugin.json',
       jsonValue: {
