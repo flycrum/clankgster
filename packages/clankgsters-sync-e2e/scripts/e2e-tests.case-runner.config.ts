@@ -7,6 +7,8 @@ export interface RunOneE2eTestsCaseOptions {
   caseOutputRoot: string;
   /** Absolute path to the expected `sync-manifest.json` fixture (JSON on disk). */
   expectedManifestPath: string;
+  /** Absolute path to expected file-structure fixture JSON. */
+  expectedFileStructurePath: string;
   /** Case id used in log lines and error prefixes (e.g. the test file stem). */
   name: string;
   /** Root of this e2e package (template under `sandboxes/`, test cases under `scripts/test-cases/`). */

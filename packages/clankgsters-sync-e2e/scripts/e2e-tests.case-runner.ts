@@ -11,7 +11,7 @@ import {
 } from './e2e-tests.case-runner.config.js';
 import { prefabs } from './prefabs/prefabs.js';
 import { diffManifest } from './utils/diff-manifest.js';
-import { fileAssertions } from './utils/file-assertions.js';
+import { fileStructureFixture, type FileStructureFixture } from './utils/file-structure-fixture.js';
 import { printLine } from './utils/print-line.js';
 
 function runCommand(
@@ -110,9 +110,29 @@ export async function runOneE2eTestsCase(
     );
   }
 
-  const fileAssertionResult = fileAssertions.fromManifestEntries(sandboxRoot, []);
-  if (fileAssertionResult.missing.length > 0) {
-    errorLines.push(printLine.error(`${options.name}: missing files in sandbox`));
+  const expectedFileStructure = clankgstersIdentity.resolveFixtureStrings(
+    JSON.parse(fs.readFileSync(options.expectedFileStructurePath, 'utf8'))
+  ) as FileStructureFixture;
+  const actualFileStructure = fileStructureFixture.buildSnapshot(sandboxRoot);
+  const fileStructureDiff = fileStructureFixture.compare(
+    expectedFileStructure,
+    actualFileStructure
+  );
+  if (fileStructureDiff.changed) {
+    errorLines.push(printLine.error(`${options.name}: file structure does not match fixture`));
+    for (const missingPath of fileStructureDiff.missing) {
+      errorLines.push(printLine.error(`${options.name}: missing path ${missingPath}`));
+    }
+    for (const extraPath of fileStructureDiff.extra) {
+      errorLines.push(printLine.error(`${options.name}: extra path ${extraPath}`));
+    }
+    for (const modifiedEntry of fileStructureDiff.modified) {
+      errorLines.push(
+        printLine.error(
+          `${options.name}: modified path ${modifiedEntry.path} (${modifiedEntry.reasons.join(', ')})`
+        )
+      );
+    }
   }
 
   const passed = errorLines.length === 0;

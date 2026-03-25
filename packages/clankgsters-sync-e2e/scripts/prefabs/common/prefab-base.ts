@@ -1,5 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { prefabOrchestration as prefabPlan } from '../prefab-orchestration.js';
+import type {
+  PrefabsPrepareConfig as PrefabsPlanConfig,
+  ResolvedPrefabsPrepareConfig as ResolvedPrefabsPlanConfig,
+} from '../prefab-types.js';
 import type { PrefabApplyContext, PrefabExecutable } from './prefab-types.js';
 
 /**
@@ -18,6 +23,28 @@ export abstract class PrefabBase<
 
   /** Applies one prefab to the current case output root. */
   abstract apply(context: PrefabApplyContext): void;
+
+  preparePlan(_context: PrefabApplyContext): PrefabsPlanConfig {
+    return {
+      groups: [
+        {
+          action: 'append',
+          entries: [
+            {
+              action: 'append',
+              id: `${this.constructor.name}.materialize`,
+              run: (runContext) => this.apply(runContext),
+            },
+          ],
+          id: this.constructor.name,
+        },
+      ],
+    };
+  }
+
+  runPlan(context: PrefabApplyContext, resolvedPlan: ResolvedPrefabsPlanConfig): void {
+    prefabPlan.runResolvedPrepare(context, resolvedPlan, this.getSandboxRoot(context));
+  }
 
   /** Absolute sandbox root for this prefab in the current case. */
   protected getSandboxRoot(context: PrefabApplyContext): string {

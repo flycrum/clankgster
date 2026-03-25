@@ -6,13 +6,13 @@ Config-driven e2e tests for `@clankgsters/sync`.
 
 ```mermaid
 flowchart TD
-  testCaseTs[TestCaseDefinition (.ts)] -->|seeding: definePrefabs(...)| prefabList[PrefabOrPresetList]
+  testCaseTs[case-config.ts per folder] -->|seeding: defineSeeding(...)| prefabList[BlueprintOrMainList]
   harness[E2EHarness] --> caseLoop[SortedCaseLoop]
   caseLoop --> caseDir[CaseDirBuilder]
   caseDir --> runner[runOneE2eCase]
   prefabList --> runner
   runner --> sandboxRoot[case-N-name sandbox root]
-  runner --> prefabEngine[PrefabEngine applySequentially]
+  runner --> prefabEngine[prefabOrchestration.applySeeding]
   prefabEngine --> generatedTree[Generated sandbox contents]
   generatedTree --> clearRun[clankgsters-sync:clear]
   clearRun --> syncRun[clankgsters-sync:run]
@@ -21,10 +21,10 @@ flowchart TD
 
 ## What they do
 
-- Build each sandbox dynamically from prefab/preset classes under `scripts/prefabs/`.
+- Build each sandbox dynamically from prefab mains and blueprints under `scripts/prefabs/`.
 - Inject per-case config into generated sandbox `clankgsters.config.ts`.
 - Run clear then sync for each case against `CLANKGSTERS_REPO_ROOT=<case>`.
-- Compare expected fixture JSON in `scripts/test-cases/*.json` with generated manifest output.
+- Compare expected fixtures `case-sync-manifest.json` and `case-file-structure.json` in each `scripts/test-cases/<caseId>/` folder with generated output.
 - Keep all case outputs under `sandboxes/.e2e-tests.run-results/case-{num}-{name}/` for inspection.
 
 ## Run
@@ -38,7 +38,7 @@ From repository root:
 From this package:
 
 - `pnpm test`
-- `tsx scripts/e2e-tests.run.harness.ts [case-name]`
+- `tsx scripts/e2e-tests.run.harness.ts [caseId]`
 - `tsx scripts/e2e-tests.clear.ts`
 - `tsx scripts/e2e-tests.sync-fixtures.ts`
 
@@ -46,5 +46,5 @@ From this package:
 
 - Run `pnpm e2e-tests:run` to generate per-case outputs under `.e2e-tests.run-results`.
 - Inspect case output directories to confirm generated trees/manifests.
-- Run `pnpm e2e-tests:sync-fixtures` to copy manifests into `scripts/test-cases/*.json`.
+- Run `pnpm e2e-tests:sync-fixtures` to copy manifests and file-structure snapshots into each case folder.
 - Re-run `pnpm e2e-tests:run` until green.

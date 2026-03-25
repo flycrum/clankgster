@@ -1,7 +1,7 @@
 import { clankgstersConfigDefaults } from '../../../../clankgsters-sync/config/index.js';
-import { MarkdownContextFileNamePrefab } from '../markdown-context-file-name.prefab.js';
-import { PrefabPresetBase } from '../common/prefab-preset-base.js';
-import type { PrefabExecutable } from '../common/prefab-types.js';
+import { PrefabBlueprintBase } from '../prefab-blueprint-base.js';
+import type { PrefabMainBase } from '../prefab-main-base.js';
+import { MarkdownContextFileNamePrefabMain } from '../prefabs/markdown-context-file-name-prefab/prefab-main.js';
 
 export type MarkdownScenarioMode =
   | 'root-only'
@@ -9,15 +9,15 @@ export type MarkdownScenarioMode =
   | 'root-and-nested-1'
   | 'root-and-multi-nested';
 
-export interface MarkdownContextScenarioPresetOptions {
+export interface MarkdownContextScenarioPrefabPresetOptions {
   fileContentsByPath?: Record<string, string>;
   markdownContextFileName?: string;
   scenarioMode?: MarkdownScenarioMode;
 }
 
 /** Creates markdown context files for common root/nested topology scenarios. */
-export class MarkdownContextScenarioPreset extends PrefabPresetBase<MarkdownContextScenarioPresetOptions> {
-  protected override createPrefabs(): PrefabExecutable[] {
+export class MarkdownContextScenarioPrefabPreset extends PrefabBlueprintBase<MarkdownContextScenarioPrefabPresetOptions> {
+  override createPrefabMains(): PrefabMainBase<object>[] {
     const fileName =
       this.options.markdownContextFileName ??
       clankgstersConfigDefaults.CONSTANTS.sourceDefaults.markdownContextFileName;
@@ -36,10 +36,10 @@ export class MarkdownContextScenarioPreset extends PrefabPresetBase<MarkdownCont
     const includeRoot =
       mode === 'root-only' || mode === 'root-and-nested-1' || mode === 'root-and-multi-nested';
 
-    const prefabs: PrefabExecutable[] = [];
+    const prefabs: PrefabMainBase<object>[] = [];
     if (includeRoot) {
       prefabs.push(
-        new MarkdownContextFileNamePrefab(this.sandboxDirectoryName, {
+        new MarkdownContextFileNamePrefabMain(this.sandboxDirectoryName, {
           fileContents: this.options.fileContentsByPath?.['/'] ?? '# root context\n',
           fileName,
           parentPaths: [],
@@ -48,7 +48,7 @@ export class MarkdownContextScenarioPreset extends PrefabPresetBase<MarkdownCont
     }
     for (const parentPaths of nestedParentSets) {
       prefabs.push(
-        new MarkdownContextFileNamePrefab(this.sandboxDirectoryName, {
+        new MarkdownContextFileNamePrefabMain(this.sandboxDirectoryName, {
           fileContents:
             this.options.fileContentsByPath?.[`/${parentPaths.join('/')}`] ??
             `# nested context ${parentPaths.join('/')}\n`,

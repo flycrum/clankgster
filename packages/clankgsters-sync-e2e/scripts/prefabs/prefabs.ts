@@ -1,91 +1,104 @@
-import { AgentPluginJsonPrefab } from './agent-plugin-json.prefab.js';
-import { PrefabBase } from './common/prefab-base.js';
-import { PrefabPresetBase } from './common/prefab-preset-base.js';
-import type { PrefabApplyContext, PrefabExecutable } from './common/prefab-types.js';
-import { DirectoryPrefab } from './directory-prefab.js';
-import { FilePrefab } from './file-prefab.js';
-import { JsonFilePrefab } from './json-file-prefab.js';
-import { LocalMarketplaceNamePrefab } from './local-marketplace-name.prefab.js';
-import { MarkdownContextFileNamePrefab } from './markdown-context-file-name.prefab.js';
-import { MarkdownFilePrefab } from './markdown-file-prefab.js';
-import { PluginCommandMarkdownPrefab } from './plugin-command-markdown.prefab.js';
-import { PluginRuleMarkdownPrefab } from './plugin-rule-markdown.prefab.js';
-import { PluginSkillFilePrefab } from './plugin-skill-file.prefab.js';
-import { PluginsDirPrefab } from './plugins-dir.prefab.js';
-import { PluginsLocalDirPrefab } from './plugins-local-dir.prefab.js';
-import { DefaultSandboxPrefabPreset } from './presets/default-sandbox.prefab-preset.js';
-import { MarkdownContextScenarioPreset } from './presets/markdown-context-scenario.prefab-preset.js';
-import { PluginsSkillsScenarioPreset } from './presets/plugins-skills-scenario.prefab-preset.js';
-import { SourceLayoutVariantsPreset } from './presets/source-layout-variants.prefab-preset.js';
-import { SkillFileNamePrefab } from './skill-file-name.prefab.js';
-import { SkillsDirPrefab } from './skills-dir.prefab.js';
-import { SkillsLocalDirPrefab } from './skills-local-dir.prefab.js';
-import { SourceDirPrefab } from './source-dir.prefab.js';
+import { PrefabBlueprintBase } from './prefab-blueprint-base.js';
+import { DefaultSandboxPrefabBlueprint } from './prefab-blueprints/default-sandbox.prefab-blueprint.js';
+import { MarkdownContextScenarioPrefabBlueprint } from './prefab-blueprints/markdown-context-scenario.prefab-blueprint.js';
+import { PluginsSkillsScenarioPrefabBlueprint } from './prefab-blueprints/plugins-skills-scenario.prefab-blueprint.js';
+import { SourceLayoutVariantsPrefabBlueprint } from './prefab-blueprints/source-layout-variants.prefab-blueprint.js';
+import { PrefabMainBase } from './prefab-main-base.js';
+import { type TestCaseSeedingItem, prefabOrchestration } from './prefab-orchestration.js';
+import { PrefabPrepareBase } from './prefab-prepare-base.js';
+import { PrefabRunBase } from './prefab-run-base.js';
+import { AgentPluginJsonPrefabMain } from './prefabs/agent-plugin-json-prefab/prefab-main.js';
+import { DirectoryPrefabMain } from './prefabs/directory-prefab/prefab-main.js';
+import { FilePrefabMain } from './prefabs/file-prefab/prefab-main.js';
+import { JsonFilePrefabMain } from './prefabs/json-file-prefab/prefab-main.js';
+import { LocalMarketplaceNamePrefabMain } from './prefabs/local-marketplace-name-prefab/prefab-main.js';
+import { MarkdownContextFileNamePrefabMain } from './prefabs/markdown-context-file-name-prefab/prefab-main.js';
+import { MarkdownFilePrefabMain } from './prefabs/markdown-file-prefab/prefab-main.js';
+import { PluginCommandMarkdownPrefabMain } from './prefabs/plugin-command-markdown-prefab/prefab-main.js';
+import { PluginRuleMarkdownPrefabMain } from './prefabs/plugin-rule-markdown-prefab/prefab-main.js';
+import { PluginSkillFilePrefabMain } from './prefabs/plugin-skill-file-prefab/prefab-main.js';
+import { PluginsDirPrefabMain } from './prefabs/plugins-dir-prefab/prefab-main.js';
+import { PluginsLocalDirPrefabMain } from './prefabs/plugins-local-dir-prefab/prefab-main.js';
+import { SkillFileNamePrefabMain } from './prefabs/skill-file-name-prefab/prefab-main.js';
+import { SkillsDirPrefabMain } from './prefabs/skills-dir-prefab/prefab-main.js';
+import { SkillsLocalDirPrefabMain } from './prefabs/skills-local-dir-prefab/prefab-main.js';
+import { SourceDirPrefabMain } from './prefabs/source-dir-prefab/prefab-main.js';
+import type { PrefabApplyContext } from './prefab-types.js';
 
-/** Registry list of concrete prefab classes available to test cases. */
-const PREFAB_CLASSES = [
-  AgentPluginJsonPrefab,
-  DirectoryPrefab,
-  FilePrefab,
-  JsonFilePrefab,
-  LocalMarketplaceNamePrefab,
-  MarkdownContextFileNamePrefab,
-  MarkdownFilePrefab,
-  PluginCommandMarkdownPrefab,
-  PluginRuleMarkdownPrefab,
-  PluginsDirPrefab,
-  PluginsLocalDirPrefab,
-  PluginSkillFilePrefab,
-  SkillFileNamePrefab,
-  SkillsDirPrefab,
-  SkillsLocalDirPrefab,
-  SourceDirPrefab,
+/** Registry list of concrete prefab main classes available to test cases. */
+const PREFAB_MAIN_CLASSES = [
+  AgentPluginJsonPrefabMain,
+  DirectoryPrefabMain,
+  FilePrefabMain,
+  JsonFilePrefabMain,
+  LocalMarketplaceNamePrefabMain,
+  MarkdownContextFileNamePrefabMain,
+  MarkdownFilePrefabMain,
+  PluginCommandMarkdownPrefabMain,
+  PluginRuleMarkdownPrefabMain,
+  PluginsDirPrefabMain,
+  PluginsLocalDirPrefabMain,
+  PluginSkillFilePrefabMain,
+  SkillFileNamePrefabMain,
+  SkillsDirPrefabMain,
+  SkillsLocalDirPrefabMain,
+  SourceDirPrefabMain,
 ] as const;
 
-/** Registry list of concrete prefab preset classes available to test cases. */
-const PREFAB_PRESET_CLASSES = [
-  DefaultSandboxPrefabPreset,
-  MarkdownContextScenarioPreset,
-  PluginsSkillsScenarioPreset,
-  SourceLayoutVariantsPreset,
+/** Registry list of concrete prefab blueprint classes available to test cases. */
+const PREFAB_BLUEPRINT_CLASSES = [
+  DefaultSandboxPrefabBlueprint,
+  MarkdownContextScenarioPrefabBlueprint,
+  PluginsSkillsScenarioPrefabBlueprint,
+  SourceLayoutVariantsPrefabBlueprint,
 ] as const;
 
 /** Shared prefab API surface and registries for e2e seeding. */
 export const prefabs = {
-  PREFAB_CLASSES,
-  PREFAB_PRESET_CLASSES,
+  PREFAB_BLUEPRINT_CLASSES,
+  PREFAB_MAIN_CLASSES,
 
-  /** Runs prefab/preset instances sequentially for one case context. */
-  applySequentially(executables: PrefabExecutable[], context: PrefabApplyContext): void {
-    for (const executable of executables) {
-      executable.apply(context);
-    }
+  /** Runs blueprint/main seeding: prepare → resolve → run for each expanded slot. */
+  applySequentially(items: TestCaseSeedingItem[], context: PrefabApplyContext): void {
+    prefabOrchestration.applySeeding(context, items);
   },
 } as const;
 
 export {
-  AgentPluginJsonPrefab,
-  DefaultSandboxPrefabPreset,
-  DirectoryPrefab,
-  FilePrefab,
-  JsonFilePrefab,
-  LocalMarketplaceNamePrefab,
-  MarkdownContextFileNamePrefab,
-  MarkdownContextScenarioPreset,
-  MarkdownFilePrefab,
-  PluginCommandMarkdownPrefab,
-  PluginRuleMarkdownPrefab,
-  PluginsDirPrefab,
-  PluginSkillFilePrefab,
-  PluginsLocalDirPrefab,
-  PluginsSkillsScenarioPreset,
-  PrefabBase,
-  PrefabPresetBase,
-  SkillFileNamePrefab,
-  SkillsDirPrefab,
-  SkillsLocalDirPrefab,
-  SourceDirPrefab,
-  SourceLayoutVariantsPreset,
+  AgentPluginJsonPrefabMain,
+  DefaultSandboxPrefabBlueprint,
+  DirectoryPrefabMain,
+  FilePrefabMain,
+  JsonFilePrefabMain,
+  LocalMarketplaceNamePrefabMain,
+  MarkdownContextFileNamePrefabMain,
+  MarkdownContextScenarioPrefabBlueprint,
+  MarkdownFilePrefabMain,
+  PluginCommandMarkdownPrefabMain,
+  PluginRuleMarkdownPrefabMain,
+  PluginsDirPrefabMain,
+  PluginSkillFilePrefabMain,
+  PluginsLocalDirPrefabMain,
+  PluginsSkillsScenarioPrefabBlueprint,
+  prefabOrchestration,
+  PrefabBlueprintBase,
+  PrefabMainBase,
+  PrefabPrepareBase,
+  PrefabRunBase,
+  SkillFileNamePrefabMain,
+  SkillsDirPrefabMain,
+  SkillsLocalDirPrefabMain,
+  SourceDirPrefabMain,
+  SourceLayoutVariantsPrefabBlueprint,
 };
 
-export type { PrefabApplyContext, PrefabExecutable } from './common/prefab-types.js';
+export type { TestCaseSeedingItem } from './prefab-orchestration.js';
+export type {
+  PrefabApplyContext,
+  PrefabPrepareAction,
+  PrefabPrepareEntry,
+  PrefabPrepareGroup,
+  PrefabPrepareOverlayOptions,
+  PrefabsPrepareConfig,
+  ResolvedPrefabsPrepareConfig,
+} from './prefab-types.js';

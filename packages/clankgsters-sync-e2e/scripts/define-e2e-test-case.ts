@@ -1,8 +1,5 @@
 import type { ClankgstersConfig } from '../../clankgsters-sync/config/index.js';
-import type { PrefabBase, PrefabPresetBase } from './prefabs/prefabs.js';
-
-/** Supported seeding item types for one test case. */
-export type PrefabLike = PrefabBase<any> | PrefabPresetBase<any>;
+import type { TestCaseSeedingItem } from './prefabs/prefab-orchestration.js';
 
 export interface E2eTestCaseDefinition {
   /** Partial config serialized into the sandbox `clankgsters.config.ts`. */
@@ -11,8 +8,8 @@ export interface E2eTestCaseDefinition {
   description: string;
   /** Path to the expected manifest JSON fixture, relative to this package root. */
   jsonPath: string;
-  /** Ordered prefab/preset instances that seed the dynamic sandbox before sync runs. */
-  seeding: PrefabLike[];
+  /** Ordered blueprint/main instances that seed the dynamic sandbox before sync runs. */
+  seeding: TestCaseSeedingItem[];
 }
 
 export const e2eTestCase = {
@@ -20,8 +17,8 @@ export const e2eTestCase = {
   define(definition: E2eTestCaseDefinition): E2eTestCaseDefinition {
     return definition;
   },
-  /** Returns the input list unchanged while enforcing prefab/preset union typing at call sites. */
-  definePrefabs(prefabs: PrefabLike[]): PrefabLike[] {
-    return prefabs;
+  /** Returns the input list unchanged while enforcing seeding typing at call sites. */
+  defineSeeding(seeding: TestCaseSeedingItem[]): TestCaseSeedingItem[] {
+    return seeding;
   },
 };

@@ -1,5 +1,5 @@
 /**
- * CLI harness for package-local e2e cases: discovers modules under `scripts/test-cases/`,
+ * CLI harness for package-local e2e cases: discovers nested `case-config.ts` under `scripts/test-cases/`,
  * runs them through `runOneE2eTestsCase`, and exits with status 1 when any case fails.
  */
 import chalk from 'chalk';
@@ -11,10 +11,10 @@ import { e2eTestsPaths } from './e2e-tests.paths.js';
 import { printLine } from './utils/print-line.js';
 
 /**
- * Runs the e2e loop: optional `process.argv[2]` selects a single `<name>` so only
- * `test-cases/<name>.ts` runs; otherwise every `*.ts` case in `scripts/test-cases/` runs in order.
+ * Runs the e2e loop: optional `process.argv[2]` selects a single `<caseId>` so only
+ * `test-cases/<caseId>/case-config.ts` runs; otherwise every discovered case runs in order.
  *
- * Each case uses `sandboxes/.e2e-tests.run-results/case-{n}-{name}` as its dedicated output root.
+ * Each case uses `sandboxes/.e2e-tests.run-results/case-{n}-{caseId}` as its dedicated output root.
  *
  * Invariants:
  * - Deletes `sandboxes/.e2e-tests.run-results` once at harness start so each invocation begins from a clean tree.
@@ -26,12 +26,9 @@ async function main(): Promise<void> {
   const repoRoot = path.resolve(packageRoot, '..', '..');
   const testCasesDir = e2eTestsPaths.getTestCasesRoot(scriptDir);
   const caseNameArg = process.argv[2];
-  const testCases = fs
-    .readdirSync(testCasesDir)
-    .filter((name) => name.endsWith('.ts') && !name.endsWith('.d.ts'))
-    .sort((left, right) => left.localeCompare(right));
+  const discovered = e2eTestsPaths.discoverCases(testCasesDir);
   const selectedCases =
-    caseNameArg != null ? testCases.filter((name) => name === `${caseNameArg}.ts`) : testCases;
+    caseNameArg != null ? discovered.filter((entry) => entry.caseId === caseNameArg) : discovered;
 
   if (selectedCases.length === 0) {
     console.error(chalk.red('No e2e test cases found.'));
@@ -44,27 +41,27 @@ async function main(): Promise<void> {
   fs.mkdirSync(e2eTestsResultsRoot, { recursive: true });
 
   let failures = 0;
-  for (const [offset, testCaseFile] of selectedCases.entries()) {
+  for (const [offset, { caseConfigPath, caseDir, caseId }] of selectedCases.entries()) {
     const caseIndex = offset + 1;
-    const name = testCaseFile.replace(/\.ts$/, '');
-    const caseDirectoryName = e2eTestsPaths.formatCaseDirectoryName(caseIndex, name);
+    const caseDirectoryName = e2eTestsPaths.formatCaseDirectoryName(caseIndex, caseId);
     const caseOutputRoot = path.join(e2eTestsResultsRoot, caseDirectoryName);
     const result = await runOneE2eTestsCase({
       caseIndex,
       caseOutputRoot,
-      expectedManifestPath: path.join(testCasesDir, `${name}.json`),
-      name,
+      expectedFileStructurePath: path.join(caseDir, e2eTestsPaths.CASE_FILE_STRUCTURE_FIXTURE_NAME),
+      expectedManifestPath: path.join(caseDir, e2eTestsPaths.CASE_SYNC_MANIFEST_FIXTURE_NAME),
+      name: caseId,
       packageRoot,
       repoRoot,
-      testCaseTsPath: path.join(testCasesDir, testCaseFile),
+      testCaseTsPath: caseConfigPath,
     });
     if (result.passed) {
-      console.log(printLine.success(`${name} passed -> ${path.resolve(result.sandboxRoot)}`));
+      console.log(printLine.success(`${caseId} passed -> ${path.resolve(result.sandboxRoot)}`));
       continue;
     }
 
     failures += 1;
-    console.log(printLine.error(`${name} failed -> ${path.resolve(result.sandboxRoot)}`));
+    console.log(printLine.error(`${caseId} failed -> ${path.resolve(result.sandboxRoot)}`));
     for (const errorLine of result.errorLines) console.log(errorLine);
   }
 

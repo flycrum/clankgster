@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { clankgstersIdentity } from '../../clankgsters-sync/config/index.js';
 import type { E2eTestCaseDefinition } from './define-e2e-test-case.js';
 import { e2eTestsPaths } from './e2e-tests.paths.js';
+import { fileStructureFixture } from './utils/file-structure-fixture.js';
 import { printLine } from './utils/print-line.js';
 
 function getManifestPathForCase(sandboxRoot: string, testCase: E2eTestCaseDefinition): string {
@@ -25,33 +26,44 @@ function getManifestPathForCase(sandboxRoot: string, testCase: E2eTestCaseDefini
   return path.join(sandboxRoot, clankgstersIdentity.defaultSyncManifestRelativePath);
 }
 
-/** Copies generated manifests from `.e2e-tests.run-results` back into `scripts/test-cases/*.json` fixtures. */
+/** Copies generated manifests and file-structure snapshots back into each `scripts/test-cases/<id>/` folder. */
 async function main(): Promise<void> {
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const packageRoot = path.resolve(scriptDir, '..');
   const testCasesDir = e2eTestsPaths.getTestCasesRoot(scriptDir);
   const resultsRoot = e2eTestsPaths.getResultsRoot(packageRoot);
-  const caseFiles = fs
-    .readdirSync(testCasesDir)
-    .filter((name) => name.endsWith('.ts') && !name.endsWith('.d.ts'))
-    .sort((left, right) => left.localeCompare(right));
+  const cases = e2eTestsPaths.discoverCases(testCasesDir);
 
-  for (const [offset, caseFile] of caseFiles.entries()) {
+  for (const [offset, { caseConfigPath, caseDir, caseId }] of cases.entries()) {
     const caseIndex = offset + 1;
-    const caseName = caseFile.replace(/\.ts$/, '');
-    const caseDirName = e2eTestsPaths.formatCaseDirectoryName(caseIndex, caseName);
+    const caseDirName = e2eTestsPaths.formatCaseDirectoryName(caseIndex, caseId);
     const caseOutputRoot = path.join(resultsRoot, caseDirName);
     const sandboxRoot = caseOutputRoot;
-    const imported = await import(pathToFileURL(path.join(testCasesDir, caseFile)).href);
+    const imported = await import(pathToFileURL(caseConfigPath).href);
     const testCase = imported.testCase as E2eTestCaseDefinition;
     const manifestPath = getManifestPathForCase(sandboxRoot, testCase);
     if (!fs.existsSync(manifestPath)) {
-      throw new Error(`manifest not found for ${caseName}: ${manifestPath}`);
+      throw new Error(`manifest not found for ${caseId}: ${manifestPath}`);
     }
-    const targetFixturePath = path.join(testCasesDir, `${caseName}.json`);
+    const targetManifestFixturePath = path.join(
+      caseDir,
+      e2eTestsPaths.CASE_SYNC_MANIFEST_FIXTURE_NAME
+    );
     const value = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as unknown;
-    fs.writeFileSync(targetFixturePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
-    console.log(printLine.success(`fixture synced: ${targetFixturePath}`));
+    fs.writeFileSync(targetManifestFixturePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+    console.log(printLine.success(`fixture synced: ${targetManifestFixturePath}`));
+
+    const targetFileStructureFixturePath = path.join(
+      caseDir,
+      e2eTestsPaths.CASE_FILE_STRUCTURE_FIXTURE_NAME
+    );
+    const snapshot = fileStructureFixture.buildSnapshot(sandboxRoot);
+    fs.writeFileSync(
+      targetFileStructureFixturePath,
+      `${JSON.stringify(snapshot, null, 2)}\n`,
+      'utf8'
+    );
+    console.log(printLine.success(`fixture synced: ${targetFileStructureFixturePath}`));
   }
 }
 

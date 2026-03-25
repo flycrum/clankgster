@@ -1,19 +1,19 @@
-# E2E prefabs and presets
+# E2E prefabs and blueprints
 
 Dynamic seeding for e2e sandboxes.
 
-- Prefabs are class instances that create one or more files/dirs in a case sandbox
-- Presets are class instances that expand into ordered prefab lists
-- Both use constructor signature: `(sandboxDirectoryName, options)`; pass `''` to seed directly into the case output root
-- `PrefabBase` exposes protected fs/path helpers so subclasses stay focused on scenario intent
+- **Prefab mains** (`prefabs/<name>-prefab/prefab-main.ts`) wire a prepare class and a run class; test cases and blueprints instantiate mains, not prepare/run directly
+- **Blueprints** (`prefab-blueprints/*.prefab-blueprint.ts`) expand to ordered prefab main lists; optional `getPrepareOverlay()` adjusts append/replace and `replaceRoots` for expanded mains
+- Constructor shape: `(sandboxDirectoryName, options)`; pass `''` to seed into the case output root
+- `PrefabRunBase` exposes protected fs/path helpers for run implementations
 
 Use exports from `scripts/prefabs/prefabs.ts`.
 
 Example:
 
 ```ts
-seeding: e2eTestCase.definePrefabs([
-  new PluginsSkillsScenarioPreset('', { scenarioMode: 'root-only' }),
-  new MarkdownContextScenarioPreset('', { scenarioMode: 'root-and-nested-1' }),
-]);
+seeding: e2eTestCase.defineSeeding([
+  new PluginsSkillsScenarioPrefabBlueprint('', { scenarioMode: 'root-only' }),
+  new MarkdownContextScenarioPrefabBlueprint('', { scenarioMode: 'root-and-nested-1' }),
+]),
 ```
