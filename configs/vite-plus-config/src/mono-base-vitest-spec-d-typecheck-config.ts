@@ -1,5 +1,5 @@
 /**
- * Optional Vitest `typecheck` include for `*.spec-d.ts` pattern tests (same idea as @mmaappss/vitest-config).
+ * Optional Vitest `typecheck` include for `*.spec-d.ts` pattern tests.
  * Merge into `defineConfig` beside `monoBaseVitestNodeConfig` when a package uses that convention.
  */
 export const monoBaseVitestSpecDTypecheckConfig = {

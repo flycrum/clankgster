@@ -1,0 +1,21 @@
+import type { ClankgstersAgentConfig } from '../../configs/clankgsters-config.schema.js';
+import { cursorAgentPresetConfig } from './cursor-agent-preset.config.js';
+
+const { CONSTANTS } = cursorAgentPresetConfig;
+
+/** Default Cursor preset behaviors for sync runs. */
+export const cursorAgentPreset: ClankgstersAgentConfig = {
+  enabled: true,
+  behaviors: [
+    { enabled: true, behaviorName: 'SkillsDirectorySyncPreset', options: {} },
+    {
+      enabled: true,
+      behaviorName: 'PluginsDirectorySyncPreset',
+      options: {
+        customHandler: {},
+        requiredManifestKey: CONSTANTS.AGENT_SETTINGS_MANIFEST_KEY,
+        targetRoot: CONSTANTS.PLUGINS_DIRECTORY_TARGET_ROOT,
+      },
+    },
+  ],
+};

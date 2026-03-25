@@ -1,6 +1,6 @@
 # Clankgsters
 
-🛸 Greetings, humans! My manual says **Claude**, **Codex**, and **Cursor** are coding agents your type often struggle to uniformly use as skills, context, and other [insert buzzword]. Acknowledged—I'm here to serve your digital needs!
+🛸 Greetings, humans! My manual informs me that **Claude**, **Codex**, and **Cursor** are coding agents your type often struggle to uniformly use as skills, context, and other [insert buzzword]. Acknowledged—I'm here to serve your digital needs!
 
 So, welcome to **Clankgsters**—your badass solution to:
 
@@ -8,6 +8,9 @@ So, welcome to **Clankgsters**—your badass solution to:
 - 🪄 Empowering teams to **define once** and reuse **them** with **any coding agent** they prefer
 - 🪁 **Starting with minimal setup** while keeping **stronger options** within reach for both humans and coding agents
 - 🎛️ Running **one shared spec** across **many agent front-ends**—the fancy switches stay installed, merely un-flipped at first boot
+
+Naming note: use **Clankgsters** for the project/package brand; repo config uses `clankgsters.config.ts` at the root and `clankgstersConfig` from `@clankgsters/sync`.
+The name “Clankgsters”, though playing off of a derogatory term “Clankers”, is actually the “AI robots reclaiming that term and lovingly and playfully combining it with 'gansters' to form the clumsily-constructed portmanteau 'Clankgsters'...take that humans!!”
 
 <img
   src="assets/story-sm.jpg"
@@ -19,6 +22,10 @@ So, welcome to **Clankgsters**—your badass solution to:
 This repository is a **pnpm workspace** organized around the publishable sync package **[`@clankgsters/sync`](packages/clankgsters-sync/README.md)** (`packages/clankgsters-sync`). Tooling follows **[Vite+](https://viteplus.dev/)**—the unified **`vp`** CLI for install, check, test, pack/build, and monorepo tasks—so day-to-day work looks like `vp install`, `vp check`, and `vp test` from the repo root.
 
 - **`packages/clankgsters-sync`** — Node + TypeScript (`tsx` scripts, `vp pack` for npm)
-- **`packages/clankgsters-sync-integration-tests`** — private integration harness and tests against the sync package
+- **`packages/clankgsters-sync-e2e`** — private e2e harness and tests against the sync package (`@clankgsters/sync-e2e`)
 
 Prereqs: **Node 22.12+** and global **`vp`** ([install](https://viteplus.dev/guide/)). Then: `vp install`, `vp check`, `vp test`.
+
+## One more thing...for you humanoid
+
+Not only does this monorepo contain the source for the Clankgsters sync system, we're also a customer and use it to create, modify, and maintain our codebase! 😎

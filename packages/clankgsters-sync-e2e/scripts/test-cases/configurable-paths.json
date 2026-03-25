@@ -1,0 +1,13 @@
+{
+  "claude": {
+    "MarkdownSymlinkSyncPreset": {
+      "options": {
+        "sourceFile": "YOYO.md",
+        "targetFile": "CLAUDE.md",
+        "gitignoreComment": "\n# clankgsters-sync: symlinked from AGENTS.md for Claude\n",
+        "gitignoreEntry": "CLAUDE.md"
+      },
+      "symlinks": ["CLAUDE.md", "packages/app/CLAUDE.md"]
+    }
+  }
+}

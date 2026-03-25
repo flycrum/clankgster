@@ -47,3 +47,7 @@ jobs:
 
       - name: Build sync package and run workspace tests
         run: vp run @clankgsters/sync#build && vp run -r test
+
+      - name: Sync e2e harness (sandbox + manifest)
+        # Use vp run — setup-vp does not put `pnpm` on PATH (unlike local shells with Corepack/pnpm)
+        run: vp run @clankgsters/sync-e2e#test:e2e

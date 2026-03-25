@@ -8,7 +8,12 @@
     "url": "https://github.com/flycrum/clankgsters.git",
     "directory": "packages/clankgsters-sync"
   },
+  "bin": {
+    "clankgsters-sync": "./bin/clankgsters-sync.mjs"
+  },
   "files": [
+    "bin",
+    "config",
     "dist",
     "scripts"
   ],
@@ -23,17 +28,27 @@
   "scripts": {
     "build": "vp pack",
     "check": "vp check",
+    "clankgsters-sync:clear": "tsx scripts/clankgsters-sync.clear.ts",
+    "clankgsters-sync:run": "tsx scripts/clankgsters-sync.run.ts",
     "dev": "vp pack --watch",
-    "sync:hello": "tsx scripts/hello.ts",
-    "test": "vp test",
-    "prepublishOnly": "vp pack"
+    "prepublishOnly": "vp pack",
+    "test": "vp test"
+  },
+  "dependencies": {
+    "@types/lodash-es": "catalog:",
+    "chalk": "catalog:",
+    "lodash-es": "catalog:",
+    "neverthrow": "catalog:",
+    "pino": "catalog:",
+    "tsx": "^4.19.0",
+    "xstate": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@clankgsters/typescript-config": "workspace:*",
     "@clankgsters/vite-plus-config": "workspace:*",
     "@types/node": "catalog:",
     "@typescript/native-preview": "7.0.0-dev.20260316.1",
-    "tsx": "^4.19.0",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },
