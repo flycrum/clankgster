@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -22,14 +22,32 @@ export const npmPackFilesToLintGlobs = {
     const { files } = JSON.parse(readFileSync(join(packageRoot, 'package.json'), 'utf8')) as {
       files: string[];
     };
-    return this.packFileSegmentsToLintGlobs(files);
+    return this.packFileSegmentsToLintGlobs(packageRoot, files);
   },
 
-  /** Maps npm `files` path segments to oxlint file globs. */
-  packFileSegmentsToLintGlobs(segments: readonly string[]): string[] {
+  /**
+   * Maps npm `files` path segments to oxlint `overrides[].files` globs, resolving each path under `packageRoot`.
+   * Directories get recursive `ts`/`tsx` globs (`bin` uses `mjs`/`ts`); regular files use the segment as a literal target.
+   */
+  packFileSegmentsToLintGlobs(packageRoot: string, segments: readonly string[]): string[] {
     const out: string[] = [];
     for (const segment of segments) {
       if (segment === 'dist') continue;
+      const absolute = join(packageRoot, segment);
+      let isDirectory = false;
+      let isFile = false;
+      try {
+        const st = statSync(absolute);
+        isDirectory = st.isDirectory();
+        isFile = st.isFile();
+      } catch {
+        isDirectory = true;
+      }
+      if (isFile) {
+        out.push(segment);
+        continue;
+      }
+      if (!isDirectory) continue;
       if (segment === 'bin') {
         out.push(`${segment}/**/*.{mjs,ts}`);
         continue;
