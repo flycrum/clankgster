@@ -54,4 +54,28 @@ describe('pathHelpers', () => {
       }
     });
   });
+
+  describe('isResolvedPathUnderRoot', () => {
+    it('accepts the root itself and nested paths', () => {
+      const root = path.resolve('/workspace/repo');
+      expect(pathHelpers.isResolvedPathUnderRoot(root, path.join(root, 'CLANK.md'))).toBe(true);
+      expect(pathHelpers.isResolvedPathUnderRoot(root, path.join(root, 'docs', 'guide.md'))).toBe(
+        true
+      );
+      expect(pathHelpers.isResolvedPathUnderRoot(root, root)).toBe(true);
+    });
+
+    it('rejects paths that escape via .. segments', () => {
+      const root = path.resolve('/workspace/repo');
+      const outside = path.resolve(root, '..', '..', 'etc', 'passwd');
+      expect(pathHelpers.isResolvedPathUnderRoot(root, outside)).toBe(false);
+    });
+
+    it('rejects absolute targets outside the root', () => {
+      const root = path.resolve('/workspace/repo');
+      expect(pathHelpers.isResolvedPathUnderRoot(root, path.resolve('/other/root/file.md'))).toBe(
+        false
+      );
+    });
+  });
 });

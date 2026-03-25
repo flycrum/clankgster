@@ -86,4 +86,16 @@ export const pathHelpers = {
   normalizePathForCompare(targetPath: string): string {
     return targetPath.replace(/\\/g, '/').replace(/\/+/g, '/').replace(/\/$/g, '');
   },
+
+  /**
+   * True when `resolvedTarget` is the output root or a path under it (both arguments should already be passed through `path.resolve`).
+   * Rejects `..` traversal and absolute `path.relative` results (e.g. different drive roots on Windows)
+   */
+  isResolvedPathUnderRoot(outputRoot: string, resolvedTarget: string): boolean {
+    const root = path.resolve(outputRoot);
+    const target = path.resolve(resolvedTarget);
+    const rel = path.relative(root, target);
+    if (rel.startsWith('..') || path.isAbsolute(rel)) return false;
+    return target === root || target.startsWith(root + path.sep);
+  },
 };
