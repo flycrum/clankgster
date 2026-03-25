@@ -2,6 +2,23 @@
 
 Config-driven e2e tests for `@clankgsters/sync`.
 
+## Target architecture
+
+```mermaid
+flowchart TD
+  testCaseTs[TestCaseDefinition (.ts)] -->|seeding: definePrefabs(...)| prefabList[PrefabOrPresetList]
+  harness[E2EHarness] --> caseLoop[SortedCaseLoop]
+  caseLoop --> caseDir[CaseDirBuilder]
+  caseDir --> runner[runOneE2eCase]
+  prefabList --> runner
+  runner --> sandboxRoot[case-N-name sandbox root]
+  runner --> prefabEngine[PrefabEngine applySequentially]
+  prefabEngine --> generatedTree[Generated sandbox contents]
+  generatedTree --> clearRun[clankgsters-sync:clear]
+  clearRun --> syncRun[clankgsters-sync:run]
+  syncRun --> manifestDiff[manifest + assertions]
+```
+
 ## What they do
 
 - Clone `sandboxes/sandbox-template/` into `sandboxes/.tests/current`.
