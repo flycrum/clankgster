@@ -29,7 +29,9 @@
 2. **Detect parent/base commit (`PARENT_SHA`)** (accuracy first; stop at first valid match)
 
    **Hard rule:** never choose the current branch tip as the parent.
-   - If `git rev-parse "$CAND_REF" == "$HEAD_SHA"`, skip that candidate
+   - If `git rev-parse "$CAND_REF" == "$HEAD_SHA"` (i.e. `CAND_SHA == HEAD_SHA`), skip that candidate
+
+   **Selection order:** (1) reflog → (2) naming heuristic (when applicable) → (3) `DEFAULT_SHA` → (4) ask human. Do not use `DEFAULT_SHA` until (1) and (2) have been tried and failed.
 
    a. **Reflog signals (highest confidence)**
    - Look at reflog for the current branch tip (newest first, bounded):
@@ -41,25 +43,25 @@
      - Prefer `refs/heads/X`
      - Else try `refs/remotes/origin/X`
      - Else skip
-   - Validate candidate commit:
-     - Compute `CAND_SHA=$(git rev-parse "$CAND_REF")`
-     - Require `git merge-base --is-ancestor "$CAND_SHA" "$HEAD_SHA"` (candidate must be an ancestor)
-     - Require `CAND_SHA != HEAD_SHA`
-   - Pick the first reflog candidate that passes all validations
+   - For each candidate in order, set `CAND_REF`, then `CAND_SHA=$(git rev-parse "$CAND_REF")`, then validate:
+     - `git merge-base --is-ancestor "$CAND_SHA" "$HEAD_SHA"`
+     - `CAND_SHA != HEAD_SHA`
+   - On first candidate that passes: set `PARENT_SHA="$CAND_SHA"` and stop this step.
 
-   b. **Default branch fallback**
-   - Consider `DEFAULT_SHA` as `PARENT_SHA` if:
-     - `DEFAULT_SHA` is an ancestor of `HEAD_SHA`
+   b. **Optional naming heuristic (only if `PARENT_SHA` not set and branch name has a ticket-like token)**
+   - If `CURRENT_BRANCH` matches `CG-####` (or other fixed convention tokens used in this repo), derive candidate branch name(s) from that token (e.g. same prefix, lower ticket number, or repo-specific rule).
+   - For each derived candidate, resolve `CAND_REF` / `CAND_SHA` the same way as reflog (local branch preferred, then `origin/`).
+   - Apply the same validation as (a): ancestor of `HEAD_SHA`, and `CAND_SHA != HEAD_SHA`.
+   - On first candidate that passes: set `PARENT_SHA="$CAND_SHA"` and stop.
+
+   c. **Default branch fallback (only if `PARENT_SHA` still not set)**
+   - Set `CAND_SHA="$DEFAULT_SHA"`.
+   - Use as `PARENT_SHA` only if:
+     - `git merge-base --is-ancestor "$DEFAULT_SHA" "$HEAD_SHA"`
      - `DEFAULT_SHA != HEAD_SHA`
 
-   c. **Optional naming heuristic (only if branch name contains a ticket-like token)**
-   - If `CURRENT_BRANCH` matches `CG-####` (or other fixed convention tokens used in this repo),
-     prefer a candidate local branch with the same prefix and a _lower_ number.
-   - Validate the same way as above (ancestor + not equal).
-   - If nothing passes, keep the `DEFAULT_SHA` result (if valid) or report inability to confidently detect a base.
-
    d. **If still uncertain**
-   - Fallback to `DEFAULT_SHA` if valid; otherwise stop and ask the caller to provide the base branch explicitly.
+   - If `PARENT_SHA` is still unset, stop and ask the caller to provide the base branch explicitly.
 
 3. **Gather compact evidence (fast path)**
    - `git diff --name-only "$PARENT_SHA...$HEAD_SHA"` -> `CHANGED_FILES`
