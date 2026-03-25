@@ -174,13 +174,14 @@ export const processAgentQueueMachine = setup({
     done: {
       type: 'final',
       output: ({ context }) => ({
-        manifest:
-          context.input.mode === 'clear'
-            ? context.outcomes.reduce<SyncManifest>((acc, outcome) => {
-                if (!outcome.success) return acc;
-                return syncManifest.clearAgent(acc, outcome.agent);
-              }, context.input.manifest)
-            : context.input.manifest,
+        manifest: context.outcomes.reduce<SyncManifest>((acc, outcome, index) => {
+          if (!outcome.success) return acc;
+          const queueItem = context.queue[index];
+          const effectiveMode: 'sync' | 'clear' =
+            queueItem?.config.enabled === false ? 'clear' : context.input.mode;
+          if (effectiveMode !== 'clear') return acc;
+          return syncManifest.clearAgent(acc, outcome.agent);
+        }, context.input.manifest),
         outcomes: context.outcomes,
       }),
     },
