@@ -1,6 +1,6 @@
 # Fill PR template from git diff vs parent branch
 
-**What it does:** Detect the most likely *parent/base* commit for the current branch, inspect the changes since that parent, and fill `.github/pull_request_template.md` with a copy-ready PR description for AI agents
+**What it does:** Detect the most likely _parent/base_ commit for the current branch, inspect the changes since that parent, and fill `.github/pull_request_template.md` with a copy-ready PR description for AI agents
 
 **Usage:** `/git-pr-fillout-template` -> detect parent -> gather evidence (diff/name/stat + commits) -> output completed PR description as markdown
 
@@ -54,7 +54,7 @@
 
    c. **Optional naming heuristic (only if branch name contains a ticket-like token)**
    - If `CURRENT_BRANCH` matches `CG-####` (or other fixed convention tokens used in this repo),
-     prefer a candidate local branch with the same prefix and a *lower* number.
+     prefer a candidate local branch with the same prefix and a _lower_ number.
    - Validate the same way as above (ancestor + not equal).
    - If nothing passes, keep the `DEFAULT_SHA` result (if valid) or report inability to confidently detect a base.
 
