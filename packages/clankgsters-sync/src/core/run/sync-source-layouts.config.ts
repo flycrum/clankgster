@@ -126,7 +126,10 @@ export const syncSourceLayoutsConfig = {
     normalizeRel: (value: string) => string
   ): string[] {
     const found = new Set<string>();
-    const segments = sourceDir.split('/').filter((segment) => segment.length > 0);
+    const segments = sourceDir
+      .replace(/\\/g, '/')
+      .split('/')
+      .filter((segment) => segment.length > 0);
     const excludedSet = new Set(excluded);
     if (segments.length === 0) return [];
 

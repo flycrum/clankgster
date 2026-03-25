@@ -30,7 +30,10 @@ export class LocalMarketplaceNameSeedingPrefab extends JsonFileSeedingPrefab {
     const marketplaceFilePath =
       options.marketplaceFilePath ??
       `${clankgstersIdentity.AGENT_CLAUDE_PLUGIN_DIR_NAME}/marketplace.json`;
-    const pathSegments = marketplaceFilePath.split('/').filter((segment) => segment.length > 0);
+    const pathSegments = marketplaceFilePath
+      .replace(/\\/g, '/')
+      .split('/')
+      .filter((segment) => segment.length > 0);
     const fileName = pathSegments.pop() ?? 'marketplace.json';
     super(sandboxDirectoryName, {
       fileName,
