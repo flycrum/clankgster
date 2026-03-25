@@ -231,7 +231,7 @@ export const processAgentBehaviorsMachine = setup({
         behaviorOutcomes: context.behaviorOutcomes,
         outcome: {
           agent: context.input.agentName,
-          success: true,
+          success: context.behaviorOutcomes.every((o) => o.success),
         },
       }),
     },
