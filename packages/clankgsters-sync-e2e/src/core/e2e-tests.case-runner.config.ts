@@ -1,7 +1,44 @@
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import { clankgstersIdentity } from '../../../clankgsters-sync/src/index.js';
 import type { E2eTestCaseDefinition } from './e2e-define-test-case.js';
+
+/**
+ * `stdio` tuple for quiet subprocess runs: ignore stdin, pipe stdout/stderr and drain them (no TTY echo, no buffer deadlock).
+ * Never `pipe()` these into `process.stdout` — default `pipe()` ends the destination when the child exits and can break the parent.
+ */
+const CHILD_STDIO_QUIET: ['ignore', 'pipe', 'pipe'] = ['ignore', 'pipe', 'pipe'];
+
+/**
+ * Spawns a child and resolves its exit code (`1` when `code` is null). Spawn failures resolve `1`. `Promise` ignores extra resolves if both `error` and `close` fire.
+ * @param inheritStdio - When `true`, uses `stdio: 'inherit'` (noisy). When `false`, uses {@link CHILD_STDIO_QUIET}.
+ */
+function spawnChildAwaitExit(
+  command: string,
+  args: readonly string[],
+  options: { cwd: string; env: NodeJS.ProcessEnv; inheritStdio: boolean }
+): Promise<number> {
+  return new Promise((resolve) => {
+    const attachExitHandlers = (child: ChildProcess) => {
+      child.once('error', () => resolve(1));
+      child.once('close', (code: number | null) => resolve(code ?? 1));
+    };
+    if (options.inheritStdio) {
+      attachExitHandlers(
+        spawn(command, args, { cwd: options.cwd, env: options.env, stdio: 'inherit' })
+      );
+      return;
+    }
+    const child = spawn(command, args, {
+      cwd: options.cwd,
+      env: options.env,
+      stdio: CHILD_STDIO_QUIET,
+    });
+    child.stdout?.on('data', () => {});
+    child.stderr?.on('data', () => {});
+    attachExitHandlers(child);
+  });
+}
 
 export interface RunOneE2eTestsCaseOptions {
   /** 1-based case index in alphabetical order. */
@@ -45,17 +82,20 @@ export const e2eTestsCaseRunnerConfig = {
   /** Args passed to `packageManagerCommand` for the sync run step. */
   scriptSyncRunArgs: ['clankgsters-sync:run'],
 
-  /** Spawns `command` with `args` in `cwd`, passes `env` to the child (stdio piped), and resolves with the process exit code (`1` if the code is null). */
+  /**
+   * Spawns `command` with `args` in `cwd`, passes `env` through, and resolves with the exit code (`1` if null).
+   * Default: quiet child stdio (see {@link spawnChildAwaitExit}). Set `CLANKGSTERS_E2E_CHILD_STDIO_INHERIT=1` or `true` for full child logs.
+   */
   runCommand(
     command: string,
     args: string[],
     cwd: string,
     env: NodeJS.ProcessEnv
   ): Promise<number> {
-    return new Promise((resolve) => {
-      const child = spawn(command, args, { cwd, env, stdio: 'pipe' });
-      child.on('close', (code) => resolve(code ?? 1));
-    });
+    const inheritChildStdio =
+      process.env.CLANKGSTERS_E2E_CHILD_STDIO_INHERIT === '1' ||
+      process.env.CLANKGSTERS_E2E_CHILD_STDIO_INHERIT === 'true';
+    return spawnChildAwaitExit(command, args, { cwd, env, inheritStdio: inheritChildStdio });
   },
 
   /** Builds the on-disk contents for `clankgsters.config.ts`: a `const config = …` object literal plus `export default config`. */
