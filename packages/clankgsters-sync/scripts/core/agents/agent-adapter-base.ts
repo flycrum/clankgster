@@ -19,6 +19,17 @@ class LifecycleChain {
     return this;
   }
 
+  /**
+   * Always runs `step` (e.g. {@link AgentAdapterBase.syncTeardownAfter} in {@link AgentAdapterBase.runLifecycle}).
+   * If the chain already failed, the first `Err` is kept and `step`’s result is ignored so cleanup still runs but the primary failure is preserved
+   */
+  runAlways(step: () => Result<void, Error>): LifecycleChain {
+    const stepResult = step();
+    if (this.current.isErr()) return this;
+    this.current = stepResult;
+    return this;
+  }
+
   /** The composed result after all chained steps. */
   toResult(): Result<void, Error> {
     return this.current;
@@ -48,7 +59,10 @@ export class AgentAdapterBase {
     return ok(undefined);
   }
 
-  /** Executes setup → run → teardown in order, short-circuiting on the first `Err`. */
+  /**
+   * Runs {@link syncSetupBefore} then {@link syncRun} (short-circuit on first `Err`), then always {@link syncTeardownAfter}.
+   * Teardown runs even when setup or run failed; the returned `Result` is still the first failure from setup/run, or teardown’s `Err` if those succeeded
+   */
   runLifecycle(context: AgentLifecycleContext): Result<void, Error> {
     clankLogger
       .getLogger()
@@ -56,7 +70,7 @@ export class AgentAdapterBase {
     return new LifecycleChain()
       .run(() => this.syncSetupBefore(context))
       .run(() => this.syncRun(context))
-      .run(() => this.syncTeardownAfter(context))
+      .runAlways(() => this.syncTeardownAfter(context))
       .toResult();
   }
 }
