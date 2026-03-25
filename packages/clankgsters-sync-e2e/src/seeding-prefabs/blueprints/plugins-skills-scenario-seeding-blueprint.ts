@@ -2,16 +2,16 @@ import {
   clankgstersConfigDefaults,
   clankgstersIdentity,
 } from '../../../../clankgsters-sync/src/index.js';
-import { SeedingBlueprintBase } from '../seeding-blueprint-base.js';
-import type {
-  SeedingPrefabPrepareAction,
-  SeedingPrefabPrepareOverlayOptions,
-} from '../seeding-prefab-orchestration.types.js';
 import { AgentPluginJsonSeedingPrefab } from '../prefabs/agent-plugin-json-seeding-prefab.js';
 import { PluginCommandMarkdownSeedingPrefab } from '../prefabs/plugin-command-markdown-seeding-prefab.js';
 import { PluginRuleMarkdownSeedingPrefab } from '../prefabs/plugin-rule-markdown-seeding-prefab.js';
 import { PluginSkillFileSeedingPrefab } from '../prefabs/plugin-skill-file-seeding-prefab.js';
 import { SkillFileNameSeedingPrefab } from '../prefabs/skill-file-name-seeding-prefab.js';
+import { SeedingBlueprintBase } from '../seeding-blueprint-base.js';
+import type {
+  SeedingPrefabPrepareAction,
+  SeedingPrefabPrepareOverlayOptions,
+} from '../seeding-prefab-orchestration.types.js';
 
 /** Which plugin/skill tree shapes to include: root-only, nested-only, or both. */
 export type PluginsSkillsScenarioMode = 'root-only' | 'nested-only-1' | 'root-and-nested-1';
@@ -19,7 +19,7 @@ export type PluginsSkillsScenarioMode = 'root-only' | 'nested-only-1' | 'root-an
 export interface PluginsSkillsScenarioSeedingBlueprintOptions {
   /** When true (default), seed a plugin rule markdown file under the root plugin. */
   includeRootRules?: boolean;
-  /** When true (default), seed a standalone skill marker under the skills root. */
+  /** When true (default), seed a standalone skill marker under the skills root; ignored when `scenarioMode` is `nested-only-1`. */
   includeStandaloneSkill?: boolean;
   /** Overrides `sourceDefaults.pluginsDir` for plugin paths in this scenario. */
   pluginsDirName?: string;
@@ -146,7 +146,7 @@ export class PluginsSkillsScenarioSeedingBlueprint extends SeedingBlueprintBase<
         })
       );
     }
-    if (this.options.includeStandaloneSkill ?? true)
+    if ((this.options.includeStandaloneSkill ?? true) && mode !== 'nested-only-1')
       prefabs.push(
         new SkillFileNameSeedingPrefab(this.sandboxDirectoryName, {
           skillDirName: 'sample-skill',
