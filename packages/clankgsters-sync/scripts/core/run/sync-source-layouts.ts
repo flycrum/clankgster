@@ -24,9 +24,14 @@ export const syncSourceLayouts = {
     return value.replace(/\\/g, '/');
   },
 
+  /** Normalizes `sourceDir` for layout templates and discovery (POSIX, no trailing slashes). */
+  normalizeSourceDir(sourceDir: string): string {
+    return path.posix.normalize(this.normalizeRel(sourceDir)).replace(/\/+$/g, '');
+  },
+
   /** Resolves nested and shorthand layout path templates from `sourceDefaults`. */
   getResolvedSourcePath(defaults: ClankgstersSourceDefaultsConfig): ResolvedSourcePath {
-    const sourceDir = defaults.sourceDir.replace(/\/+$/g, '');
+    const sourceDir = this.normalizeSourceDir(defaults.sourceDir);
     const shorthandBase = syncSourceLayoutsConfig.sourceDirToShorthandBase(sourceDir);
     const pluginsLocalDir = `${defaults.pluginsDir}.local`;
     const skillsLocalDir = `${defaults.skillsDir}.local`;
@@ -51,9 +56,10 @@ export const syncSourceLayouts = {
   ): DiscoverSourceLayoutPathsResult {
     const excludedSet = new Set(input.excluded);
     const resolved = this.getResolvedSourcePath(input.sourceDefaults);
+    const sourceDir = this.normalizeSourceDir(input.sourceDefaults.sourceDir);
     const sourceRoots = syncSourceLayoutsConfig.findSourceRoots(
       input.repoRoot,
-      input.sourceDefaults.sourceDir,
+      sourceDir,
       input.excluded,
       (value) => this.normalizeRel(value)
     );
