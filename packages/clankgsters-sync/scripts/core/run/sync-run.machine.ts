@@ -75,6 +75,56 @@ export const syncRunMachine = setup({
         return { manifest: input.manifest, outcomes: output.outcomes };
       }
     ),
+    /** Discovery + manifest load (was synchronous `prepareManifestAndDiscovery`); errors surface via invoke `onError` → `failed`. */
+    prepareManifestAndDiscoveryActor: fromPromise(
+      async ({
+        input,
+      }: {
+        input: {
+          resolvedConfig: NonNullable<SyncRunMachineContext['resolvedConfig']>;
+          syncRunInput: SyncRunMachineInput;
+        };
+      }) => {
+        const { resolvedConfig, syncRunInput } = input;
+        const discoveryResult = syncDiscover.discoverMarketplaces({
+          agentNames: Object.keys(resolvedConfig.agents),
+          excluded: resolvedConfig.excluded,
+          repoRoot: syncRunInput.repoRoot,
+          sourceDefaults: resolvedConfig.sourceDefaults,
+        });
+        if (discoveryResult.isErr()) throw discoveryResult.error;
+        const manifestPath = syncManifest.getManifestPath(
+          syncRunInput.repoRoot,
+          resolvedConfig.syncManifestPath
+        );
+        const manifestResult = syncManifest.load(manifestPath);
+        if (manifestResult.isErr()) throw manifestResult.error;
+        observe(syncRunInput, 'sync.discovery', {
+          marketplacesCount: discoveryResult.value.length,
+        });
+        observe(syncRunInput, 'sync.persistManifest', { manifestPath });
+        return {
+          discoveredMarketplaces: discoveryResult.value,
+          manifest: manifestResult.value,
+        };
+      }
+    ),
+    /** Manifest write (was `persistManifest` entry action); errors surface via invoke `onError` → `failed`. */
+    persistManifestActor: fromPromise(
+      async ({
+        input,
+      }: {
+        input: {
+          manifest: SyncManifest;
+          repoRoot: string;
+          syncManifestPath: string;
+        };
+      }) => {
+        const manifestPath = syncManifest.getManifestPath(input.repoRoot, input.syncManifestPath);
+        const writeResult = syncManifest.write(manifestPath, input.manifest);
+        if (writeResult.isErr()) throw writeResult.error;
+      }
+    ),
   },
   actions: {
     initializeLogger: ({ context }) => {
@@ -82,43 +132,6 @@ export const syncRunMachine = setup({
         repoRoot: context.input.repoRoot,
       });
       observe(context.input, 'sync.boot');
-    },
-    prepareManifestAndDiscovery: assign(({ context }) => {
-      if (context.resolvedConfig == null) return {};
-      const discoveryResult = syncDiscover.discoverMarketplaces({
-        agentNames: Object.keys(context.resolvedConfig.agents),
-        excluded: context.resolvedConfig.excluded,
-        repoRoot: context.input.repoRoot,
-        sourceDefaults: context.resolvedConfig.sourceDefaults,
-      });
-      if (discoveryResult.isErr()) {
-        throw discoveryResult.error;
-      }
-      const manifestPath = syncManifest.getManifestPath(
-        context.input.repoRoot,
-        context.resolvedConfig.syncManifestPath
-      );
-      const manifestResult = syncManifest.load(manifestPath);
-      if (manifestResult.isErr()) {
-        throw manifestResult.error;
-      }
-      observe(context.input, 'sync.discovery', {
-        marketplacesCount: discoveryResult.value.length,
-      });
-      observe(context.input, 'sync.persistManifest', { manifestPath });
-      return {
-        discoveredMarketplaces: discoveryResult.value,
-        manifest: manifestResult.value,
-      };
-    }),
-    persistManifest: ({ context }) => {
-      if (context.resolvedConfig == null) return;
-      const manifestPath = syncManifest.getManifestPath(
-        context.input.repoRoot,
-        context.resolvedConfig.syncManifestPath
-      );
-      const writeResult = syncManifest.write(manifestPath, context.manifest);
-      if (writeResult.isErr()) throw writeResult.error;
     },
   },
 }).createMachine({
@@ -148,7 +161,7 @@ export const syncRunMachine = setup({
           repoRoot: context.input.repoRoot,
         }),
         onDone: {
-          target: 'runAgents',
+          target: 'prepareDiscovery',
           actions: [
             assign({
               resolvedConfig: ({ event }) =>
@@ -158,7 +171,6 @@ export const syncRunMachine = setup({
                   }
                 ).resolvedConfig,
             }),
-            'prepareManifestAndDiscovery',
             ({ context, event }) => {
               const output = event.output as {
                 resolvedConfig: NonNullable<SyncRunMachineContext['resolvedConfig']>;
@@ -175,6 +187,38 @@ export const syncRunMachine = setup({
               });
             },
           ],
+        },
+        onError: {
+          target: 'failed',
+          actions: assign({
+            errorMessage: ({ event }) => String(event.error),
+          }),
+        },
+      },
+    },
+    prepareDiscovery: {
+      invoke: {
+        src: 'prepareManifestAndDiscoveryActor',
+        input: ({ context }) => ({
+          resolvedConfig: context.resolvedConfig as NonNullable<
+            SyncRunMachineContext['resolvedConfig']
+          >,
+          syncRunInput: context.input,
+        }),
+        onDone: {
+          target: 'runAgents',
+          actions: assign({
+            discoveredMarketplaces: ({ event }) =>
+              (
+                event.output as {
+                  discoveredMarketplaces: SyncRunMachineContext['discoveredMarketplaces'];
+                  manifest: SyncManifest;
+                }
+              ).discoveredMarketplaces,
+            manifest: ({ event }) =>
+              (event.output as { discoveredMarketplaces: unknown; manifest: SyncManifest })
+                .manifest,
+          }),
         },
         onError: {
           target: 'failed',
@@ -220,9 +264,24 @@ export const syncRunMachine = setup({
       },
     },
     persistManifest: {
-      entry: 'persistManifest',
-      always: {
-        target: 'done',
+      invoke: {
+        src: 'persistManifestActor',
+        input: ({ context }) => ({
+          manifest: context.manifest,
+          repoRoot: context.input.repoRoot,
+          syncManifestPath: (
+            context.resolvedConfig as NonNullable<SyncRunMachineContext['resolvedConfig']>
+          ).syncManifestPath,
+        }),
+        onDone: {
+          target: 'done',
+        },
+        onError: {
+          target: 'failed',
+          actions: assign({
+            errorMessage: ({ event }) => String(event.error),
+          }),
+        },
       },
     },
     done: {

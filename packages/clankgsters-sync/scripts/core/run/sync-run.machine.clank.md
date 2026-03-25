@@ -4,6 +4,6 @@ Top-level sync session machine coordinating config resolution, agent execution, 
 
 ## Invariants
 
-- Stage flow is linear: boot -> resolveConfig -> runAgents -> persistManifest -> done/failed.
+- Stage flow is linear: boot -> resolveConfig -> prepareDiscovery -> runAgents -> persistManifest -> done/failed.
 - Child machine invocation boundaries are stable e2e observation points.
 - Observation callback is optional and test-focused.
