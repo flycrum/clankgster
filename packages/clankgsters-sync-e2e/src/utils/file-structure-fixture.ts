@@ -1,138 +1,31 @@
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  fileStructureFixtureConfig,
+  type FileStructureDiffModifiedEntry,
+  type FileStructureDiffResult,
+  type FileStructureFixture,
+  type FileStructureFixtureEntry,
+} from './file-structure-fixture.config.js';
 
-export type FileStructureEntryKind = 'dir' | 'file';
-
-/** Controls whether file-size metadata is compared in diffs. Keep `false` for now. */
-const ENABLE_META_SIZE_COMPARISON = false;
-
-/** Paths (POSIX, relative to snapshot root) whose bytes change every run — omit `hash` and skip hash diffs. */
-const UNSTABLE_FILE_HASH_PATHS = new Set(['.clank/logs/clankgsters-sync.log']);
-
-/**
- * Optional filesystem metadata captured for one fixture entry
- * @example
- * `{ mode: 16877 }`
- */
-export interface FileStructureEntryMeta {
-  /** POSIX stat mode number for permission/type bits (example: `33188` for a regular file). */
-  mode?: number;
-  // /** File size in bytes (example: `42`). Disabled for now to avoid size-based diffs. */
-  // size?: number;
-}
+export type {
+  FileStructureDiffModifiedEntry,
+  FileStructureDiffResult,
+  FileStructureEntryKind,
+  FileStructureEntryMeta,
+  FileStructureFixture,
+  FileStructureFixtureEntry,
+} from './file-structure-fixture.config.js';
 
 /**
- * One file-system entry captured in a fixture snapshot
- * @example
- * `{ kind: 'file', path: 'packages/app/README.md', hash: 'sha256:abc123', meta: { mode: 33188 } }`
+ * Walks a tree and diffs JSON snapshots for e2e; behavior is configured by {@link fileStructureFixtureConfig}
+ * (unstable paths, optional `stat` capture, hashing helpers).
  */
-export interface FileStructureFixtureEntry {
-  /** SHA-256 digest for file contents (present for `kind: 'file'`, omitted for directories). */
-  hash?: string;
-  /** Entry kind: directory or file. */
-  kind: FileStructureEntryKind;
-  /** Optional metadata captured from `fs.statSync`. */
-  meta?: FileStructureEntryMeta;
-  /** POSIX-style relative path from snapshot root (example: `packages/app`). */
-  path: string;
-}
-
-/**
- * Snapshot document for a full directory tree
- * @example
- * `{ version: 1, entries: [{ kind: 'dir', path: 'packages' }] }`
- */
-export interface FileStructureFixture {
-  /** Sorted list of captured file and directory entries under the snapshot root. */
-  entries: FileStructureFixtureEntry[];
-  /** Schema version for fixture compatibility checks. */
-  version: 1;
-}
-
-/**
- * One changed entry reported by fixture comparison
- * @example
- * `{ path: 'README.md', reasons: ['hash'], expected: {...}, actual: {...} }`
- */
-export interface FileStructureDiffModifiedEntry {
-  /** Expected entry from the baseline fixture. */
-  expected: FileStructureFixtureEntry;
-  /** Relative path key for this diff row. */
-  path: string;
-  /** Machine-readable change reasons (e.g. `kind`, `hash`, `meta.mode`). */
-  reasons: string[];
-  /** Actual entry from the new snapshot when present. */
-  actual?: FileStructureFixtureEntry;
-}
-
-/**
- * Aggregate result of comparing two fixture snapshots
- * @example
- * `{ changed: true, missing: ['a.txt'], extra: [], modified: [] }`
- */
-export interface FileStructureDiffResult {
-  /** True when any missing, extra, or modified entries are detected. */
-  changed: boolean;
-  /** Paths found only in the actual snapshot. */
-  extra: string[];
-  /** Paths found only in the expected snapshot. */
-  missing: string[];
-  /** Entries present in both snapshots but differing by one or more reasons. */
-  modified: FileStructureDiffModifiedEntry[];
-}
-
-/**
- * Converts an absolute/relative path under `root` into a stable POSIX-style relative path
- * @example
- * `toPosixRelativePath('/repo', '/repo/packages/app') // 'packages/app'`
- */
-function toPosixRelativePath(root: string, value: string): string {
-  return path.relative(root, value).split(path.sep).join('/');
-}
-
-/**
- * Computes a deterministic SHA-256 fingerprint for file bytes
- * @example
- * `createHash(Buffer.from('hello')) // 'sha256:2cf24dba5...'`
- */
-function createHash(contents: Buffer): string {
-  return `sha256:${crypto.createHash('sha256').update(contents).digest('hex')}`;
-}
-
-/**
- * Compares optional metadata and returns machine-readable mismatch reasons
- * @example
- * `compareMeta({ mode: 33188 }, { mode: 33261 }) // ['meta.mode']`
- */
-function compareMeta(
-  expectedMeta: FileStructureEntryMeta | undefined,
-  actualMeta: FileStructureEntryMeta | undefined
-): string[] {
-  if (expectedMeta == null || actualMeta == null) return [];
-  const reasons: string[] = [];
-  // Keep this block for a future re-enable of size-based comparisons.
-  // if (
-  //   ENABLE_META_SIZE_COMPARISON &&
-  //   expectedMeta.size != null &&
-  //   actualMeta.size != null &&
-  //   expectedMeta.size !== actualMeta.size
-  // ) {
-  //   reasons.push('meta.size');
-  // }
-  if (ENABLE_META_SIZE_COMPARISON) {
-    // Intentionally no-op while size metadata remains disabled.
-  }
-  if (expectedMeta.mode != null && actualMeta.mode != null && expectedMeta.mode !== actualMeta.mode)
-    reasons.push('meta.mode');
-  return reasons;
-}
-
 export const fileStructureFixture = {
   /**
-   * Walks a directory tree and builds a stable fixture snapshot of files and directories
-   * @example
-   * `fileStructureFixture.buildSnapshot('/tmp/sandbox') // { version: 1, entries: [...] }`
+   * Walks a directory tree and builds a stable fixture snapshot of files and directories.
+   * @param root - Absolute path to the directory root (typically the case sandbox).
+   * @returns Sorted `entries` with optional `hash` per file and optional `meta` when config flags allow.
    */
   buildSnapshot(root: string): FileStructureFixture {
     const normalizedRoot = path.resolve(root);
@@ -147,26 +40,23 @@ export const fileStructureFixture = {
       const stat = fs.statSync(absolutePath);
       if (relativePath !== '.') {
         if (stat.isDirectory()) {
-          entries.push({
+          const entry: FileStructureFixtureEntry = {
             kind: 'dir',
-            meta: {
-              mode: stat.mode,
-              // size: stat.size, // Disabled for now: avoid fixture churn on size metadata.
-            },
             path: relativePath.split(path.sep).join('/'),
-          });
+          };
+          const meta = fileStructureFixtureConfig.metaFromStat(stat);
+          if (meta != null) entry.meta = meta;
+          entries.push(entry);
         } else if (stat.isFile()) {
           const posixPath = relativePath.split(path.sep).join('/');
           const entry: FileStructureFixtureEntry = {
             kind: 'file',
-            meta: {
-              mode: stat.mode,
-              // size: stat.size, // Disabled for now: avoid fixture churn on size metadata.
-            },
             path: posixPath,
           };
-          if (!UNSTABLE_FILE_HASH_PATHS.has(posixPath)) {
-            entry.hash = createHash(fs.readFileSync(absolutePath));
+          const meta = fileStructureFixtureConfig.metaFromStat(stat);
+          if (meta != null) entry.meta = meta;
+          if (!fileStructureFixtureConfig.unstableFileHashPaths.has(posixPath)) {
+            entry.hash = fileStructureFixtureConfig.createHash(fs.readFileSync(absolutePath));
           }
           entries.push(entry);
         }
@@ -177,7 +67,9 @@ export const fileStructureFixture = {
         .sort((left, right) => left.localeCompare(right));
       for (const child of children) {
         const childAbsolutePath = path.join(absolutePath, child);
-        queue.push(toPosixRelativePath(normalizedRoot, childAbsolutePath));
+        queue.push(
+          fileStructureFixtureConfig.toPosixRelativePath(normalizedRoot, childAbsolutePath)
+        );
       }
     }
 
@@ -189,9 +81,9 @@ export const fileStructureFixture = {
   },
 
   /**
-   * Compares expected vs actual snapshots and reports missing, extra, and modified entries
-   * @example
-   * `fileStructureFixture.compare(expected, actual) // { changed: true, missing: [], extra: [], modified: [...] }`
+   * Compares expected vs actual snapshots and reports missing, extra, and modified entries.
+   * @param expectedFixture - Committed baseline (e.g. `case-file-structure.json`).
+   * @param actualFixture - Output of {@link fileStructureFixture.buildSnapshot}.
    */
   compare(
     expectedFixture: FileStructureFixture,
@@ -216,14 +108,14 @@ export const fileStructureFixture = {
       if (
         expectedEntry.kind === 'file' &&
         actualEntry.kind === 'file' &&
-        !UNSTABLE_FILE_HASH_PATHS.has(entryPath) &&
+        !fileStructureFixtureConfig.unstableFileHashPaths.has(entryPath) &&
         expectedEntry.hash != null &&
         actualEntry.hash != null &&
         expectedEntry.hash !== actualEntry.hash
       ) {
         reasons.push('hash');
       }
-      reasons.push(...compareMeta(expectedEntry.meta, actualEntry.meta));
+      reasons.push(...fileStructureFixtureConfig.compareMeta(expectedEntry.meta, actualEntry.meta));
       if (reasons.length > 0) {
         modified.push({
           actual: actualEntry,

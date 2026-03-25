@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 describe('fileStructureFixture', () => {
-  test('buildSnapshot returns deterministic entries with hashes and metadata', () => {
+  test('buildSnapshot returns deterministic entries with hashes', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'clank-file-structure-'));
     tempPaths.push(root);
     fs.mkdirSync(path.join(root, 'alpha'));
@@ -29,26 +29,16 @@ describe('fileStructureFixture', () => {
   test('compare returns missing, extra, and modified buckets', () => {
     const expected = {
       entries: [
-        { kind: 'dir' as const, meta: { mode: 16877, size: 64 }, path: 'alpha' },
-        {
-          hash: 'sha256:old',
-          kind: 'file' as const,
-          meta: { mode: 33188, size: 3 },
-          path: 'alpha/a.txt',
-        },
+        { kind: 'dir' as const, path: 'alpha' },
+        { hash: 'sha256:old', kind: 'file' as const, path: 'alpha/a.txt' },
       ],
       version: 1 as const,
     };
     const actual = {
       entries: [
-        { kind: 'dir' as const, meta: { mode: 16877, size: 64 }, path: 'alpha' },
-        {
-          hash: 'sha256:new',
-          kind: 'file' as const,
-          meta: { mode: 33188, size: 4 },
-          path: 'alpha/a.txt',
-        },
-        { kind: 'dir' as const, meta: { mode: 16877, size: 64 }, path: 'beta' },
+        { kind: 'dir' as const, path: 'alpha' },
+        { hash: 'sha256:new', kind: 'file' as const, path: 'alpha/a.txt' },
+        { kind: 'dir' as const, path: 'beta' },
       ],
       version: 1 as const,
     };
