@@ -4,7 +4,7 @@ Local agent plugin for **git workflow commands**: commit staged files with push 
 
 ## Purpose
 
-- **Commit staged files** — pre-checks (branch ≠ main, staged files exist), story ID from branch, diff review, commit message by complexity, commit, push `--force-with-lease`, post-commit checks (adjacent .md, .clank/plugins, tests)
+- **Commit staged files** — pre-checks (branch ≠ main, staged files exist), story ID from branch, diff review, commit message by complexity, commit, `git push` (force only if user explicitly asks for `--force` / `--force-with-lease`), post-commit checks (adjacent .md, .clank/plugins, tests)
 - **Fill PR template** — detect parent branch (reflog-first strategy), diff parent...HEAD, analyze change themes, fill `.github/pull_request_template.md`, emit copy-ready markdown
 
 ## Layout

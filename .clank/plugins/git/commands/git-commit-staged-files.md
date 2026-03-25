@@ -2,9 +2,9 @@
 
 **Scope:** Only commit files that are already staged. Do not run `git add` or stage any files as part of this command.
 
-**What it does:** Run pre-checks, derive story ID, analyze staged diff, write commit message, commit, push with `--force-with-lease`, then post-commit checks. No user verification checkpoints. All output/responses: terse.
+**What it does:** Run pre-checks, derive story ID, analyze staged diff, write commit message, commit, `git push` (non-force), then post-commit checks. No user verification checkpoints. All output/responses: terse.
 
-**Usage:** `/git-commit-staged-files` → pre-checks → story ID, analyze staged, message, commit, push, run checks.
+**Usage:** `/git-commit-staged-files` → pre-checks → story ID, analyze staged, message, commit, push, run checks. Force-push (`--force` or `--force-with-lease`) only if the user explicitly asks for it in the same invocation (e.g. “with --force-with-lease”); never infer force-push from vague language.
 
 ---
 
@@ -42,7 +42,7 @@ Push fails → stop, report, wait. No workarounds.
 
 - Write for the target audience of AI Agents
 - Keep condensed and succinct; sacrifice grammar for concision
-- Exclude punctuation at end of bullet points or end of linesVerify each finding against the current code and only fix it if needed.
+- Exclude punctuation at end of bullet points or end of lines
 
 ---
 
@@ -62,7 +62,8 @@ Push fails → stop, report, wait. No workarounds.
    - `git commit -m "<subject>" -m "<body>"`. Fold in any user context if given.
 
 4. **Push**
-   - `git push --force-with-lease`. Fail → stop, report, do not fix.
+   - Default: `git push` (no `--force`, no `--force-with-lease`). Fail → stop, report, do not fix.
+   - Force-push only when the user explicitly requested `--force` or `--force-with-lease` for this run; then use exactly what they asked for (prefer `--force-with-lease` over bare `--force` if they only said “force push” without a flag). Otherwise never force-push.
 
 5. **Confirm**
    - Hash + summary. Push success. (Included in final commit summary table.)
