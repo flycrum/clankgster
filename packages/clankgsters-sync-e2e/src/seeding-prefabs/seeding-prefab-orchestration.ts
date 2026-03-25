@@ -43,7 +43,13 @@ export const seedingPrefabOrchestration = {
     };
   },
 
-  /** Expands blueprints into `{ main, overlay? }` pairs; passes through standalone prefabs without an overlay. */
+  /**
+   * Expands {@link SeedingBlueprintBase} instances by calling {@link SeedingBlueprintBase#createSeedingPrefabs} into
+   * `{ main, overlay? }` pairs. Computes {@link SeedingBlueprintBase#getPrepareOverlay} once per blueprint and attaches
+   * that overlay only to the **first** main so {@link seedingPrefabOrchestration.applySeeding} applies blueprint-level
+   * prepare (e.g. `replaceRoots`) once per blueprint, not once per expanded prefab. Standalone {@link SeedingPrefabBase}
+   * items pass through with no overlay.
+   */
   flattenSeeding(
     items: TestCaseSeedingPrefabItem[]
   ): Array<{ main: SeedingPrefabBase<any>; overlay?: SeedingPrefabPrepareOverlayOptions }> {
@@ -54,7 +60,15 @@ export const seedingPrefabOrchestration = {
     for (const item of items) {
       if (item instanceof SeedingBlueprintBase) {
         const overlay = item.getPrepareOverlay();
-        for (const main of item.createSeedingPrefabs()) out.push({ main, overlay });
+        let attachedBlueprintOverlay = false;
+        for (const main of item.createSeedingPrefabs()) {
+          if (overlay != null && !attachedBlueprintOverlay) {
+            attachedBlueprintOverlay = true;
+            out.push({ main, overlay });
+          } else {
+            out.push({ main });
+          }
+        }
       } else {
         out.push({ main: item });
       }
