@@ -2,9 +2,9 @@
  * Excluded non-existent path: excluded ['.clank/plugins/does-not-exist'] should be harmless.
  */
 
-import { clankgstersConfig } from '../../../../clankgsters-sync/config/index.js';
-import { e2eTestCase } from '../../define-e2e-test-case.js';
-import { DefaultSandboxPrefabBlueprint } from '../../prefabs/prefabs.js';
+import { clankgstersConfig } from '../../../../clankgsters-sync/src/index.js';
+import { e2eTestCase } from '../../core/e2e-define-test-case.js';
+import { DefaultSandboxSeedingBlueprint } from '../../seeding-prefabs/blueprints/default-sandbox-seeding-blueprint.js';
 
 export const testCase = e2eTestCase.define({
   config: clankgstersConfig.define({
@@ -23,5 +23,5 @@ export const testCase = e2eTestCase.define({
   }),
   description: 'Excluded non-existent path; sync unchanged.',
   jsonPath: 'test-cases/excluded-nonexistent/case-sync-manifest.json',
-  seeding: e2eTestCase.defineSeeding([new DefaultSandboxPrefabBlueprint('', {})]),
+  seeding: e2eTestCase.defineSeeding([new DefaultSandboxSeedingBlueprint('', {})]),
 });

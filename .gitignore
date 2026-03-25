@@ -26,6 +26,9 @@ node_modules/
 # Build outputs
 dist/
 
+# Scratch / ephemeral dirs (tests, local tooling); conventional name used across ecosystems
+tmp/
+
 # IDE / OS
 .idea/
 .vscode/*

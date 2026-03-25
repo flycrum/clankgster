@@ -21,6 +21,9 @@ catalogs:
     neverthrow:
       specifier: ^8.2.0
       version: 8.2.0
+    oxlint:
+      specifier: 1.56.0
+      version: 1.56.0
     pino:
       specifier: ^10.3.1
       version: 10.3.1
@@ -45,6 +48,9 @@ importers:
 
   .:
     devDependencies:
+      '@clankgsters/sync':
+        specifier: workspace:*
+        version: link:packages/clankgsters-sync
       '@clankgsters/vite-plus-config':
         specifier: workspace:*
         version: link:configs/vite-plus-config
@@ -114,6 +120,9 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260316.1
         version: 7.0.0-dev.20260316.1
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.56.0(oxlint-tsgolint@0.17.1)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

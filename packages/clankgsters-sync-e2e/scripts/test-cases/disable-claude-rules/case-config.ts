@@ -2,9 +2,9 @@
  * Disable Claude rules test case: claude with AgentRulesSymlinkSyncPreset disabled + one custom agent (codex-like); cursor and codex disabled.
  */
 
-import { clankgstersConfig } from '../../../../clankgsters-sync/config/index.js';
-import { e2eTestCase } from '../../define-e2e-test-case.js';
-import { DefaultSandboxPrefabBlueprint } from '../../prefabs/prefabs.js';
+import { clankgstersConfig } from '../../../../clankgsters-sync/src/index.js';
+import { e2eTestCase } from '../../core/e2e-define-test-case.js';
+import { DefaultSandboxSeedingBlueprint } from '../../seeding-prefabs/blueprints/default-sandbox-seeding-blueprint.js';
 
 export const testCase = e2eTestCase.define({
   config: clankgstersConfig.define({
@@ -32,5 +32,5 @@ export const testCase = e2eTestCase.define({
   description:
     'Claude with AgentRulesSymlinkSyncPreset disabled plus one codex-like custom agent; cursor and codex disabled.',
   jsonPath: 'test-cases/disable-claude-rules/case-sync-manifest.json',
-  seeding: e2eTestCase.defineSeeding([new DefaultSandboxPrefabBlueprint('', {})]),
+  seeding: e2eTestCase.defineSeeding([new DefaultSandboxSeedingBlueprint('', {})]),
 });

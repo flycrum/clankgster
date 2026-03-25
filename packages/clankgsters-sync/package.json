@@ -13,9 +13,9 @@
   },
   "files": [
     "bin",
-    "config",
     "dist",
-    "scripts"
+    "scripts",
+    "src"
   ],
   "type": "module",
   "exports": {
@@ -26,12 +26,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vp pack",
+    "build": "vp pack src/index.ts",
     "check": "vp check",
     "clankgsters-sync:clear": "tsx scripts/clankgsters-sync.clear.ts",
     "clankgsters-sync:run": "tsx scripts/clankgsters-sync.run.ts",
-    "dev": "vp pack --watch",
-    "prepublishOnly": "vp pack",
+    "dev": "vp pack src/index.ts --watch",
+    "prepublishOnly": "vp pack src/index.ts",
     "test": "vp test"
   },
   "dependencies": {
@@ -49,6 +49,7 @@
     "@clankgsters/vite-plus-config": "workspace:*",
     "@types/node": "catalog:",
     "@typescript/native-preview": "7.0.0-dev.20260316.1",
+    "oxlint": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },

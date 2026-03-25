@@ -1,6 +1,7 @@
-import { clankgstersConfig } from '../../../../clankgsters-sync/config/index.js';
-import { e2eTestCase } from '../../define-e2e-test-case.js';
-import { AgentPluginJsonPrefabMain, DefaultSandboxPrefabBlueprint } from '../../prefabs/prefabs.js';
+import { clankgstersConfig } from '../../../../clankgsters-sync/src/index.js';
+import { e2eTestCase } from '../../core/e2e-define-test-case.js';
+import { DefaultSandboxSeedingBlueprint } from '../../seeding-prefabs/blueprints/default-sandbox-seeding-blueprint.js';
+import { AgentPluginJsonSeedingPrefab } from '../../seeding-prefabs/prefabs/agent-plugin-json-seeding-prefab.js';
 
 export const testCase = e2eTestCase.define({
   config: clankgstersConfig.define({
@@ -19,8 +20,8 @@ export const testCase = e2eTestCase.define({
   description: 'Custom agent uses fallback plugin manifest dir .testagent-plugin during discovery.',
   jsonPath: 'test-cases/custom-agent-plugin-manifest-dir/case-sync-manifest.json',
   seeding: e2eTestCase.defineSeeding([
-    new DefaultSandboxPrefabBlueprint('', {}),
-    new AgentPluginJsonPrefabMain('', {
+    new DefaultSandboxSeedingBlueprint('', {}),
+    new AgentPluginJsonSeedingPrefab('', {
       pluginDirName: 'root',
       pluginManifestDirName: '.testagent-plugin',
       pluginName: 'root',

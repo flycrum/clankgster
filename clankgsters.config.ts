@@ -1,4 +1,4 @@
-import { clankgstersConfig } from './packages/clankgsters-sync/config/index.js';
+import { clankgstersConfig } from './packages/clankgsters-sync/src/index.js';
 
 /** Team-shared tier-1 sync defaults loaded before local overrides; keep deterministic and free of machine-specific paths. */
 const clankgsters = clankgstersConfig.define({

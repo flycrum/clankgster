@@ -6,8 +6,9 @@ import chalk from 'chalk';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { runOneE2eTestsCase } from './e2e-tests.case-runner.js';
-import { e2eTestsPaths } from './e2e-tests.paths.js';
+import { runOneE2eTestsCase } from './core/e2e-tests.case-runner.js';
+import { e2ePathHelpers } from './common/e2e-path-helpers.js';
+import { e2eTestCaseDiscovery } from './common/e2e-test-case-discovery.js';
 import { printLine } from './utils/print-line.js';
 
 /**
@@ -24,9 +25,9 @@ async function main(): Promise<void> {
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const packageRoot = path.resolve(scriptDir, '..');
   const repoRoot = path.resolve(packageRoot, '..', '..');
-  const testCasesDir = e2eTestsPaths.getTestCasesRoot(scriptDir);
+  const testCasesDir = e2ePathHelpers.getTestCasesRoot(scriptDir);
   const caseNameArg = process.argv[2];
-  const discovered = e2eTestsPaths.discoverCases(testCasesDir);
+  const discovered = e2eTestCaseDiscovery.discoverCases(testCasesDir);
   const selectedCases =
     caseNameArg != null ? discovered.filter((entry) => entry.caseId === caseNameArg) : discovered;
 
@@ -35,7 +36,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const e2eTestsResultsRoot = e2eTestsPaths.getResultsRoot(packageRoot);
+  const e2eTestsResultsRoot = e2ePathHelpers.getResultsRoot(packageRoot);
   if (fs.existsSync(e2eTestsResultsRoot))
     fs.rmSync(e2eTestsResultsRoot, { recursive: true, force: true });
   fs.mkdirSync(e2eTestsResultsRoot, { recursive: true });
@@ -43,13 +44,16 @@ async function main(): Promise<void> {
   let failures = 0;
   for (const [offset, { caseConfigPath, caseDir, caseId }] of selectedCases.entries()) {
     const caseIndex = offset + 1;
-    const caseDirectoryName = e2eTestsPaths.formatCaseDirectoryName(caseIndex, caseId);
+    const caseDirectoryName = e2ePathHelpers.formatCaseDirectoryName(caseIndex, caseId);
     const caseOutputRoot = path.join(e2eTestsResultsRoot, caseDirectoryName);
     const result = await runOneE2eTestsCase({
       caseIndex,
       caseOutputRoot,
-      expectedFileStructurePath: path.join(caseDir, e2eTestsPaths.CASE_FILE_STRUCTURE_FIXTURE_NAME),
-      expectedManifestPath: path.join(caseDir, e2eTestsPaths.CASE_SYNC_MANIFEST_FIXTURE_NAME),
+      expectedFileStructurePath: path.join(
+        caseDir,
+        e2ePathHelpers.CASE_FILE_STRUCTURE_FIXTURE_NAME
+      ),
+      expectedManifestPath: path.join(caseDir, e2ePathHelpers.CASE_SYNC_MANIFEST_FIXTURE_NAME),
       name: caseId,
       packageRoot,
       repoRoot,

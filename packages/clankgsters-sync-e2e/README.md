@@ -21,7 +21,7 @@ flowchart TD
 
 ## What they do
 
-- Build each sandbox dynamically from prefab mains and blueprints under `scripts/prefabs/`.
+- Build each sandbox dynamically from prefab mains and blueprints under `scripts/seeding-prefabs/`.
 - Inject per-case config into generated sandbox `clankgsters.config.ts`.
 - Run clear then sync for each case against `CLANKGSTERS_REPO_ROOT=<case>`.
 - Compare expected fixtures `case-sync-manifest.json` and `case-file-structure.json` in each `scripts/test-cases/<caseId>/` folder with generated output.
@@ -33,18 +33,27 @@ From repository root:
 
 - `pnpm e2e-tests:run`
 - `pnpm e2e-tests:clear`
-- `pnpm e2e-tests:sync-fixtures`
 
 From this package:
 
 - `pnpm test`
 - `tsx scripts/e2e-tests.run.harness.ts [caseId]`
 - `tsx scripts/e2e-tests.clear.ts`
-- `tsx scripts/e2e-tests.sync-fixtures.ts`
+
+`package.json` scripts under `e2e-tests:*` are reserved for CLI entrypoints in `scripts/`. Shared harness code lives under `scripts/core/`.
 
 ## Fixture authoring loop
 
 - Run `pnpm e2e-tests:run` to generate per-case outputs under `.e2e-tests.run-results`.
 - Inspect case output directories to confirm generated trees/manifests.
-- Run `pnpm e2e-tests:sync-fixtures` to copy manifests and file-structure snapshots into each case folder.
+- Update committed golden JSON (baseline expected outputs the tests compare against) by running the maintenance tool (not an npm script):
+
+  ```bash
+  pnpm -F @clankgsters/sync-e2e exec tsx scripts/core/sync-e2e-fixtures.ts
+  ```
+
+  From `packages/clankgsters-sync-e2e` you can use `pnpm exec tsx scripts/core/sync-e2e-fixtures.ts`.
+
+  That copies each case’s generated manifest and file-structure snapshot into `scripts/test-cases/<caseId>/` as `case-sync-manifest.json` and `case-file-structure.json`.
+
 - Re-run `pnpm e2e-tests:run` until green.

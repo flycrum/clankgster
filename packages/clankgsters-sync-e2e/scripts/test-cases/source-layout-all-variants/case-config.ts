@@ -1,9 +1,7 @@
-import { clankgstersConfig } from '../../../../clankgsters-sync/config/index.js';
-import { e2eTestCase } from '../../define-e2e-test-case.js';
-import {
-  DefaultSandboxPrefabBlueprint,
-  SourceLayoutVariantsPrefabBlueprint,
-} from '../../prefabs/prefabs.js';
+import { clankgstersConfig } from '../../../../clankgsters-sync/src/index.js';
+import { e2eTestCase } from '../../core/e2e-define-test-case.js';
+import { DefaultSandboxSeedingBlueprint } from '../../seeding-prefabs/blueprints/default-sandbox-seeding-blueprint.js';
+import { SourceLayoutVariantsSeedingBlueprint } from '../../seeding-prefabs/blueprints/source-layout-variants-seeding-blueprint.js';
 
 export const testCase = e2eTestCase.define({
   config: clankgstersConfig.define({
@@ -17,7 +15,7 @@ export const testCase = e2eTestCase.define({
     'Seeds nested/shorthand x regular/local source layout variants for discovery coverage.',
   jsonPath: 'test-cases/source-layout-all-variants/case-sync-manifest.json',
   seeding: e2eTestCase.defineSeeding([
-    new DefaultSandboxPrefabBlueprint('', {}),
-    new SourceLayoutVariantsPrefabBlueprint('', {}),
+    new DefaultSandboxSeedingBlueprint('', {}),
+    new SourceLayoutVariantsSeedingBlueprint('', {}),
   ]),
 });

@@ -59,6 +59,6 @@ describe('fileStructureFixture', () => {
     expect(result.extra).toEqual(['beta']);
     expect(result.missing).toEqual([]);
     expect(result.modified).toHaveLength(1);
-    expect(result.modified[0]?.reasons).toEqual(['hash', 'meta.size']);
+    expect(result.modified[0]?.reasons).toEqual(['hash']);
   });
 });

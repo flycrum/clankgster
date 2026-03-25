@@ -8,6 +8,7 @@
   ],
   "type": "module",
   "exports": {
+    "./common/npm-pack-files-to-lint-globs": "./src/common/npm-pack-files-to-lint-globs.ts",
     "./mono-base-format-config": "./src/mono-base-format-config.ts",
     "./mono-base-lint-config": "./src/mono-base-lint-config.ts",
     "./mono-base-vitest-node-config": "./src/mono-base-vitest-node-config.ts",

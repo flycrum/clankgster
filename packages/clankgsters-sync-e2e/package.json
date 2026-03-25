@@ -10,7 +10,6 @@
     "check": "vp check",
     "e2e-tests:clear": "tsx scripts/e2e-tests.clear.ts",
     "e2e-tests:run": "tsx scripts/e2e-tests.run.harness.ts",
-    "e2e-tests:sync-fixtures": "tsx scripts/e2e-tests.sync-fixtures.ts",
     "test": "vp test",
     "test:unit": "vp test"
   },

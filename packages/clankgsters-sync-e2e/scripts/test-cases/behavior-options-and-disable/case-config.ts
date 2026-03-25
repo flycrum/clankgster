@@ -1,9 +1,9 @@
 import {
   clankgstersConfig,
   clankgstersConfigDefaults,
-} from '../../../../clankgsters-sync/config/index.js';
-import { e2eTestCase } from '../../define-e2e-test-case.js';
-import { DefaultSandboxPrefabBlueprint } from '../../prefabs/prefabs.js';
+} from '../../../../clankgsters-sync/src/index.js';
+import { e2eTestCase } from '../../core/e2e-define-test-case.js';
+import { DefaultSandboxSeedingBlueprint } from '../../seeding-prefabs/blueprints/default-sandbox-seeding-blueprint.js';
 
 export const testCase = e2eTestCase.define({
   config: clankgstersConfig.define({
@@ -44,5 +44,5 @@ export const testCase = e2eTestCase.define({
   }),
   description: 'Behavior object form with options and one disabled behavior entry.',
   jsonPath: 'test-cases/behavior-options-and-disable/case-sync-manifest.json',
-  seeding: e2eTestCase.defineSeeding([new DefaultSandboxPrefabBlueprint('', {})]),
+  seeding: e2eTestCase.defineSeeding([new DefaultSandboxSeedingBlueprint('', {})]),
 });

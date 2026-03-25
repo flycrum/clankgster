@@ -21,7 +21,7 @@ The name “Clankgsters”, though playing off of a derogatory term “Clankers�
 
 # `@clankgsters/sync`
 
-Node-first package for Clankgsters sync logic: **TypeScript `scripts/`** run with **`tsx`** (see `package.json` → `sync:*`), and the **publishable surface** is built with **`vp pack`** into `dist/`.
+Node-first package for Clankgsters sync logic: implementation lives under **`src/`**; **`scripts/`** holds CLI entry files run with **`tsx`** (see `package.json` → `clankgsters-sync:*`), and the **publishable surface** is built with **`vp pack src/index.ts`** into `dist/`.
 
 ## Commands (from repo root)
 
@@ -42,4 +42,4 @@ Sync loads `clankgsters.config.ts` from the **repository root** (the tree that c
 - **`CLANKGSTERS_REPO_ROOT`:** optional absolute path override (sandboxes, tests, or when you need an explicit root).
 - **Published CLI:** `clankgsters-sync` (see `package.json` → `bin`) sets `CLANKGSTERS_REPO_ROOT` to the **current working directory** and runs the sync entry with this package’s `tsx` loader (for global or linked installs).
 
-Implementation details live in `scripts/common/path-helpers.ts` (TSDoc).
+Implementation details live in `src/common/path-helpers.ts` (TSDoc).

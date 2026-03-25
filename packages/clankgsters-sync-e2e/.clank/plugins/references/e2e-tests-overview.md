@@ -16,7 +16,7 @@ Shared reference for the **@clankgsters/sync-e2e** harness: test case layout, ma
 
 ## Case files
 
-- **Config:** `scripts/test-cases/<name>.ts` exports `testCase` from `e2eTestCase.define({ config, description, jsonPath, seeding })`. Config is built with `clankgstersConfig` from `@clankgsters/sync/config`.
+- **Config:** `scripts/test-cases/<name>/case-config.ts` exports `testCase` from `e2eTestCase.define({ config, description, jsonPath, seeding })`. Config is built with `clankgstersConfig` from `@clankgsters/sync` (or repo-relative `packages/clankgsters-sync/src/index.js` without a prior build).
 - **Expected manifest:** colocated `scripts/test-cases/<name>.json` — shape of `.clankgsters-cache/sync-manifest.json` after sync (placeholders in JSON are resolved in the runner; see package `clankgstersIdentity`).
 
 ## Where sync writes
