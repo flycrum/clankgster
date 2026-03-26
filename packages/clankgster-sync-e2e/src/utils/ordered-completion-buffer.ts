@@ -58,8 +58,8 @@ class OrderedCompletionBuffer<TResult> {
     while (this.pendingByIndex.has(this.nextExpectedIndex)) {
       const expectedCaseIndex = this.nextExpectedIndex;
       const result = this.pendingByIndex.get(expectedCaseIndex) as TResult;
-      this.pendingByIndex.delete(expectedCaseIndex);
       await this.emit(expectedCaseIndex, result);
+      this.pendingByIndex.delete(expectedCaseIndex);
       this.nextExpectedIndex += 1;
     }
   }
