@@ -3,8 +3,8 @@ import path from 'node:path';
 import { z } from 'zod';
 import { pathHelpers } from '../../../common/path-helpers.js';
 import { syncFs } from '../../../common/sync-fs.js';
-import { syncSourceLayouts, type SyncSourceLayoutKey } from '../../run/sync-source-layouts.js';
 import { syncManifest } from '../../run/sync-manifest.js';
+import { syncSourceLayouts, type SyncSourceLayoutKey } from '../../run/sync-source-layouts.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
 interface SkillsLayoutCustomData {
@@ -44,6 +44,8 @@ export interface SkillsDirectorySyncPresetOptions {
  * Syncs skills into agent-native skill directories via symlinks:
  * - Flat layouts under `.clank/skills*` (and shorthand siblings) — folder name = symlink name
  * - Each discovered marketplace plugin’s `skills/<name>/` (with a skill marker file) — symlink name `{plugin.name}-{name}` to avoid collisions
+ *
+ * **Duplicate outputs:** walk order is `syncSourceLayouts.SYNC_SOURCE_LAYOUT_KEYS`, then flat skills roots for that layout, then marketplace plugin skills. The first source to claim a given `targetRel` wins; a second source for the same path returns `Err` (sanitized names can collide across plugins or layouts)
  */
 export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
   override syncRun(context: SyncBehaviorRunContext): Result<void, Error> {
@@ -91,6 +93,8 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
     });
     const customData = createSkillsCustomData();
     const symlinks = new Set<string>();
+    /** Repo-relative symlink path → first skill source dir that claimed it (duplicate detection before write). */
+    const seenTargets = new Map<string, string>();
     const skillFileName = context.resolvedConfig.sourceDefaults.skillFileName;
     for (const layout of syncSourceLayouts.SYNC_SOURCE_LAYOUT_KEYS) {
       for (const sourceSkillsPath of sourceLayoutPaths.skillsByLayout[layout]) {
@@ -105,8 +109,17 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
           const targetPath = path.join(outputRootResolved, nativeSkillsDirRel, leaf);
           const targetResolved = path.resolve(targetPath);
           if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, targetResolved)) continue;
-          syncFs.symlinkRelative(skillDir, targetPath);
           const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
+          const firstSource = seenTargets.get(targetRel);
+          if (firstSource !== undefined) {
+            return err(
+              new Error(
+                `skillsDirectorySync: duplicate skill symlink target ${JSON.stringify(targetRel)} for source ${JSON.stringify(skillDir)} (already claimed by ${JSON.stringify(firstSource)})`
+              )
+            );
+          }
+          seenTargets.set(targetRel, skillDir);
+          syncFs.symlinkRelative(skillDir, targetPath);
           symlinks.add(targetRel);
           customData[layout].symlinks.push(targetRel);
         }
@@ -128,8 +141,17 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
             const targetPath = path.join(outputRootResolved, nativeSkillsDirRel, skillTargetName);
             const targetResolved = path.resolve(targetPath);
             if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, targetResolved)) continue;
-            syncFs.symlinkRelative(skillDir, targetPath);
             const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
+            const firstSource = seenTargets.get(targetRel);
+            if (firstSource !== undefined) {
+              return err(
+                new Error(
+                  `skillsDirectorySync: duplicate skill symlink target ${JSON.stringify(targetRel)} for source ${JSON.stringify(skillDir)} (already claimed by ${JSON.stringify(firstSource)})`
+                )
+              );
+            }
+            seenTargets.set(targetRel, skillDir);
+            syncFs.symlinkRelative(skillDir, targetPath);
             symlinks.add(targetRel);
             customData[layout].symlinks.push(targetRel);
           }
