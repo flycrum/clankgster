@@ -11,7 +11,7 @@ describe('processAgentBehaviorsMachine', () => {
       input: {
         agentName: 'cursor',
         behaviors: [
-          { enabled: true, behaviorName: 'AgentRulesSymlinkSyncPreset', options: {} },
+          { enabled: true, behaviorName: 'AgentRulesDirectorySyncPreset', options: {} },
           { enabled: true, behaviorName: 'SkillsDirectorySyncPreset', options: {} },
         ],
         discoveredMarketplaces: [],
@@ -23,11 +23,21 @@ describe('processAgentBehaviorsMachine', () => {
         repoRoot: process.cwd(),
         resolvedConfig: {
           agents: {},
+          artifactMode: 'copy',
           excluded: [],
           loggingEnabled: false,
           sourceDefaults: { ...clankgsterConfigDefaults.CONSTANTS.sourceDefaults },
           syncCacheDir: clankgsterIdentity.SYNC_CACHE_DIR,
           syncManifestPath: clankgsterIdentity.defaultSyncManifestRelativePath,
+          syncOutputReadOnly: false,
+          transforms: {
+            hooks: {},
+            options: {},
+            registry: (definitions) => definitions,
+            templateVariables: {
+              ...clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables,
+            },
+          },
         },
         sharedState: new Map<string, unknown>(),
       },

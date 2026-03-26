@@ -99,11 +99,6 @@ export const e2eTestsCaseRunnerConfig = {
     return spawnChildAwaitExit(command, args, { cwd, env, inheritStdio: inheritChildStdio });
   },
 
-  /** Builds the on-disk contents for `clankgster.config.ts`: a `const config = …` object literal plus `export default config`. */
-  toConfigFileContents(config: unknown): string {
-    return `const config = ${JSON.stringify(config, null, 2)};\n\nexport default config;\n`;
-  },
-
   /**
    * Absolute path to the sync manifest JSON after a run inside `sandboxRoot`. Precedence matches `sync-e2e-fixtures.ts`:
    * `config.syncManifestPath` (absolute or relative to sandbox), else `config.syncCacheDir` + manifest filename, else `manifestRelativePath`.

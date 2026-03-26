@@ -7,7 +7,6 @@ import { fileStructureFixture } from '../utils/file-structure-fixture.js';
 import { printLine } from '../utils/print-line.js';
 import type { E2eTestCaseDefinition } from './e2e-define-test-case.js';
 import { e2eTestsCaseRunnerConfig } from './e2e-tests.case-runner.config.js';
-import { syncE2eFixturesConfig } from './sync-e2e-fixtures.config.js';
 
 /**
  * Maintenance entrypoint (run with `tsx`, not wired in `package.json`): copies **golden fixtures** from the
@@ -75,7 +74,8 @@ async function main(): Promise<void> {
     console.log(printLine.success(`fixture synced: ${targetFileStructureFixturePath}`));
   }
 
-  syncE2eFixturesConfig.spawnDetachedFmtTestCases(packageRoot);
+  // Disabled while JSON fixtures are no longer formatter-managed.
+  // syncE2eFixturesConfig.spawnDetachedFmtTestCases(packageRoot);
 }
 
 main().catch((error) => {

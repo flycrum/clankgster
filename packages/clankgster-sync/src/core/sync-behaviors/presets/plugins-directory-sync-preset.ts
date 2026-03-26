@@ -1,19 +1,22 @@
 import { ok, type Result } from 'neverthrow';
-import fs from 'node:fs';
 import path from 'node:path';
 import { z } from 'zod';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
+import { syncFsContentPipeline } from '../../sync-fs-transforms/sync-fs-content-pipeline.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
+import { syncFsTransformGlobalContextConfig } from '../../sync-fs-transforms/sync-fs-transform-global-context.config.js';
 import type { SyncSourceLayoutKey } from '../../run/sync-source-layouts.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
 interface PluginsDirectoryLayoutEntry {
+  copies: string[];
   fsAutoRemoval: string[];
   symlinks: string[];
 }
 
 function emptyLayoutEntry(): PluginsDirectoryLayoutEntry {
-  return { symlinks: [], fsAutoRemoval: [] };
+  return { symlinks: [], copies: [], fsAutoRemoval: [] };
 }
 
 function createPluginsDirectoryCustomData(): Record<
@@ -53,6 +56,7 @@ export class PluginsDirectorySyncPreset extends SyncBehaviorBase {
     if (context.mode === 'clear' || context.behaviorConfig.enabled === false) return ok(undefined);
 
     const symlinks: string[] = [];
+    const copies: string[] = [];
     const fsAutoRemoval: string[] = [];
     const customData = createPluginsDirectoryCustomData();
     const parsed = pluginsDirectorySyncPresetOptionsSchema.safeParse(
@@ -78,9 +82,20 @@ export class PluginsDirectorySyncPreset extends SyncBehaviorBase {
           const targetPath = path.join(targetRoot, 'commands', plugin.name, commandFile.name);
           const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
           if (this.isExcluded(targetRel, context.excluded)) continue;
-          syncFs.symlinkRelative(sourcePath, targetPath);
-          symlinks.push(targetRel);
-          customData[layout].symlinks.push(targetRel);
+          syncFsFileSyncConfig.syncFile({
+            context,
+            destinationPath: targetPath,
+            pluginName: plugin.name,
+            sourceKind: 'command',
+            sourcePath,
+          });
+          if (context.artifactMode === 'symlink') {
+            symlinks.push(targetRel);
+            customData[layout].symlinks.push(targetRel);
+          } else {
+            copies.push(targetRel);
+            customData[layout].copies.push(targetRel);
+          }
         }
 
         const rulesDir = path.join(plugin.path, 'rules');
@@ -93,12 +108,28 @@ export class PluginsDirectorySyncPreset extends SyncBehaviorBase {
           const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
           if (this.isExcluded(targetRel, context.excluded)) continue;
           const markdown = syncFs.readFileUtf8(sourcePath);
-          syncFs.ensureDir(path.dirname(targetPath));
-          fs.writeFileSync(
+          const transformedMarkdown = syncFsContentPipeline.process({
+            artifactMode: context.artifactMode,
+            contents: markdown,
+            globalContext: syncFsTransformGlobalContextConfig.create({
+              agentName: context.agentName,
+              behaviorName: context.behaviorConfig.behaviorName,
+              destinationPath: targetPath,
+              outputRoot: context.outputRoot,
+              pluginName: plugin.name,
+              repoRoot: context.repoRoot,
+              resolvedConfig: context.resolvedConfig,
+              sourcePath,
+              sourceKind: 'rule',
+            }),
+          });
+          syncFs.writeFileUtf8(
             targetPath,
-            `${optionsFallbacks.rulesMarkdownFrontmatter ?? ''}${markdown}`,
-            'utf8'
+            `${optionsFallbacks.rulesMarkdownFrontmatter ?? ''}${transformedMarkdown}`
           );
+          if (context.resolvedConfig.syncOutputReadOnly) syncFs.markFileReadOnly(targetPath);
+          copies.push(targetRel);
+          customData[layout].copies.push(targetRel);
           fsAutoRemoval.push(targetRel);
           customData[layout].fsAutoRemoval.push(targetRel);
         }
@@ -106,6 +137,7 @@ export class PluginsDirectorySyncPreset extends SyncBehaviorBase {
     }
 
     context.registerManifestEntry(context.agentName, context.behaviorConfig.behaviorName, {
+      copies,
       options: optionsFallbacks,
       symlinks,
       fsAutoRemoval,

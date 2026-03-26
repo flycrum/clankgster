@@ -4,33 +4,34 @@ import { z } from 'zod';
 import { pathHelpers } from '../../../common/path-helpers.js';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
-const agentRulesSymlinkSyncPresetOptionsSchema = z.looseObject({
+const agentRulesDirectorySyncPresetOptionsSchema = z.looseObject({
   rulesDir: z.string().min(1).optional(),
   syncManifest: z.string().min(1).nullable().optional(),
 });
 
-/** Typed options for `AgentRulesSymlinkSyncPreset`. */
-export interface AgentRulesSymlinkSyncPresetOptions {
-  /** Repo-relative rules directory where plugin rules symlink outputs are written. */
+/** Typed options for `AgentRulesDirectorySyncPreset`. */
+export interface AgentRulesDirectorySyncPresetOptions {
+  /** Repo-relative rules directory where plugin rules outputs are written. */
   rulesDir?: string;
   /** Optional sidecar JSON path for rules sync bookkeeping metadata. */
   syncManifest?: string | null;
 }
 
-/** Symlinks plugin `rules` markdown files into an agent-native rules directory. */
-export class AgentRulesSymlinkSyncPreset extends SyncBehaviorBase {
+/** Syncs plugin `rules` markdown files into an agent-native rules directory. */
+export class AgentRulesDirectorySyncPreset extends SyncBehaviorBase {
   override syncRun(context: SyncBehaviorRunContext): Result<void, Error> {
     if (context.manifestEntry != null)
       syncManifest.teardownEntry(context.outputRoot, context.manifestEntry);
 
-    const parsed = agentRulesSymlinkSyncPresetOptionsSchema.safeParse(
+    const parsed = agentRulesDirectorySyncPresetOptionsSchema.safeParse(
       context.behaviorConfig.options
     );
     if (!parsed.success) {
       return err(
-        new Error(`agentRulesSymlinkSync: invalid behavior options\n${parsed.error.message}`)
+        new Error(`agentRulesDirectorySync: invalid behavior options\n${parsed.error.message}`)
       );
     }
 
@@ -48,13 +49,14 @@ export class AgentRulesSymlinkSyncPreset extends SyncBehaviorBase {
     if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, rulesDirResolved)) {
       return err(
         new Error(
-          `agentRulesSymlinkSync: rulesDir resolves outside outputRoot (${JSON.stringify(rulesDirRel)})`
+          `agentRulesDirectorySync: rulesDir resolves outside outputRoot (${JSON.stringify(rulesDirRel)})`
         )
       );
     }
 
     syncFs.ensureDir(rulesDirResolved);
     const symlinks: string[] = [];
+    const copies: string[] = [];
     for (const marketplace of context.discoveredMarketplaces) {
       for (const plugin of marketplace.plugins) {
         if (plugin.manifests[context.agentName] !== true) continue;
@@ -65,13 +67,22 @@ export class AgentRulesSymlinkSyncPreset extends SyncBehaviorBase {
         for (const file of files) {
           const sourcePath = path.join(pluginRulesDir, file.name);
           const linkPath = path.join(rulesDirResolved, plugin.name, file.name);
-          syncFs.symlinkRelative(sourcePath, linkPath);
-          symlinks.push(path.relative(context.outputRoot, linkPath).replace(/\\/g, '/'));
+          syncFsFileSyncConfig.syncFile({
+            context,
+            destinationPath: linkPath,
+            pluginName: plugin.name,
+            sourceKind: 'rule',
+            sourcePath,
+          });
+          const outputRel = path.relative(context.outputRoot, linkPath).replace(/\\/g, '/');
+          if (context.artifactMode === 'symlink') symlinks.push(outputRel);
+          else copies.push(outputRel);
         }
       }
     }
 
     context.registerManifestEntry(context.agentName, context.behaviorConfig.behaviorName, {
+      copies,
       options: optionsFallbacks,
       symlinks,
     });

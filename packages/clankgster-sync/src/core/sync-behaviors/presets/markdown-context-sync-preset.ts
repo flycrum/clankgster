@@ -3,6 +3,7 @@ import path from 'node:path';
 import { z } from 'zod';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
 function isExcluded(relPath: string, excluded: string[]): boolean {
@@ -32,18 +33,18 @@ function listSourceDirsWithContextFile(
   return found;
 }
 
-const markdownSymlinkSyncPresetOptionsSchema = z.looseObject({
+const markdownContextSyncPresetOptionsSchema = z.looseObject({
   gitignoreComment: z.string().nullable().optional(),
   gitignoreEntry: z.string().nullable().optional(),
   sourceFile: z.string().min(1).optional(),
   targetFile: z.string().min(1).optional(),
 });
 
-/** Typed options for `MarkdownSymlinkSyncPreset`. */
-export interface MarkdownSymlinkSyncPresetOptions {
-  /** Source markdown filename used as symlink source in each discovered directory. */
+/** Typed options for `MarkdownContextSyncPreset`. */
+export interface MarkdownContextSyncPresetOptions {
+  /** Source markdown filename used as source in each discovered directory. */
   sourceFile?: string;
-  /** Target markdown filename created as the symlink output in each discovered directory. */
+  /** Target markdown filename created as the output in each discovered directory. */
   targetFile?: string;
   /** Optional comment block inserted ahead of gitignore entry updates. */
   gitignoreComment?: string | null;
@@ -51,8 +52,8 @@ export interface MarkdownSymlinkSyncPresetOptions {
   gitignoreEntry?: string | null;
 }
 
-/** Creates/removes symlinks from root context files into agent-native context filenames. */
-export class MarkdownSymlinkSyncPreset extends SyncBehaviorBase {
+/** Creates/removes markdown context outputs from root context files into agent-native context filenames. */
+export class MarkdownContextSyncPreset extends SyncBehaviorBase {
   override syncRun(context: SyncBehaviorRunContext): Result<void, Error> {
     if (context.mode === 'clear') {
       if (context.manifestEntry != null)
@@ -68,7 +69,7 @@ export class MarkdownSymlinkSyncPreset extends SyncBehaviorBase {
     if (context.manifestEntry != null)
       syncManifest.teardownEntry(context.outputRoot, context.manifestEntry);
     const markdownContextFileName = context.resolvedConfig.sourceDefaults.markdownContextFileName;
-    const parsed = markdownSymlinkSyncPresetOptionsSchema.safeParse(context.behaviorConfig.options);
+    const parsed = markdownContextSyncPresetOptionsSchema.safeParse(context.behaviorConfig.options);
     const defaultTargetFile = context.agentsCommonValues.markdownContextFileName ?? 'AGENTS.md';
     const rawOptions = parsed.success ? parsed.data : {};
     const optionsFallbacks = {
@@ -84,14 +85,23 @@ export class MarkdownSymlinkSyncPreset extends SyncBehaviorBase {
       context.excluded
     );
     const symlinks: string[] = [];
+    const copies: string[] = [];
     for (const dir of dirs) {
       const sourcePath = path.join(dir, sourceFilename);
       const targetPath = path.join(dir, targetFilename);
-      syncFs.symlinkRelative(sourcePath, targetPath);
-      symlinks.push(path.relative(context.outputRoot, targetPath).replace(/\\/g, '/'));
+      syncFsFileSyncConfig.syncFile({
+        context,
+        destinationPath: targetPath,
+        sourceKind: 'markdownContextFile',
+        sourcePath,
+      });
+      const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
+      if (context.artifactMode === 'symlink') symlinks.push(targetRel);
+      else copies.push(targetRel);
     }
 
     context.registerManifestEntry(context.agentName, context.behaviorConfig.behaviorName, {
+      copies,
       options: optionsFallbacks,
       symlinks,
     });

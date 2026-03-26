@@ -1,14 +1,8 @@
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { fsHelpers } from '../common/fs-helpers.js';
 import type { JsonValue } from 'type-fest';
 import { clankgsterIdentity } from '../../../clankgster-sync/src/index.js';
-import type { E2eTestCaseDefinition } from './e2e-define-test-case.js';
-import {
-  e2eTestsCaseRunnerConfig,
-  type RunOneE2eTestsCaseOptions,
-  type RunOneE2eTestsCaseResult,
-} from './e2e-tests.case-runner.config.js';
+import { fsHelpers } from '../common/fs-helpers.js';
 import { seedingPrefabs } from '../seeding-prefabs/seeding-prefabs.js';
 import { diffManifest } from '../utils/diff-manifest.js';
 import {
@@ -16,6 +10,16 @@ import {
   type FileStructureFixture,
 } from '../utils/file-structure-fixture.js';
 import { printLine } from '../utils/print-line.js';
+import type { E2eTestCaseDefinition } from './e2e-define-test-case.js';
+import {
+  e2eTestsCaseRunnerConfig,
+  type RunOneE2eTestsCaseOptions,
+  type RunOneE2eTestsCaseResult,
+} from './e2e-tests.case-runner.config.js';
+
+function hasAnyWriteBit(mode: number): boolean {
+  return (mode & 0o222) !== 0;
+}
 
 /**
  * Executes a single harness case: resets `caseOutputRoot`, applies seeding prefabs, writes sandbox `clankgster.config.ts`,
@@ -50,9 +54,16 @@ export async function runOneE2eTestsCase(
     options.caseOutputRoot,
     e2eTestsCaseRunnerConfig.configFileName
   );
+  const testCaseModuleUrl = pathToFileURL(options.testCaseTsPath).href;
+  /**
+   * Materializes a sandbox-local `clankgster.config.ts` at the case repo root so the real sync CLI can load
+   * config from disk exactly like production usage. We import `testCase.config` instead of serializing the
+   * object literal so function values (for example `transforms.registry` or transform hooks) remain executable.
+   * This keeps the harness path realistic while still allowing rich typed config declarations in case files.
+   */
   fs.writeFileSync(
     configPath,
-    e2eTestsCaseRunnerConfig.toConfigFileContents(testCase.config),
+    `import { testCase } from ${JSON.stringify(testCaseModuleUrl)};\n\nconst config = testCase.config;\n\nexport default config;\n`,
     'utf8'
   );
 
@@ -106,19 +117,73 @@ export async function runOneE2eTestsCase(
     actualFileStructure
   );
   if (fileStructureDiff.changed) {
-    errorLines.push(printLine.error(`${options.name}: file structure does not match fixture`));
+    errorLines.push(
+      printLine.error(
+        `${options.name}: file structure does not match fixture '${options.expectedFileStructurePath}'`
+      )
+    );
     for (const missingPath of fileStructureDiff.missing) {
-      errorLines.push(printLine.error(`${options.name}: missing path ${missingPath}`));
+      errorLines.push(printLine.error(`${options.name}: missing path '${missingPath}'`));
     }
     for (const extraPath of fileStructureDiff.extra) {
-      errorLines.push(printLine.error(`${options.name}: extra path ${extraPath}`));
+      errorLines.push(printLine.error(`${options.name}: extra path '${extraPath}'`));
     }
     for (const modifiedEntry of fileStructureDiff.modified) {
       errorLines.push(
         printLine.error(
-          `${options.name}: modified path ${modifiedEntry.path} (${modifiedEntry.reasons.join(', ')})`
+          `${options.name}: modified path '${modifiedEntry.path}' (reasons: ${modifiedEntry.reasons.join(', ')})`
         )
       );
+    }
+  }
+
+  for (const relPath of testCase.assertions?.readOnlyPaths ?? []) {
+    const absPath = fsHelpers.joinRootSafe(sandboxRoot, relPath);
+    if (!fs.existsSync(absPath)) {
+      errorLines.push(
+        printLine.error(`${options.name}: expected read-only path missing '${relPath}'`)
+      );
+      continue;
+    }
+    const stat = fs.lstatSync(absPath);
+    if (hasAnyWriteBit(stat.mode)) {
+      errorLines.push(printLine.error(`${options.name}: expected read-only path '${relPath}'`));
+    }
+  }
+
+  for (const relPath of testCase.assertions?.writablePaths ?? []) {
+    const absPath = fsHelpers.joinRootSafe(sandboxRoot, relPath);
+    if (!fs.existsSync(absPath)) {
+      errorLines.push(
+        printLine.error(`${options.name}: expected writable path missing '${relPath}'`)
+      );
+      continue;
+    }
+    const stat = fs.lstatSync(absPath);
+    if (!hasAnyWriteBit(stat.mode)) {
+      errorLines.push(printLine.error(`${options.name}: expected writable path '${relPath}'`));
+    }
+  }
+
+  for (const [relPath, requiredSnippets] of Object.entries(
+    testCase.assertions?.fileContains ?? {}
+  )) {
+    const absPath = fsHelpers.joinRootSafe(sandboxRoot, relPath);
+    if (!fs.existsSync(absPath)) {
+      errorLines.push(
+        printLine.error(`${options.name}: expected content path missing '${relPath}'`)
+      );
+      continue;
+    }
+    const contents = fs.readFileSync(absPath, 'utf8');
+    for (const snippet of requiredSnippets) {
+      if (!contents.includes(snippet)) {
+        errorLines.push(
+          printLine.error(
+            `${options.name}: expected snippet not found in '${relPath}': ${JSON.stringify(snippet)}`
+          )
+        );
+      }
     }
   }
 
