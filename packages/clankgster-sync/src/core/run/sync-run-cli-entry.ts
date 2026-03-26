@@ -1,3 +1,4 @@
+import { helloSync } from '@clankgster/dafiles';
 import chalk from 'chalk';
 import { createActor } from 'xstate';
 import { actorHelpers } from '../../common/actor-helpers.js';
@@ -14,6 +15,7 @@ export const syncRunCli = {
    * Uses `pathHelpers.getRepoRoot()` from `path-helpers.ts` for `repoRoot` (not raw `process.cwd()`), so workspace-filtered `pnpm` scripts and published installs resolve config against the real project root.
    */
   async run(mode: 'sync' | 'clear'): Promise<void> {
+    helloSync();
     const repoRoot = pathHelpers.getRepoRoot();
     const actor = createActor(syncRunMachine, {
       input: {

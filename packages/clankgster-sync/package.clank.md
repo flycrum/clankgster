@@ -6,7 +6,7 @@
 
 - Runtime flow depends on `xstate`, `zod`, `pino`, `neverthrow`, and `chalk`.
 - Use workspace catalog versions for consistency across packages.
-- **This package must not depend on `@clankgster/sync-e2e`.** E2E tests live in the e2e package and consume sync; the reverse would create a circular coupling. Shared types and helpers belong here (or a future shared package) and are re-exported from `src/index.ts` / `dist/`. Enforcement: Oxlint `eslint/no-restricted-imports` with overrides in `vite.config.ts` and repo `.oxlintrc.jsonc` (contract test: repo root `.oxlintrc-sync-no-e2e-dependency.spec.ts`).
+- **This package must not depend on `@clankgster/sync-e2e`.** E2E tests live in the e2e package and consume sync; the reverse would create a circular coupling. Shared types and helpers belong here (or a future shared package) and are re-exported from `src/index.ts` / `dist/`. Enforcement: Oxlint `eslint/no-restricted-imports` with overrides in `vite.config.ts` and repo `.oxlintrc.jsonc` (contract test: repo root `.oxlintrc-monorepo-boundaries.spec.ts`).
 
 ## Public surfaces
 

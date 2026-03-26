@@ -35,6 +35,7 @@
     "test": "vp test"
   },
   "dependencies": {
+    "@clankgster/dafiles": "workspace:*",
     "@types/lodash-es": "catalog:",
     "chalk": "catalog:",
     "lodash-es": "catalog:",
