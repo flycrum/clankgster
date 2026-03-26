@@ -5,7 +5,7 @@ description: Run all @clankgsters/sync e2e tests. Use when you need the full san
 
 # Run all e2e tests
 
-Use when you need **every** config-driven case under `scripts/test-cases/`.
+Use when you need **every** config-driven case under `src/test-cases/`.
 
 ## When to use
 
@@ -17,22 +17,22 @@ Use when you need **every** config-driven case under `scripts/test-cases/`.
 From **monorepo root**:
 
 ```bash
-pnpm test:e2e
+pnpm e2e-tests:run
 ```
 
 Or:
 
 ```bash
-pnpm -F @clankgsters/sync-e2e run test:e2e
+pnpm -F @clankgsters/sync-e2e run e2e-tests:run
 ```
 
 From **`packages/clankgsters-sync-e2e`**:
 
 ```bash
-pnpm run test:e2e
+pnpm run e2e-tests:run
 ```
 
 ## Reference
 
 - [e2e-tests-overview.md](../references/e2e-tests-overview.md)
-- Cases: `scripts/test-cases/` — see package [README.md](../../../README.md)
+- Cases: `src/test-cases/` — see package [README.md](../../../README.md)

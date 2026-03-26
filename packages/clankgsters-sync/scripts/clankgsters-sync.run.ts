@@ -1,4 +1,4 @@
-import { syncRunCli } from './core/run/sync-run-cli-entry.js';
+import { syncRunCli } from '../src/core/run/sync-run-cli-entry.js';
 
 /**
  * Runs the sync CLI entrypoint using the top-level machine in `sync` mode.
