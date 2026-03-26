@@ -49,7 +49,7 @@ Implementation details live in `src/common/path-helpers.ts` (TSDoc).
 - **Sources:** `.clank/plugins/`, `.clank/skills*` (and layouts in config), `clankgsters.config.ts`
 - **Do not** manually symlink, copy, or “register” rules, commands, skills, or plugins under `.cursor/`, `.claude/`, Codex outputs, or marketplace JSON — **run sync** and fix the pipeline if something is missing
 - **Command:** read **`packages/clankgsters-sync/package.json`** (this package) for the current **`clankgsters-sync:run`** / **`clankgsters-sync:clear`** scripts, then run from the repo root; verify outputs afterward
-- **Detail:** [clankgsters-sync-trust-sync-workflow.md](.clank/plugins/clankgsters-sync/rules/clankgsters-sync-trust-sync-workflow.md) in the driver plugin (shipped in-repo)
+- **Detail:** [clankgsters-sync-trust-sync-workflow.md](.clank/plugins/clankgsters-sync/rules/clankgsters-sync-trust-sync-workflow.md) (driver plugin under this package; path is valid in a monorepo checkout)
 
 ## Field note: sync is not a hostile takeover
 
@@ -73,7 +73,7 @@ Implementation details live in `src/common/path-helpers.ts` (TSDoc).
 
 This package is intended to be practical to adopt in open-source and enterprise projects.
 
-- The published npm artifact for `@clankgsters/sync` is licensed under MIT (see `LICENSE` in this package).
-- Repository source in the monorepo follows the PolyForm Noncommercial License 1.0.0 (see the root `LICENSE`).
-- The npm artifact currently includes `src/` and `scripts/` for typing and CLI developer experience, and those shipped files are covered by the package MIT license.
+- The published npm artifact for `@clankgsters/sync` is licensed under MIT (see [LICENSE](./LICENSE) next to this README in the package).
+- Repository source in the monorepo follows the PolyForm Noncommercial License 1.0.0 (see the repo root [LICENSE](../../LICENSE)).
+- The npm artifact currently includes `src/` and `scripts/` for typing and CLI developer experience (see [package.json](./package.json) `files` field), and those shipped files are covered by the package MIT license.
 - This structure keeps installed package usage simple while keeping source-sharing expectations explicit.
