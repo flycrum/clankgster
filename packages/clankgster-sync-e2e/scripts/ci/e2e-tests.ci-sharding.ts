@@ -29,18 +29,28 @@ export const e2eTestsCiSharding = {
    * - `CLANKGSTER_E2E_SHARD_INDEX`: current shard index (1-based)
    *
    * Behavior:
-   * - If either variable is missing/empty, returns `{ shardCount: 1, shardIndex: 1 }`
+   * - If both variables are missing/empty, returns `{ shardCount: 1, shardIndex: 1 }`
+   * - If only one variable is present, throws so CI does not silently disable sharding
    * - Throws with explicit messages for non-numeric or out-of-range values
    */
   resolveFromEnv(env: NodeJS.ProcessEnv): E2eTestsCiShardSelection {
     const rawCount = env.CLANKGSTER_E2E_SHARD_COUNT;
     const rawIndex = env.CLANKGSTER_E2E_SHARD_INDEX;
-    if (rawCount == null || rawCount.length === 0 || rawIndex == null || rawIndex.length === 0) {
+    const hasCount = rawCount != null && rawCount.length > 0;
+    const hasIndex = rawIndex != null && rawIndex.length > 0;
+    if (!hasCount && !hasIndex) {
       return { shardCount: 1, shardIndex: 1 };
     }
+    if (hasCount !== hasIndex) {
+      throw new Error(
+        `Invalid partial shard env config CLANKGSTER_E2E_SHARD_COUNT='${rawCount}' CLANKGSTER_E2E_SHARD_INDEX='${rawIndex}'`
+      );
+    }
+    const countValue = rawCount as string;
+    const indexValue = rawIndex as string;
 
-    const parsedCount = Number.parseInt(rawCount, 10);
-    const parsedIndex = Number.parseInt(rawIndex, 10);
+    const parsedCount = Number.parseInt(countValue, 10);
+    const parsedIndex = Number.parseInt(indexValue, 10);
     if (!Number.isFinite(parsedCount) || !Number.isFinite(parsedIndex)) {
       throw new Error(
         `Invalid shard values CLANKGSTER_E2E_SHARD_COUNT='${rawCount}' CLANKGSTER_E2E_SHARD_INDEX='${rawIndex}'`
