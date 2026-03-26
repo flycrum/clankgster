@@ -12,11 +12,12 @@ export const logPathFormat = {
     const resolvedRoot = path.resolve(options.repoRoot);
     const resolvedPath = path.resolve(absolutePath);
     const relativeToRepo = path.relative(resolvedRoot, resolvedPath);
-    return relativeToRepo.length > 0 &&
-      !relativeToRepo.startsWith('..') &&
-      !path.isAbsolute(relativeToRepo)
-      ? this.toPosix(relativeToRepo)
-      : this.toPosix(resolvedPath);
+    const insideRepo =
+      relativeToRepo === '' ||
+      (relativeToRepo.length > 0 &&
+        !relativeToRepo.startsWith('..') &&
+        !path.isAbsolute(relativeToRepo));
+    return insideRepo ? this.toPosix(relativeToRepo || '.') : this.toPosix(resolvedPath);
   },
 
   /** Returns a short label plus repo-relative path when available (for example `foo/bar.ts (src/foo/bar.ts)`). */
