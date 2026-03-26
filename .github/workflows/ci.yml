@@ -34,6 +34,14 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard_index: [1, 2, 3, 4]
+    env:
+      CLANKGSTER_E2E_SHARD_COUNT: 4
+      CLANKGSTER_E2E_SHARD_INDEX: ${{ matrix.shard_index }}
+      CLANKGSTER_E2E_UPLOAD_SHARD_ARTIFACTS: 'false'
     steps:
       - uses: actions/checkout@v4
 
@@ -51,3 +59,11 @@ jobs:
       - name: Sync e2e harness (sandbox + manifest)
         # Use vp run — setup-vp does not put `pnpm` on PATH (unlike local shells with Corepack/pnpm)
         run: vp run @clankgster/sync-e2e#e2e-tests:run
+
+      - name: Upload e2e shard results artifact
+        if: ${{ failure() && env.CLANKGSTER_E2E_UPLOAD_SHARD_ARTIFACTS == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-shard-${{ matrix.shard_index }}-results
+          path: packages/clankgster-sync-e2e/sandboxes/.e2e-tests.run-results
+          if-no-files-found: ignore

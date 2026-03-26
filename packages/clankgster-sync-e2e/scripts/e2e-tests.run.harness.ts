@@ -14,6 +14,7 @@ import { runOneE2eTestsCase } from '../src/core/e2e-tests.case-runner.js';
 import { asyncConcurrencyPool } from '../src/utils/async-concurrency-pool.js';
 import { orderedCompletionBuffer } from '../src/utils/ordered-completion-buffer.js';
 import { printLine } from '../src/utils/print-line.js';
+import { e2eTestsCiSharding } from './ci/e2e-tests.ci-sharding.js';
 
 /**
  * Runs the e2e loop: optional `process.argv[2]` selects a single `<caseId>` so only
@@ -34,8 +35,11 @@ async function main(): Promise<void> {
   const testCasesDir = e2ePathHelpers.getTestCasesRoot(srcRoot);
   const caseNameArg = process.argv[2];
   const discovered = e2eTestCaseDiscovery.discoverCases(testCasesDir);
-  const selectedCases =
-    caseNameArg != null ? discovered.filter((entry) => entry.caseId === caseNameArg) : discovered;
+  const { shardCount, shardIndex } = e2eTestsCiSharding.resolveFromEnv(process.env);
+  const selectedCases = e2eTestsCiSharding.filterCases(
+    caseNameArg != null ? discovered.filter((entry) => entry.caseId === caseNameArg) : discovered,
+    { shardCount, shardIndex }
+  );
 
   if (selectedCases.length === 0) {
     console.error(chalk.red('No e2e test cases found.'));
@@ -76,7 +80,7 @@ async function main(): Promise<void> {
   const maxTestsRunning = resolveMaxTestsRunning();
   console.log(
     printLine.info(
-      `Running '${runSpecs.length}' e2e case(s) with max '${maxTestsRunning}' in-flight.`
+      `Running '${runSpecs.length}' e2e case(s) on shard '${shardIndex}/${shardCount}' with max '${maxTestsRunning}' in-flight.`
     )
   );
 
