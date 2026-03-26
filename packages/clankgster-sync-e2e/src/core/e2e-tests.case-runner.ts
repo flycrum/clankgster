@@ -9,6 +9,7 @@ import {
   fileStructureFixture,
   type FileStructureFixture,
 } from '../utils/file-structure-fixture.js';
+import { logPathFormat } from '../utils/log-path-format.js';
 import { printLine } from '../utils/print-line.js';
 import type { E2eTestCaseDefinition } from './e2e-define-test-case.js';
 import {
@@ -117,10 +118,11 @@ export async function runOneE2eTestsCase(
     actualFileStructure
   );
   if (fileStructureDiff.changed) {
+    const fixturePathForLog = logPathFormat.summarizePath(options.expectedFileStructurePath, {
+      repoRoot: options.repoRoot,
+    });
     errorLines.push(
-      printLine.error(
-        `${options.name}: file structure does not match fixture '${options.expectedFileStructurePath}'`
-      )
+      printLine.error(`${options.name}: file structure does not match fixture ${fixturePathForLog}`)
     );
     for (const missingPath of fileStructureDiff.missing) {
       errorLines.push(printLine.error(`${options.name}: missing path '${missingPath}'`));

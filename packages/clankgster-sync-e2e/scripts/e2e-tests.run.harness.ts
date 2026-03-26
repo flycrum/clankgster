@@ -12,6 +12,7 @@ import { e2eTestCaseDiscovery } from '../src/common/e2e-test-case-discovery.js';
 import type { RunOneE2eTestsCaseResult } from '../src/core/e2e-tests.case-runner.config.js';
 import { runOneE2eTestsCase } from '../src/core/e2e-tests.case-runner.js';
 import { asyncConcurrencyPool } from '../src/utils/async-concurrency-pool.js';
+import { logPathFormat } from '../src/utils/log-path-format.js';
 import { orderedCompletionBuffer } from '../src/utils/ordered-completion-buffer.js';
 import { printLine } from '../src/utils/print-line.js';
 import { e2eTestsCiSharding } from './ci/e2e-tests.ci-sharding.js';
@@ -86,13 +87,16 @@ async function main(): Promise<void> {
 
   let failures = 0;
   const reportOrderedResult = (caseId: string, result: RunOneE2eTestsCaseResult): void => {
+    const sandboxPathForLog = logPathFormat.repoRelativeOrAbsolute(result.sandboxRoot, {
+      repoRoot,
+    });
     if (result.passed) {
-      console.log(printLine.success(`${caseId} passed -> ${path.resolve(result.sandboxRoot)}`));
+      console.log(printLine.successWithLink(`${caseId} ->`, sandboxPathForLog));
       return;
     }
 
     failures += 1;
-    console.log(printLine.error(`${caseId} failed -> ${path.resolve(result.sandboxRoot)}`));
+    console.log(printLine.errorWithLink(`${caseId} ->`, sandboxPathForLog));
     for (const errorLine of result.errorLines) console.log(errorLine);
   };
 
