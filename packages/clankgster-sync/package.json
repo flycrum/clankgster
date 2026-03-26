@@ -62,5 +62,9 @@
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "inlinedDependencies": {
+    "@types/mdast": "4.0.4",
+    "@types/unist": "3.0.3"
   }
 }
