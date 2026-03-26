@@ -12,8 +12,10 @@ import { e2eTestCaseDiscovery } from '../src/common/e2e-test-case-discovery.js';
 import type { RunOneE2eTestsCaseResult } from '../src/core/e2e-tests.case-runner.config.js';
 import { runOneE2eTestsCase } from '../src/core/e2e-tests.case-runner.js';
 import { asyncConcurrencyPool } from '../src/utils/async-concurrency-pool.js';
+import { logPathFormat } from '../src/utils/log-path-format.js';
 import { orderedCompletionBuffer } from '../src/utils/ordered-completion-buffer.js';
 import { printLine } from '../src/utils/print-line.js';
+import { e2eTestsCiSharding } from './ci/e2e-tests.ci-sharding.js';
 
 /**
  * Runs the e2e loop: optional `process.argv[2]` selects a single `<caseId>` so only
@@ -34,8 +36,11 @@ async function main(): Promise<void> {
   const testCasesDir = e2ePathHelpers.getTestCasesRoot(srcRoot);
   const caseNameArg = process.argv[2];
   const discovered = e2eTestCaseDiscovery.discoverCases(testCasesDir);
+  const { shardCount, shardIndex } = e2eTestsCiSharding.resolveFromEnv(process.env);
   const selectedCases =
-    caseNameArg != null ? discovered.filter((entry) => entry.caseId === caseNameArg) : discovered;
+    caseNameArg != null
+      ? discovered.filter((entry) => entry.caseId === caseNameArg)
+      : e2eTestsCiSharding.filterCases(discovered, { shardCount, shardIndex });
 
   if (selectedCases.length === 0) {
     console.error(chalk.red('No e2e test cases found.'));
@@ -56,6 +61,8 @@ async function main(): Promise<void> {
     if (!Number.isFinite(parsed)) return defaultMaxConcurrentThreads;
     return Math.max(1, Math.min(8, parsed));
   };
+  const failFast =
+    process.env.CLANKGSTER_E2E_FAIL_FAST === '1' || process.env.CLANKGSTER_E2E_FAIL_FAST === 'true';
 
   const runSpecs = selectedCases.map(({ caseConfigPath, caseDir, caseId }, offset) => {
     const caseIndex = offset + 1;
@@ -76,20 +83,26 @@ async function main(): Promise<void> {
   const maxTestsRunning = resolveMaxTestsRunning();
   console.log(
     printLine.info(
-      `Running '${runSpecs.length}' e2e case(s) with max '${maxTestsRunning}' in-flight.`
+      `Running '${runSpecs.length}' e2e case(s) on shard '${shardIndex}/${shardCount}' with max '${maxTestsRunning}' in-flight.`
     )
   );
 
   let failures = 0;
   const reportOrderedResult = (caseId: string, result: RunOneE2eTestsCaseResult): void => {
+    const sandboxPathForLog = logPathFormat.repoRelativeOrAbsolute(result.sandboxRoot, {
+      repoRoot,
+    });
     if (result.passed) {
-      console.log(printLine.success(`${caseId} passed -> ${path.resolve(result.sandboxRoot)}`));
+      console.log(printLine.successWithLink(`${caseId} ->`, sandboxPathForLog));
       return;
     }
 
     failures += 1;
-    console.log(printLine.error(`${caseId} failed -> ${path.resolve(result.sandboxRoot)}`));
+    console.log(printLine.errorWithLink(`${caseId} ->`, sandboxPathForLog));
     for (const errorLine of result.errorLines) console.log(errorLine);
+    if (failFast) {
+      throw new Error(`E2E fail-fast stopping after first failure in case '${caseId}'`);
+    }
   };
 
   const completionBuffer = orderedCompletionBuffer.create<{
