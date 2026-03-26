@@ -3,6 +3,7 @@ import { err, ok, type Result } from 'neverthrow';
 import fs from 'node:fs';
 import path from 'node:path';
 import { clankgstersIdentity } from '../../common/clankgsters-identity.js';
+import { pathHelpers } from '../../common/path-helpers.js';
 import { syncFs } from '../../common/sync-fs.js';
 
 /**
@@ -86,15 +87,18 @@ export const syncManifest = {
   /** Tears down files/symlinks recorded in one manifest entry (best effort and idempotent). */
   teardownEntry(repoRoot: string, entry: SyncManifestEntry): void {
     if (entry === true || typeof entry !== 'object') return;
+    const rootAbs = path.resolve(repoRoot);
     for (const relPath of entry.symlinks ?? []) {
-      const fullPath = path.join(repoRoot, relPath);
+      const fullPath = path.resolve(rootAbs, relPath);
+      if (!pathHelpers.isResolvedPathUnderRoot(rootAbs, fullPath)) continue;
       syncFs.unlinkIfExists(fullPath);
-      syncFs.pruneEmptyParentDirs(fullPath, repoRoot);
+      syncFs.pruneEmptyParentDirs(fullPath, rootAbs);
     }
     for (const relPath of entry.fsAutoRemoval ?? []) {
-      const fullPath = path.join(repoRoot, relPath);
+      const fullPath = path.resolve(rootAbs, relPath);
+      if (!pathHelpers.isResolvedPathUnderRoot(rootAbs, fullPath)) continue;
       syncFs.removePathIfExists(fullPath);
-      syncFs.pruneEmptyParentDirs(fullPath, repoRoot);
+      syncFs.pruneEmptyParentDirs(fullPath, rootAbs);
     }
   },
   /** Tears down all behavior entries for one agent manifest bucket. */

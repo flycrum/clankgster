@@ -78,4 +78,30 @@ describe('pathHelpers', () => {
       );
     });
   });
+
+  describe('isSafeRelativePathSegments', () => {
+    it('accepts normal repo-relative dirs', () => {
+      expect(pathHelpers.isSafeRelativePathSegments('.cursor/skills')).toBe(true);
+      expect(pathHelpers.isSafeRelativePathSegments('foo\\bar')).toBe(true);
+    });
+
+    it('rejects absolute and traversal segments', () => {
+      expect(pathHelpers.isSafeRelativePathSegments('/abs')).toBe(false);
+      expect(pathHelpers.isSafeRelativePathSegments('C:\\\\Users')).toBe(false);
+      expect(pathHelpers.isSafeRelativePathSegments('a/../b')).toBe(false);
+      expect(pathHelpers.isSafeRelativePathSegments('a/./b')).toBe(false);
+      expect(pathHelpers.isSafeRelativePathSegments('')).toBe(false);
+    });
+  });
+
+  describe('sanitizeToSingleSymlinkSegment', () => {
+    it('keeps simple names stable', () => {
+      expect(pathHelpers.sanitizeToSingleSymlinkSegment('my-skill')).toBe('my-skill');
+    });
+
+    it('collapses scoped or multi-segment names into one basename', () => {
+      expect(pathHelpers.sanitizeToSingleSymlinkSegment('@scope/pkg')).toBe('@scope-pkg');
+      expect(pathHelpers.sanitizeToSingleSymlinkSegment('a/b')).toBe('a-b');
+    });
+  });
 });

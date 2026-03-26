@@ -98,4 +98,41 @@ export const pathHelpers = {
     if (rel.startsWith('..') || path.isAbsolute(rel)) return false;
     return target === root || target.startsWith(root + path.sep);
   },
+
+  /**
+   * True when `rel` is non-empty, not absolute on POSIX or Windows, and has no `.` / `..` path segments.
+   * Use before joining config strings such as `nativeSkillsDir` under an output root.
+   */
+  isSafeRelativePathSegments(rel: string): boolean {
+    if (typeof rel !== 'string' || rel.length === 0) return false;
+    if (path.posix.isAbsolute(rel)) return false;
+    if (path.win32.isAbsolute(rel)) return false;
+    const segments = rel.split(/[/\\]+/).filter((s) => s.length > 0);
+    if (segments.length === 0) return false;
+    for (const seg of segments) {
+      if (seg === '..' || seg === '.') return false;
+    }
+    return true;
+  },
+
+  /**
+   * One symlink basename under an output root: collapses `@scope/pkg`-style names and separators,
+   * strips traversal segments, and restricts to a conservative character set.
+   */
+  sanitizeToSingleSymlinkSegment(raw: string): string {
+    const trimmed = raw.trim();
+    if (trimmed.length === 0) return 'unnamed-skill';
+    const parts = trimmed
+      .replace(/\\/g, '/')
+      .split('/')
+      .map((p) => p.replaceAll('..', '_'))
+      .filter((p) => p.length > 0 && p !== '.' && p !== '..');
+    const collapsed = parts.length > 0 ? parts.join('-') : 'unnamed-skill';
+    const base = path.posix.basename(collapsed);
+    const slug = base
+      .replaceAll('..', '_')
+      .replace(/[^a-zA-Z0-9._@-]+/g, '-')
+      .replace(/^[-.]+|[-.]+$/g, '');
+    return slug.length > 0 ? slug : 'unnamed-skill';
+  },
 };

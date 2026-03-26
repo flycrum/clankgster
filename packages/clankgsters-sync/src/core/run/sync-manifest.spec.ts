@@ -37,4 +37,24 @@ describe('syncManifest', () => {
     if (loadResult.isErr()) return;
     expect(loadResult.value.claude?.AgentSettingsSyncPreset).toBe(true);
   });
+
+  test('teardownEntry ignores symlink paths that would escape repoRoot', () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'clank-sync-teardown-'));
+    const outside = path.join(tempDir, 'outside');
+    const victim = path.join(outside, 'keep-me.txt');
+    fs.mkdirSync(outside, { recursive: true });
+    fs.writeFileSync(victim, 'x', 'utf8');
+    const safeDir = path.join(tempDir, 'repo');
+    fs.mkdirSync(safeDir, { recursive: true });
+    const safeLink = path.join(safeDir, 'ok.txt');
+    fs.writeFileSync(safeLink, 'y', 'utf8');
+
+    syncManifest.teardownEntry(safeDir, {
+      symlinks: ['../../outside/keep-me.txt', 'ok.txt'],
+    });
+
+    expect(fs.existsSync(victim)).toBe(true);
+    expect(fs.existsSync(safeLink)).toBe(false);
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
 });

@@ -1,6 +1,7 @@
-import { ok, type Result } from 'neverthrow';
+import { err, ok, type Result } from 'neverthrow';
 import path from 'node:path';
 import { z } from 'zod';
+import { pathHelpers } from '../../../common/path-helpers.js';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncSourceLayouts, type SyncSourceLayoutKey } from '../../run/sync-source-layouts.js';
 import { syncManifest } from '../../run/sync-manifest.js';
@@ -20,7 +21,14 @@ function createSkillsCustomData(): Record<SyncSourceLayoutKey, SkillsLayoutCusto
 }
 
 const skillsDirectorySyncPresetOptionsSchema = z.looseObject({
-  nativeSkillsDir: z.string().min(1).optional(),
+  nativeSkillsDir: z
+    .string()
+    .min(1)
+    .optional()
+    .refine((s) => s === undefined || pathHelpers.isSafeRelativePathSegments(s), {
+      message:
+        'nativeSkillsDir must be a relative path without absolute prefixes, drive letters, or . / .. segments',
+    }),
   skillsDirectorySyncEnabled: z.boolean().optional(),
 });
 
@@ -39,15 +47,22 @@ export interface SkillsDirectorySyncPresetOptions {
  */
 export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
   override syncRun(context: SyncBehaviorRunContext): Result<void, Error> {
+    if (context.manifestEntry != null)
+      syncManifest.teardownEntry(context.outputRoot, context.manifestEntry);
+
     const parsed = skillsDirectorySyncPresetOptionsSchema.safeParse(context.behaviorConfig.options);
+    if (!parsed.success) {
+      return err(
+        new Error(`skillsDirectorySync: invalid behavior options\n${parsed.error.message}`)
+      );
+    }
+
     const optionsFallbacks = {
       nativeSkillsDir: `.${context.agentName}/skills`,
       skillsDirectorySyncEnabled: true,
-      ...(parsed.success ? parsed.data : {}),
+      ...parsed.data,
     };
     const nativeSkillsDirRel = optionsFallbacks.nativeSkillsDir;
-    if (context.manifestEntry != null)
-      syncManifest.teardownEntry(context.outputRoot, context.manifestEntry);
     if (context.mode === 'clear' || context.behaviorConfig.enabled === false) return ok(undefined);
 
     if (!optionsFallbacks.skillsDirectorySyncEnabled) {
@@ -57,6 +72,16 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
         customData: createSkillsCustomData(),
       });
       return ok(undefined);
+    }
+
+    const outputRootResolved = path.resolve(context.outputRoot);
+    const skillsRootResolved = path.resolve(outputRootResolved, nativeSkillsDirRel);
+    if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, skillsRootResolved)) {
+      return err(
+        new Error(
+          `skillsDirectorySync: nativeSkillsDir resolves outside outputRoot (${JSON.stringify(nativeSkillsDirRel)})`
+        )
+      );
     }
 
     const sourceLayoutPaths = syncSourceLayouts.discoverSourceLayoutPaths({
@@ -76,7 +101,10 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
           const skillDir = path.join(sourceSkillsPath, entry.name);
           const markerFile = path.join(skillDir, skillFileName);
           if (!syncFs.isFile(markerFile)) continue;
-          const targetPath = path.join(context.outputRoot, nativeSkillsDirRel, entry.name);
+          const leaf = pathHelpers.sanitizeToSingleSymlinkSegment(entry.name);
+          const targetPath = path.join(outputRootResolved, nativeSkillsDirRel, leaf);
+          const targetResolved = path.resolve(targetPath);
+          if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, targetResolved)) continue;
           syncFs.symlinkRelative(skillDir, targetPath);
           const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
           symlinks.add(targetRel);
@@ -96,8 +124,10 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
             const skillDir = path.join(pluginSkillsDir, entry.name);
             const markerFile = path.join(skillDir, skillFileName);
             if (!syncFs.isFile(markerFile)) continue;
-            const skillTargetName = `${plugin.name}-${entry.name}`;
-            const targetPath = path.join(context.outputRoot, nativeSkillsDirRel, skillTargetName);
+            const skillTargetName = `${pathHelpers.sanitizeToSingleSymlinkSegment(plugin.name)}-${pathHelpers.sanitizeToSingleSymlinkSegment(entry.name)}`;
+            const targetPath = path.join(outputRootResolved, nativeSkillsDirRel, skillTargetName);
+            const targetResolved = path.resolve(targetPath);
+            if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, targetResolved)) continue;
             syncFs.symlinkRelative(skillDir, targetPath);
             const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
             symlinks.add(targetRel);
