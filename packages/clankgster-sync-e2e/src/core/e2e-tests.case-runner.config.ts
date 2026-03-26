@@ -100,6 +100,14 @@ export const e2eTestsCaseRunnerConfig = {
   },
 
   /**
+   * Builds `clankgster.config.ts` contents that import `testCase.config` from a case module path.
+   * Using an import keeps function-valued config fields executable while avoiding absolute-path hashes.
+   */
+  toConfigFileContentsFromTestCaseImport(testCaseImportPath: string): string {
+    return `import { testCase } from ${JSON.stringify(testCaseImportPath)};\n\nconst config = testCase.config;\n\nexport default config;\n`;
+  },
+
+  /**
    * Absolute path to the sync manifest JSON after a run inside `sandboxRoot`. Precedence matches `sync-e2e-fixtures.ts`:
    * `config.syncManifestPath` (absolute or relative to sandbox), else `config.syncCacheDir` + manifest filename, else `manifestRelativePath`.
    */

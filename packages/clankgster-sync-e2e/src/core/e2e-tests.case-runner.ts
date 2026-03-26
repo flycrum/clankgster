@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { JsonValue } from 'type-fest';
 import { clankgsterIdentity } from '../../../clankgster-sync/src/index.js';
@@ -55,16 +56,16 @@ export async function runOneE2eTestsCase(
     options.caseOutputRoot,
     e2eTestsCaseRunnerConfig.configFileName
   );
-  const testCaseModuleUrl = pathToFileURL(options.testCaseTsPath).href;
-  /**
-   * Materializes a sandbox-local `clankgster.config.ts` at the case repo root so the real sync CLI can load
-   * config from disk exactly like production usage. We import `testCase.config` instead of serializing the
-   * object literal so function values (for example `transforms.registry` or transform hooks) remain executable.
-   * This keeps the harness path realistic while still allowing rich typed config declarations in case files.
-   */
+  const relativeImportPath = path
+    .relative(options.caseOutputRoot, options.testCaseTsPath)
+    .split(path.sep)
+    .join('/');
+  const testCaseImportPath = relativeImportPath.startsWith('.')
+    ? relativeImportPath
+    : `./${relativeImportPath}`;
   fs.writeFileSync(
     configPath,
-    `import { testCase } from ${JSON.stringify(testCaseModuleUrl)};\n\nconst config = testCase.config;\n\nexport default config;\n`,
+    e2eTestsCaseRunnerConfig.toConfigFileContentsFromTestCaseImport(testCaseImportPath),
     'utf8'
   );
 
