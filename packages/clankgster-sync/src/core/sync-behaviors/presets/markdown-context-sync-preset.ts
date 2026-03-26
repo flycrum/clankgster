@@ -3,7 +3,7 @@ import path from 'node:path';
 import { z } from 'zod';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
-import { syncFileSyncConfig } from '../../sync-transforms/sync-file-sync.config.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
 function isExcluded(relPath: string, excluded: string[]): boolean {
@@ -33,7 +33,7 @@ function listSourceDirsWithContextFile(
   return found;
 }
 
-const markdownSymlinkSyncPresetOptionsSchema = z.looseObject({
+const markdownContextSyncPresetOptionsSchema = z.looseObject({
   gitignoreComment: z.string().nullable().optional(),
   gitignoreEntry: z.string().nullable().optional(),
   sourceFile: z.string().min(1).optional(),
@@ -69,7 +69,7 @@ export class MarkdownContextSyncPreset extends SyncBehaviorBase {
     if (context.manifestEntry != null)
       syncManifest.teardownEntry(context.outputRoot, context.manifestEntry);
     const markdownContextFileName = context.resolvedConfig.sourceDefaults.markdownContextFileName;
-    const parsed = markdownSymlinkSyncPresetOptionsSchema.safeParse(context.behaviorConfig.options);
+    const parsed = markdownContextSyncPresetOptionsSchema.safeParse(context.behaviorConfig.options);
     const defaultTargetFile = context.agentsCommonValues.markdownContextFileName ?? 'AGENTS.md';
     const rawOptions = parsed.success ? parsed.data : {};
     const optionsFallbacks = {
@@ -89,7 +89,7 @@ export class MarkdownContextSyncPreset extends SyncBehaviorBase {
     for (const dir of dirs) {
       const sourcePath = path.join(dir, sourceFilename);
       const targetPath = path.join(dir, targetFilename);
-      syncFileSyncConfig.syncFile({
+      syncFsFileSyncConfig.syncFile({
         context,
         destinationPath: targetPath,
         sourceKind: 'markdownContextFile',

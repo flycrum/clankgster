@@ -1,11 +1,15 @@
 import { z } from 'zod';
 import { clankgsterIdentity } from '../../common/clankgster-identity.js';
-import {
-  syncTransformHooks,
-  type ClankgsterSyncHooks,
-  type SyncArtifactMode,
-} from '../sync-transforms/sync-transform-hooks.js';
+import { syncFsTransformRegistry } from '../sync-fs-transforms/sync-fs-transform-registry.js';
+import type {
+  SyncFsTransformFileType,
+  SyncFsTransformsConfigInput,
+} from '../sync-fs-transforms/sync-fs-transform.types.js';
 import { clankgsterConfigDefaults } from './clankgster-config.defaults.js';
+
+function makeFunctionSchema<T>() {
+  return z.custom<T>((value) => value == null || typeof value === 'function');
+}
 
 const clankgsterBehaviorSchema = z.object({
   /**
@@ -80,15 +84,13 @@ const clankgsterSourceDefaultsSchema = z.object({
 const clankgsterConfigSchemaValueBase = z.object({
   /** Named agent entries (coding-agent front-ends) and their behavior definitions. */
   agents: z.record(z.string(), clankgsterAgentSchema).default({}),
-  /** Paths or globs excluded from sync/discovery (repo-relative strings). */
-  excluded: z.array(z.string()).optional().default([]),
   /** Global output artifact strategy; `copy` enables in-file transforms and hooks. */
   artifactMode: z
     .enum(['copy', 'symlink'])
     .optional()
     .default(clankgsterConfigDefaults.CONSTANTS.artifactMode),
-  /** Optional transform callbacks used by copy-mode content processing. */
-  hooks: syncTransformHooks.hooksSchema,
+  /** Paths or globs excluded from sync/discovery (repo-relative strings). */
+  excluded: z.array(z.string()).optional().default([]),
   /** Enables file logging for sync scripts when true. */
   loggingEnabled: z.boolean().optional().default(false),
   /** Global source/layout defaults used by discovery and selected behaviors. */
@@ -109,6 +111,52 @@ const clankgsterConfigSchemaValueBase = z.object({
     .boolean()
     .optional()
     .default(clankgsterConfigDefaults.CONSTANTS.syncOutputReadOnly),
+  /** Sync-fs-transforms configuration: registry, hooks, options, and template variable delimiters. */
+  transforms: z
+    .object({
+      hooks: z
+        .record(z.string(), z.record(z.string(), makeFunctionSchema<(...args: any[]) => unknown>()))
+        .optional()
+        .default({}),
+      options: z.record(z.string(), z.record(z.string(), z.unknown())).optional().default({}),
+      registry: makeFunctionSchema<
+        (
+          definitions: ReturnType<typeof syncFsTransformRegistry.getBuiltInDefinitions>
+        ) => ReturnType<typeof syncFsTransformRegistry.getBuiltInDefinitions>
+      >()
+        .optional()
+        .default((definitions) => definitions),
+      templateVariables: z
+        .object({
+          closingDelimiterToken: z
+            .string()
+            .min(1)
+            .optional()
+            .default(
+              clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables.closingDelimiterToken
+            ),
+          openingDelimiterToken: z
+            .string()
+            .min(1)
+            .optional()
+            .default(
+              clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables.openingDelimiterToken
+            ),
+        })
+        .optional()
+        .default({
+          ...clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables,
+        }),
+    })
+    .optional()
+    .default({
+      hooks: {},
+      options: {},
+      registry: (definitions) => definitions,
+      templateVariables: {
+        ...clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables,
+      },
+    }),
 });
 
 const clankgsterConfigSchemaValue = clankgsterConfigSchemaValueBase.transform((data) => ({
@@ -121,7 +169,8 @@ export type ClankgsterBehaviorConfig = z.infer<typeof clankgsterBehaviorSchema>;
 export type ClankgsterAgentConfig = z.infer<typeof clankgsterAgentSchema>;
 export type ClankgsterSourceDefaultsConfig = z.infer<typeof clankgsterSourceDefaultsSchema>;
 export type ClankgsterConfig = z.infer<typeof clankgsterConfigSchemaValue>;
-export type { ClankgsterSyncHooks, SyncArtifactMode };
+export type SyncArtifactMode = 'copy' | 'symlink';
+export type { SyncFsTransformFileType, SyncFsTransformsConfigInput };
 
 /** Zod entry points: single-agent shape vs full repo config (see `ClankgsterAgentConfig` / `ClankgsterConfig`). */
 export const clankgsterConfigSchema = {

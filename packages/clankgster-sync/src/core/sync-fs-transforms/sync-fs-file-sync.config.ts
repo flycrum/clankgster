@@ -1,10 +1,10 @@
-import path from 'node:path';
 import { syncFs } from '../../common/sync-fs.js';
 import type { SyncBehaviorRunContext } from '../sync-behaviors/sync-behavior-base.js';
-import { syncContentPipeline } from './sync-content-pipeline.js';
+import { syncFsContentPipeline } from './sync-fs-content-pipeline.js';
+import { syncFsTransformGlobalContextConfig } from './sync-fs-transform-global-context.config.js';
 
 /** File-by-file sync helper for copy/symlink artifact modes. */
-export const syncFileSyncConfig = {
+export const syncFsFileSyncConfig = {
   /** Returns true when a file path should be processed via markdown transforms. */
   isMarkdownLikeFile(filePath: string): boolean {
     return /\.(md|mdc|markdown)$/i.test(filePath);
@@ -33,25 +33,20 @@ export const syncFileSyncConfig = {
     }
     if (this.isMarkdownLikeFile(sourcePath)) {
       const contents = syncFs.readFileUtf8(sourcePath);
-      const transformed = syncContentPipeline.process({
+      const transformed = syncFsContentPipeline.process({
         artifactMode: context.artifactMode,
         contents,
-        globalContext: {
+        globalContext: syncFsTransformGlobalContextConfig.create({
           agentName: context.agentName,
           behaviorName: context.behaviorConfig.behaviorName,
-          destinationFileAbsolutePath: path.resolve(destinationPath),
-          destinationFileRelativePath: path
-            .relative(context.outputRoot, destinationPath)
-            .replace(/\\/g, '/'),
+          destinationPath,
           outputRoot: context.outputRoot,
           pluginName: options.pluginName,
           repoRoot: context.repoRoot,
           resolvedConfig: context.resolvedConfig,
-          sourceFileAbsolutePath: path.resolve(sourcePath),
-          sourceFileRelativePath: path.relative(context.repoRoot, sourcePath).replace(/\\/g, '/'),
+          sourcePath,
           sourceKind: options.sourceKind,
-          syncTimestampIso: new Date().toISOString(),
-        },
+        }),
       });
       syncFs.writeFileUtf8(destinationPath, transformed);
       this.applyReadOnlyIfEnabled(context, destinationPath);

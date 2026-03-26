@@ -1,8 +1,8 @@
 import type {
   ClankgsterBehaviorConfig,
   ClankgsterConfig,
+  SyncArtifactMode,
 } from '../configs/clankgster-config.schema.js';
-import type { SyncArtifactMode } from '../sync-transforms/sync-transform-hooks.js';
 
 /** Artifact mode, whether to copy or symlink files during sync, resolution helpers shared across sync behaviors. */
 export const syncArtifactModeConfig = {

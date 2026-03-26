@@ -1,8 +1,8 @@
 import type { AgentMarketplaceJsonSyncPresetOptions } from '../../sync-behaviors/presets/agent-marketplace-json-sync-preset.js';
-import type { AgentRulesDirectorySyncPresetOptions } from '../../sync-behaviors/presets/agent-rules-symlink-sync-preset.js';
+import type { AgentRulesDirectorySyncPresetOptions } from '../../sync-behaviors/presets/agent-rules-directory-sync-preset.js';
 import type { AgentSettingsSyncPresetOptions } from '../../sync-behaviors/presets/agent-settings-sync-preset.js';
 import type { MarkdownSectionSyncPresetOptions } from '../../sync-behaviors/presets/markdown-section-sync-preset.js';
-import type { MarkdownContextSyncPresetOptions } from '../../sync-behaviors/presets/markdown-symlink-sync-preset.js';
+import type { MarkdownContextSyncPresetOptions } from '../../sync-behaviors/presets/markdown-context-sync-preset.js';
 import type { PluginsCacheBustSyncPresetOptions } from '../../sync-behaviors/presets/plugins-cache-bust-sync-preset.js';
 import type { PluginsDirectorySyncPresetOptions } from '../../sync-behaviors/presets/plugins-directory-sync-preset.js';
 import type { SkillsDirectorySyncPresetOptions } from '../../sync-behaviors/presets/skills-directory-sync-preset.js';

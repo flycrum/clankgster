@@ -1,0 +1,61 @@
+{
+  "cursor": {
+    "SkillsDirectorySyncPreset": {
+      "copies": [],
+      "options": {
+        "nativeSkillsDir": ".cursor/skills",
+        "skillsDirectorySyncEnabled": true
+      },
+      "symlinks": [],
+      "customData": {
+        "nestedRegular": {
+          "symlinks": [],
+          "copies": []
+        },
+        "nestedLocal": {
+          "symlinks": [],
+          "copies": []
+        },
+        "shorthandRegular": {
+          "symlinks": [],
+          "copies": []
+        },
+        "shorthandLocal": {
+          "symlinks": [],
+          "copies": []
+        }
+      }
+    },
+    "PluginsDirectorySyncPreset": {
+      "copies": [".cursor/commands/root/root-cmd.md", ".cursor/rules/root/root-rule.mdc"],
+      "options": {
+        "targetRoot": ".cursor",
+        "rulesMarkdownFrontmatter": "---\nalwaysApply: true\n---\n\n"
+      },
+      "symlinks": [],
+      "fsAutoRemoval": [".cursor/rules/root/root-rule.mdc"],
+      "customData": {
+        "nestedRegular": {
+          "symlinks": [],
+          "copies": [".cursor/commands/root/root-cmd.md", ".cursor/rules/root/root-rule.mdc"],
+          "fsAutoRemoval": [".cursor/rules/root/root-rule.mdc"]
+        },
+        "nestedLocal": {
+          "symlinks": [],
+          "copies": [],
+          "fsAutoRemoval": []
+        },
+        "shorthandRegular": {
+          "symlinks": [],
+          "copies": [],
+          "fsAutoRemoval": []
+        },
+        "shorthandLocal": {
+          "symlinks": [],
+          "copies": [],
+          "fsAutoRemoval": []
+        }
+      }
+    }
+  }
+}

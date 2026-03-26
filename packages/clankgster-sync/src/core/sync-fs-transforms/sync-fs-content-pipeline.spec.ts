@@ -1,15 +1,15 @@
-import { describe, expect, test } from 'vite-plus/test';
 import path from 'node:path';
+import { describe, expect, test } from 'vite-plus/test';
 import { clankgsterConfigSchema } from '../configs/clankgster-config.schema.js';
-import { syncContentPipeline } from './sync-content-pipeline.js';
-import type { SyncTransformGlobalContext } from './sync-transform-hooks.js';
+import { syncFsContentPipeline } from './sync-fs-content-pipeline.js';
+import type { SyncFsTransformGlobalContext } from './sync-fs-transform.types.js';
 
 function makeGlobalContext(
-  overrides: Partial<SyncTransformGlobalContext> = {}
-): SyncTransformGlobalContext {
+  overrides: Partial<SyncFsTransformGlobalContext> = {}
+): SyncFsTransformGlobalContext {
   const repoRoot = '/repo';
   const resolvedConfig = clankgsterConfigSchema.config.parse({
-    hooks: overrides.resolvedConfig?.hooks ?? {},
+    transforms: overrides.resolvedConfig?.transforms ?? {},
   });
   return {
     agentName: 'cursor',
@@ -27,9 +27,9 @@ function makeGlobalContext(
   };
 }
 
-describe('syncContentPipeline', () => {
+describe('syncFsContentPipeline', () => {
   test('returns original contents in symlink mode', () => {
-    const output = syncContentPipeline.process({
+    const output = syncFsContentPipeline.process({
       artifactMode: 'symlink',
       contents: 'hello',
       globalContext: makeGlobalContext(),
@@ -38,7 +38,7 @@ describe('syncContentPipeline', () => {
   });
 
   test('rewrites relative markdown links against destination file path', () => {
-    const output = syncContentPipeline.process({
+    const output = syncFsContentPipeline.process({
       artifactMode: 'copy',
       contents: '[docs](../references/README.md)',
       globalContext: makeGlobalContext(),
@@ -47,7 +47,7 @@ describe('syncContentPipeline', () => {
   });
 
   test('resolves built-in template variables and trims whitespace', () => {
-    const output = syncContentPipeline.process({
+    const output = syncFsContentPipeline.process({
       artifactMode: 'copy',
       contents:
         'a=[[[clankgster_agent_name]]], b=[[[ clankgster_time ]]], c=[[[       clankgster_agent_name]]]',
@@ -58,8 +58,26 @@ describe('syncContentPipeline', () => {
     expect(output).toContain('c=cursor');
   });
 
+  test('supports configurable template delimiters', () => {
+    const output = syncFsContentPipeline.process({
+      artifactMode: 'copy',
+      contents: '[[clankgster_agent_name]]',
+      globalContext: makeGlobalContext({
+        resolvedConfig: clankgsterConfigSchema.config.parse({
+          transforms: {
+            templateVariables: {
+              closingDelimiterToken: ']]',
+              openingDelimiterToken: '[[',
+            },
+          },
+        }),
+      }),
+    });
+    expect(output).toContain('cursor');
+  });
+
   test('leaves unknown template variables unchanged by default', () => {
-    const output = syncContentPipeline.process({
+    const output = syncFsContentPipeline.process({
       artifactMode: 'copy',
       contents: '[[[ my_custom_local_var ]]]',
       globalContext: makeGlobalContext(),
@@ -68,12 +86,25 @@ describe('syncContentPipeline', () => {
   });
 
   test('applies xml hook outside fenced code blocks only', () => {
-    const context = makeGlobalContext();
-    context.resolvedConfig.hooks.onXmlTransform = (payload) => ({
-      ...payload,
-      innerContent: payload.innerContent.toUpperCase(),
+    const context = makeGlobalContext({
+      resolvedConfig: clankgsterConfigSchema.config.parse({
+        transforms: {
+          hooks: {
+            SyncFsTransformMarkdownXmlSegmentsPreset: {
+              onXmlTransform: (payload: {
+                attributes: Record<string, string>;
+                innerContent: string;
+                tagName: string;
+              }) => ({
+                ...payload,
+                innerContent: payload.innerContent.toUpperCase(),
+              }),
+            },
+          },
+        },
+      }),
     });
-    const output = syncContentPipeline.process({
+    const output = syncFsContentPipeline.process({
       artifactMode: 'copy',
       contents: '<thinking phase="a">hello</thinking>\n\n```md\n<thinking>skip</thinking>\n```',
       globalContext: context,
@@ -83,10 +114,19 @@ describe('syncContentPipeline', () => {
   });
 
   test('validates hook payload shape via zod', () => {
-    const context = makeGlobalContext();
-    context.resolvedConfig.hooks.onLinkTransform = () => ({ linkUrl: 1 }) as unknown as never;
+    const context = makeGlobalContext({
+      resolvedConfig: clankgsterConfigSchema.config.parse({
+        transforms: {
+          hooks: {
+            SyncFsTransformMarkdownLinkPreset: {
+              onLinkTransform: () => ({ linkUrl: 1 }) as unknown as never,
+            },
+          },
+        },
+      }),
+    });
     expect(() =>
-      syncContentPipeline.process({
+      syncFsContentPipeline.process({
         artifactMode: 'copy',
         contents: '[x](./x.md)',
         globalContext: context,
@@ -95,7 +135,7 @@ describe('syncContentPipeline', () => {
   });
 
   test('default link rewrite keeps anchors and absolute urls unchanged', () => {
-    const output = syncContentPipeline.process({
+    const output = syncFsContentPipeline.process({
       artifactMode: 'copy',
       contents: '[a](#head) [b](https://example.com/x) [c](mailto:test@example.com)',
       globalContext: makeGlobalContext({

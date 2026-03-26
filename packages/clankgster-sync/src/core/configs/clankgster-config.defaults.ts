@@ -37,5 +37,12 @@ export const clankgsterConfigDefaults = {
       /** Root source directory for marketplace content (default: `.clank`). */
       sourceDir: '.clank',
     },
+    /** Default transform-level configuration values. */
+    transforms: {
+      templateVariables: {
+        closingDelimiterToken: ']]]',
+        openingDelimiterToken: '[[[',
+      },
+    },
   },
 } as const;

@@ -1,4 +1,5 @@
 import { err, ok, type Result } from 'neverthrow';
+import { syncFsTransformRegistry } from '../sync-fs-transforms/sync-fs-transform-registry.js';
 import { clankgsterConfig } from './clankgster-config.js';
 import {
   clankgsterConfigSchema,
@@ -53,9 +54,21 @@ export const configResolverConfig = {
           ...acc.sourceDefaults,
           ...layer.sourceDefaults,
         },
-        hooks: {
-          ...acc.hooks,
-          ...layer.hooks,
+        transforms: {
+          ...acc.transforms,
+          ...layer.transforms,
+          hooks: {
+            ...acc.transforms?.hooks,
+            ...layer.transforms?.hooks,
+          },
+          options: {
+            ...acc.transforms?.options,
+            ...layer.transforms?.options,
+          },
+          templateVariables: {
+            ...acc.transforms?.templateVariables,
+            ...layer.transforms?.templateVariables,
+          },
         },
         excluded: layer.excluded ?? acc.excluded,
       } as Partial<ClankgsterConfig>;
@@ -79,9 +92,23 @@ export const configResolverConfig = {
 
   /** Parses partial config through `clankgsterConfigSchema.config` and returns a full `ClankgsterConfig` or a parse error. */
   validateShape(config: Partial<ClankgsterConfig>): Result<ClankgsterConfig, Error> {
+    const oldHooksValue = (config as Record<string, unknown>).hooks;
+    if (oldHooksValue != null) {
+      return err(
+        new Error(
+          'config shape changed: top-level "hooks" is removed; use "transforms.hooks" instead'
+        )
+      );
+    }
     const parsed = clankgsterConfigSchema.config.safeParse(config);
     if (!parsed.success) {
       return err(new Error(parsed.error.message));
+    }
+    try {
+      syncFsTransformRegistry.resolveRuntimeDefinitions(parsed.data.transforms);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(new Error(`invalid transforms.registry output: ${message}`));
     }
     return ok(parsed.data);
   },

@@ -1,6 +1,6 @@
 import type { ClankgsterAgentConfig } from '../../configs/clankgster-config.schema.js';
 import type { MarkdownSectionSyncPresetOptions } from '../../sync-behaviors/presets/markdown-section-sync-preset.js';
-import type { MarkdownContextSyncPresetOptions } from '../../sync-behaviors/presets/markdown-symlink-sync-preset.js';
+import type { MarkdownContextSyncPresetOptions } from '../../sync-behaviors/presets/markdown-context-sync-preset.js';
 import type { SkillsDirectorySyncPresetOptions } from '../../sync-behaviors/presets/skills-directory-sync-preset.js';
 import { defineAgentConstants } from './define-agent-constants.js';
 

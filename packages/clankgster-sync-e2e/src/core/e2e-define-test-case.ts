@@ -4,6 +4,8 @@ import type { TestCaseSeedingPrefabItem } from '../seeding-prefabs/seeding-prefa
 export interface E2eTestCaseDefinition {
   /** Optional post-sync file assertions beyond manifest/file-structure fixtures. */
   assertions?: {
+    /** Path/content assertions for synced files (path => required text snippets). */
+    fileContains?: Record<string, string[]>;
     /** Paths expected to be read-only after sync (repo-root relative to case sandbox). */
     readOnlyPaths?: string[];
     /** Paths expected to remain writable after sync (repo-root relative to case sandbox). */

@@ -1,0 +1,88 @@
+{
+  "entries": [
+    {
+      "kind": "dir",
+      "path": ".clank"
+    },
+    {
+      "kind": "dir",
+      "path": ".clank/plugins"
+    },
+    {
+      "kind": "dir",
+      "path": ".clank/plugins/root"
+    },
+    {
+      "kind": "dir",
+      "path": ".clank/plugins/root/.cursor-plugin"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/plugins/root/.cursor-plugin/plugin.json",
+      "hash": "sha256:5f8dfbef6677ceb631d0ddbd4c7e547108804ec7738e692ee9235889dcd7b635"
+    },
+    {
+      "kind": "dir",
+      "path": ".clank/plugins/root/commands"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/plugins/root/commands/root-cmd.md",
+      "hash": "sha256:5efeb0d02e032b34d81d723629658615c2f99f437ab51d26c934c51916374b8d"
+    },
+    {
+      "kind": "dir",
+      "path": ".clank/plugins/root/rules"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/plugins/root/rules/root-rule.md",
+      "hash": "sha256:554022c1a9d1440c83fc6757029b377468aec0ff9edd9630ce29e53783fd6d76"
+    },
+    {
+      "kind": "dir",
+      "path": ".clankgster-cache"
+    },
+    {
+      "kind": "file",
+      "path": ".clankgster-cache/sync-manifest.json",
+      "hash": "sha256:8469d4f8e2398fd8eed51e689924701538a1e1e0a0dfb893479f927990978c25"
+    },
+    {
+      "kind": "dir",
+      "path": ".cursor"
+    },
+    {
+      "kind": "dir",
+      "path": ".cursor/commands"
+    },
+    {
+      "kind": "dir",
+      "path": ".cursor/commands/root"
+    },
+    {
+      "kind": "file",
+      "path": ".cursor/commands/root/root-cmd.md",
+      "hash": "sha256:41b5f8fb6f42c8fb2aa8fea959c83ec6974925018dd4ebc521a230bb5f30f28a"
+    },
+    {
+      "kind": "dir",
+      "path": ".cursor/rules"
+    },
+    {
+      "kind": "dir",
+      "path": ".cursor/rules/root"
+    },
+    {
+      "kind": "file",
+      "path": ".cursor/rules/root/root-rule.mdc",
+      "hash": "sha256:ec77d982dcc75a2e687f38ce06deda1dc655278ed961892b29de1fc8b9ba6293"
+    },
+    {
+      "kind": "file",
+      "path": "clankgster.config.ts",
+      "hash": "sha256:181f4d203f4c9c3df60d8c079d0f05b8764d02df3d9408584a304d10221e0c1f"
+    }
+  ],
+  "version": 1
+}

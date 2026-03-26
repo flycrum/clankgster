@@ -85,7 +85,7 @@ describe('clankgsterConfigResolver', () => {
     expect(claude?.behaviors[0]?.behaviorName).toBe('AgentRulesDirectorySyncPreset');
   });
 
-  test('merges hooks key-by-key so later layers can add callbacks', async () => {
+  test('merges transforms.hooks key-by-key so later layers can add callbacks', async () => {
     const onLinkTransform = (
       payload: { linkName: string; linkUrl: string },
       _hookContext: unknown,
@@ -102,8 +102,12 @@ describe('clankgsterConfigResolver', () => {
         priority: 10,
         load: () =>
           ({
-            hooks: {
-              onLinkTransform,
+            transforms: {
+              hooks: {
+                SyncFsTransformMarkdownLinkPreset: {
+                  onLinkTransform,
+                },
+              },
             },
           }) as unknown as Partial<ClankgsterConfig>,
       },
@@ -112,8 +116,12 @@ describe('clankgsterConfigResolver', () => {
         priority: 20,
         load: () =>
           ({
-            hooks: {
-              onTemplateVariable,
+            transforms: {
+              hooks: {
+                SyncFsTransformMarkdownTemplateVariablesPreset: {
+                  onTemplateVariable,
+                },
+              },
             },
           }) as unknown as Partial<ClankgsterConfig>,
       },
@@ -124,7 +132,23 @@ describe('clankgsterConfigResolver', () => {
     );
     expect(result.isOk()).toBe(true);
     if (result.isErr()) return;
-    expect(result.value.resolvedConfig.hooks.onLinkTransform).toBe(onLinkTransform);
-    expect(result.value.resolvedConfig.hooks.onTemplateVariable).toBe(onTemplateVariable);
+    expect(
+      result.value.resolvedConfig.transforms.hooks.SyncFsTransformMarkdownLinkPreset
+        ?.onLinkTransform
+    ).toBe(onLinkTransform);
+    expect(
+      result.value.resolvedConfig.transforms.hooks.SyncFsTransformMarkdownTemplateVariablesPreset
+        ?.onTemplateVariable
+    ).toBe(onTemplateVariable);
+  });
+
+  test('rejects legacy top-level hooks config', () => {
+    const result = clankgsterConfigResolver.validateShape({
+      hooks: {},
+    } as unknown as Partial<ClankgsterConfig>);
+    expect(result.isErr()).toBe(true);
+    if (result.isErr()) {
+      expect(result.error.message).toContain('top-level "hooks" is removed');
+    }
   });
 });

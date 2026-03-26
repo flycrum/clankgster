@@ -27,11 +27,18 @@ describe('processAgentQueueMachine', () => {
           },
           artifactMode: 'copy',
           excluded: [],
-          hooks: {},
           sourceDefaults: { ...clankgsterConfigDefaults.CONSTANTS.sourceDefaults },
           syncCacheDir: clankgsterIdentity.SYNC_CACHE_DIR,
           syncManifestPath: clankgsterIdentity.defaultSyncManifestRelativePath,
           syncOutputReadOnly: false,
+          transforms: {
+            hooks: {},
+            options: {},
+            registry: (definitions) => definitions,
+            templateVariables: {
+              ...clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables,
+            },
+          },
         },
       },
     });

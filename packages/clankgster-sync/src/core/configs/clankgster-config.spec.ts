@@ -61,7 +61,7 @@ describe('clankgsterConfig', () => {
     expect(config.syncOutputReadOnly).toBe(false);
   });
 
-  test('preserves hooks callbacks and explicit artifact mode', () => {
+  test('preserves transforms hooks callbacks and explicit artifact mode', () => {
     const onTemplateVariable = (
       payload: { replacement: string | null; variableName: string },
       _hookContext: unknown,
@@ -69,11 +69,17 @@ describe('clankgsterConfig', () => {
     ) => payload;
     const config = clankgsterConfig.define({
       artifactMode: 'symlink',
-      hooks: {
-        onTemplateVariable,
+      transforms: {
+        hooks: {
+          SyncFsTransformMarkdownTemplateVariablesPreset: {
+            onTemplateVariable,
+          },
+        },
       },
     });
     expect(config.artifactMode).toBe('symlink');
-    expect(config.hooks?.onTemplateVariable).toBe(onTemplateVariable);
+    expect(
+      config.transforms?.hooks?.SyncFsTransformMarkdownTemplateVariablesPreset?.onTemplateVariable
+    ).toBe(onTemplateVariable);
   });
 });

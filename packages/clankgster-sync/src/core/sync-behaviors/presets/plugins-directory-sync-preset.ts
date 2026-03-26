@@ -3,8 +3,9 @@ import path from 'node:path';
 import { z } from 'zod';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
-import { syncContentPipeline } from '../../sync-transforms/sync-content-pipeline.js';
-import { syncFileSyncConfig } from '../../sync-transforms/sync-file-sync.config.js';
+import { syncFsContentPipeline } from '../../sync-fs-transforms/sync-fs-content-pipeline.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
+import { syncFsTransformGlobalContextConfig } from '../../sync-fs-transforms/sync-fs-transform-global-context.config.js';
 import type { SyncSourceLayoutKey } from '../../run/sync-source-layouts.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
@@ -81,7 +82,7 @@ export class PluginsDirectorySyncPreset extends SyncBehaviorBase {
           const targetPath = path.join(targetRoot, 'commands', plugin.name, commandFile.name);
           const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
           if (this.isExcluded(targetRel, context.excluded)) continue;
-          syncFileSyncConfig.syncFile({
+          syncFsFileSyncConfig.syncFile({
             context,
             destinationPath: targetPath,
             pluginName: plugin.name,
@@ -107,25 +108,20 @@ export class PluginsDirectorySyncPreset extends SyncBehaviorBase {
           const targetRel = path.relative(context.outputRoot, targetPath).replace(/\\/g, '/');
           if (this.isExcluded(targetRel, context.excluded)) continue;
           const markdown = syncFs.readFileUtf8(sourcePath);
-          const transformedMarkdown = syncContentPipeline.process({
+          const transformedMarkdown = syncFsContentPipeline.process({
             artifactMode: context.artifactMode,
             contents: markdown,
-            globalContext: {
+            globalContext: syncFsTransformGlobalContextConfig.create({
               agentName: context.agentName,
               behaviorName: context.behaviorConfig.behaviorName,
-              destinationFileAbsolutePath: path.resolve(targetPath),
-              destinationFileRelativePath: targetRel,
+              destinationPath: targetPath,
               outputRoot: context.outputRoot,
               pluginName: plugin.name,
               repoRoot: context.repoRoot,
               resolvedConfig: context.resolvedConfig,
-              sourceFileAbsolutePath: path.resolve(sourcePath),
-              sourceFileRelativePath: path
-                .relative(context.repoRoot, sourcePath)
-                .replace(/\\/g, '/'),
+              sourcePath,
               sourceKind: 'rule',
-              syncTimestampIso: new Date().toISOString(),
-            },
+            }),
           });
           syncFs.writeFileUtf8(
             targetPath,

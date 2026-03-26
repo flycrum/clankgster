@@ -37,7 +37,7 @@ export interface ClankgsterAgentsConfigInput {
 /** Extra top-level config input accepted by `define` before normalization. */
 export interface ClankgsterConfigInput extends Omit<
   Partial<ClankgsterConfig>,
-  'agents' | 'sourceDefaults'
+  'agents' | 'sourceDefaults' | 'transforms'
 > {
   /**
    * Named coding-agent entries (`claude`, `cursor`, `codex`, …) plus optional `custom`; values may be
@@ -46,6 +46,8 @@ export interface ClankgsterConfigInput extends Omit<
   agents?: ClankgsterAgentsConfigInput;
   /** Partial overrides for discovery paths, marketplace name, skill filename, and related layout defaults merged into schema defaults. */
   sourceDefaults?: Partial<ClankgsterSourceDefaultsConfig>;
+  /** Partial transform config merged onto default registry/options/hooks/template settings. */
+  transforms?: Partial<ClankgsterConfig['transforms']>;
 }
 
 function toBehaviorConfig(
@@ -160,6 +162,7 @@ export const clankgsterConfig = {
     return {
       ...config,
       agents: normalizeAgentsConfig(config.agents),
+      artifactMode: config.artifactMode ?? clankgsterConfigDefaults.CONSTANTS.artifactMode,
       sourceDefaults: {
         sourceDir:
           config.sourceDefaults?.sourceDir ??
@@ -180,9 +183,23 @@ export const clankgsterConfig = {
           config.sourceDefaults?.skillFileName ??
           clankgsterConfigDefaults.CONSTANTS.sourceDefaults.skillFileName,
       },
-      artifactMode: config.artifactMode ?? clankgsterConfigDefaults.CONSTANTS.artifactMode,
-      hooks: {
-        ...config.hooks,
+      transforms: {
+        ...config.transforms,
+        hooks: {
+          ...config.transforms?.hooks,
+        },
+        options: {
+          ...config.transforms?.options,
+        },
+        registry: config.transforms?.registry ?? ((definitions) => definitions),
+        templateVariables: {
+          openingDelimiterToken:
+            config.transforms?.templateVariables?.openingDelimiterToken ??
+            clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables.openingDelimiterToken,
+          closingDelimiterToken:
+            config.transforms?.templateVariables?.closingDelimiterToken ??
+            clankgsterConfigDefaults.CONSTANTS.transforms.templateVariables.closingDelimiterToken,
+        },
       },
       syncCacheDir: config.syncCacheDir ?? clankgsterConfigDefaults.CONSTANTS.syncCacheDir,
       syncOutputReadOnly:

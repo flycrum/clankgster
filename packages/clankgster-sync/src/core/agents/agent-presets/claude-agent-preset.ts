@@ -1,8 +1,8 @@
 import type { ClankgsterAgentConfig } from '../../configs/clankgster-config.schema.js';
 import type { AgentMarketplaceJsonSyncPresetOptions } from '../../sync-behaviors/presets/agent-marketplace-json-sync-preset.js';
-import type { AgentRulesDirectorySyncPresetOptions } from '../../sync-behaviors/presets/agent-rules-symlink-sync-preset.js';
+import type { AgentRulesDirectorySyncPresetOptions } from '../../sync-behaviors/presets/agent-rules-directory-sync-preset.js';
 import type { AgentSettingsSyncPresetOptions } from '../../sync-behaviors/presets/agent-settings-sync-preset.js';
-import type { MarkdownContextSyncPresetOptions } from '../../sync-behaviors/presets/markdown-symlink-sync-preset.js';
+import type { MarkdownContextSyncPresetOptions } from '../../sync-behaviors/presets/markdown-context-sync-preset.js';
 import type { PluginsCacheBustSyncPresetOptions } from '../../sync-behaviors/presets/plugins-cache-bust-sync-preset.js';
 import type { SkillsDirectorySyncPresetOptions } from '../../sync-behaviors/presets/skills-directory-sync-preset.js';
 import { defineAgentConstants } from './define-agent-constants.js';

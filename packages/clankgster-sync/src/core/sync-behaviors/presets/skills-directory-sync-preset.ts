@@ -5,7 +5,7 @@ import { pathHelpers } from '../../../common/path-helpers.js';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
 import { syncSourceLayouts, type SyncSourceLayoutKey } from '../../run/sync-source-layouts.js';
-import { syncFileSyncConfig } from '../../sync-transforms/sync-file-sync.config.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
 interface SkillsLayoutCustomData {
@@ -132,7 +132,7 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
             for (const relFile of syncFs.walkFilePathsRecursive(skillDir)) {
               const sourceFilePath = path.join(skillDir, relFile);
               const destinationFilePath = path.join(targetPath, relFile);
-              syncFileSyncConfig.syncFile({
+              syncFsFileSyncConfig.syncFile({
                 context,
                 destinationPath: destinationFilePath,
                 sourceKind: 'skill',
@@ -183,7 +183,7 @@ export class SkillsDirectorySyncPreset extends SyncBehaviorBase {
               for (const relFile of syncFs.walkFilePathsRecursive(skillDir)) {
                 const sourceFilePath = path.join(skillDir, relFile);
                 const destinationFilePath = path.join(targetPath, relFile);
-                syncFileSyncConfig.syncFile({
+                syncFsFileSyncConfig.syncFile({
                   context,
                   destinationPath: destinationFilePath,
                   pluginName: plugin.name,

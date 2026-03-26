@@ -23,7 +23,32 @@ The name “Clankgster”, though playing off of a derogatory term “Clankers�
 
 Node-first package for Clankgster sync logic: implementation lives under **`src/`**; **`scripts/`** holds CLI entry files run with **`tsx`** (see `package.json` → `clankgster-sync:*`), and the **publishable surface** is built with **`vp pack src/index.ts`** into `dist/`.
 
-Default artifact mode is now **copy-first** (`artifactMode: 'copy'`), with optional `artifactMode: 'symlink'` for legacy filesystem behavior. Copy mode enables markdown transforms and hook callbacks (`onLinkTransform`, `onXmlTransform`, `onTemplateVariable`) plus optional `syncOutputReadOnly`.
+Default artifact mode is now **copy-first** (`artifactMode: 'copy'`), with optional `artifactMode: 'symlink'` for legacy filesystem behavior. Copy mode runs the new **sync-fs-transforms** pipeline (`transforms.registry`, `transforms.hooks`, `transforms.options`, `transforms.templateVariables`) and supports optional `syncOutputReadOnly`.
+
+## Copy-first transform examples
+
+- **Link rewrite:** relative links in synced markdown can be rewritten from destination context (great for plugin `references/` docs that are intentionally not copied).
+- **Template variables:** built-ins like `[[[clankgster_agent_name]]]` and `[[[clankgster_time]]]`, plus custom variables via `transforms.hooks.SyncFsTransformMarkdownTemplateVariablesPreset.onTemplateVariable`.
+- **XML segments:** tags like `<thinking phase="draft">...</thinking>` can be transformed via `transforms.hooks.SyncFsTransformMarkdownXmlSegmentsPreset.onXmlTransform`.
+
+Example shape in `clankgster.config.ts`:
+
+```ts
+const config = clankgsterConfig.define({
+  artifactMode: 'copy',
+  transforms: {
+    hooks: {
+      SyncFsTransformMarkdownTemplateVariablesPreset: {
+        onTemplateVariable: (payload) => payload,
+      },
+    },
+    templateVariables: {
+      openingDelimiterToken: '[[[',
+      closingDelimiterToken: ']]]',
+    },
+  },
+});
+```
 
 ## Commands (from repo root)
 

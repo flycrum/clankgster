@@ -4,10 +4,10 @@ import { z } from 'zod';
 import { pathHelpers } from '../../../common/path-helpers.js';
 import { syncFs } from '../../../common/sync-fs.js';
 import { syncManifest } from '../../run/sync-manifest.js';
-import { syncFileSyncConfig } from '../../sync-transforms/sync-file-sync.config.js';
+import { syncFsFileSyncConfig } from '../../sync-fs-transforms/sync-fs-file-sync.config.js';
 import { SyncBehaviorBase, type SyncBehaviorRunContext } from '../sync-behavior-base.js';
 
-const agentRulesSymlinkSyncPresetOptionsSchema = z.looseObject({
+const agentRulesDirectorySyncPresetOptionsSchema = z.looseObject({
   rulesDir: z.string().min(1).optional(),
   syncManifest: z.string().min(1).nullable().optional(),
 });
@@ -26,12 +26,12 @@ export class AgentRulesDirectorySyncPreset extends SyncBehaviorBase {
     if (context.manifestEntry != null)
       syncManifest.teardownEntry(context.outputRoot, context.manifestEntry);
 
-    const parsed = agentRulesSymlinkSyncPresetOptionsSchema.safeParse(
+    const parsed = agentRulesDirectorySyncPresetOptionsSchema.safeParse(
       context.behaviorConfig.options
     );
     if (!parsed.success) {
       return err(
-        new Error(`agentRulesSymlinkSync: invalid behavior options\n${parsed.error.message}`)
+        new Error(`agentRulesDirectorySync: invalid behavior options\n${parsed.error.message}`)
       );
     }
 
@@ -49,7 +49,7 @@ export class AgentRulesDirectorySyncPreset extends SyncBehaviorBase {
     if (!pathHelpers.isResolvedPathUnderRoot(outputRootResolved, rulesDirResolved)) {
       return err(
         new Error(
-          `agentRulesSymlinkSync: rulesDir resolves outside outputRoot (${JSON.stringify(rulesDirRel)})`
+          `agentRulesDirectorySync: rulesDir resolves outside outputRoot (${JSON.stringify(rulesDirRel)})`
         )
       );
     }
@@ -67,7 +67,7 @@ export class AgentRulesDirectorySyncPreset extends SyncBehaviorBase {
         for (const file of files) {
           const sourcePath = path.join(pluginRulesDir, file.name);
           const linkPath = path.join(rulesDirResolved, plugin.name, file.name);
-          syncFileSyncConfig.syncFile({
+          syncFsFileSyncConfig.syncFile({
             context,
             destinationPath: linkPath,
             pluginName: plugin.name,
