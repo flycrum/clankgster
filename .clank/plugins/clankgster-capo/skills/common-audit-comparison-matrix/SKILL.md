@@ -17,7 +17,7 @@ Verify accuracy of the content type comparison matrix against current platform d
 
 ## Scope
 
-Targets the specific file [common-content-type-comparison-matrix.md](../../docs/common-content-type-comparison-matrix.md) within the clankgster-consigliere plugin. Also checks any 1:1 docs files the matrix links to.
+Targets the specific file [common-content-type-comparison-matrix.md](../../docs/common-content-type-comparison-matrix.md) within the clankgster-capo plugin. Also checks any 1:1 docs files the matrix links to.
 
 ## Out of scope
 

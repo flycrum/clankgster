@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * consigliere MCP server (no-build JS implementation)
+ * capo MCP server (no-build JS implementation)
  *
  * Implements a stdio JSON-RPC MCP server with explicit tool -> skill routing.
  *
@@ -20,7 +20,7 @@
  */
 
 const PROTOCOL_VERSION = '2024-11-05';
-const SERVER_INFO = { name: 'consigliere', version: '0.2.0' };
+const SERVER_INFO = { name: 'capo', version: '0.2.0' };
 const CONTRACT_VERSION = '1.0.0';
 
 /**

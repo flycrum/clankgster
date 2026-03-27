@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "consigliere": {
-      "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/consigliere-mcp-server.js"]
-    }
-  }
-}

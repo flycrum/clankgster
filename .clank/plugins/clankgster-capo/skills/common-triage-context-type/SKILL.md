@@ -7,10 +7,10 @@ description: >-
   new context artifact.
 allowed-tools:
   - AskUserQuestion
-  - mcp__consigliere__Triage
-  - mcp__consigliere__PluginsWrite
-  - mcp__consigliere__SkillsWrite
-  - mcp__consigliere__ClankMdWrite
+  - mcp__capo__Triage
+  - mcp__capo__PluginsWrite
+  - mcp__capo__SkillsWrite
+  - mcp__capo__ClankMdWrite
 ---
 
 # Triage context type

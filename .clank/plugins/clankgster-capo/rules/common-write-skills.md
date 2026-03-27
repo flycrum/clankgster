@@ -38,7 +38,7 @@ Example:
 ```yaml
 allowed-tools:
   - AskUserQuestion
-  - mcp__consigliere__PluginsWrite
+  - mcp__capo__PluginsWrite
 ```
 
 ## Guardrail

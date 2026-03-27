@@ -255,11 +255,11 @@ Examples:
 ```yaml
 allowed-tools:
   - AskUserQuestion
-  - mcp__consigliere__PluginsWrite
+  - mcp__capo__PluginsWrite
 ```
 
 ```yaml
-allowed-tools: mcp__consigliere__*
+allowed-tools: mcp__capo__*
 ```
 
 Prefer explicit tool names for sensitive or high-impact skills. Use wildcard access only when the skill genuinely needs many tools from the same server.

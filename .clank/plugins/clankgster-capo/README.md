@@ -1,4 +1,4 @@
-# clankgster-consigliere plugin
+# clankgster-capo plugin
 
 Context engineering toolkit for all three Clankgster source pathways: `plugins/`, `skills/`, and `CLANK.md`.
 
@@ -74,7 +74,7 @@ This plugin includes an advanced MCP-to-skill routing pattern for specialized or
 ### MCP
 
 - [`.mcp.json`](.mcp.json) declares plugin-provided MCP tools.
-- [`servers/consigliere-mcp-server.js`](servers/consigliere-mcp-server.js) implements explicit tool registration and route handoff payloads.
+- [`servers/capo-mcp-server.js`](servers/capo-mcp-server.js) implements explicit tool registration and route handoff payloads.
 - [`common-internal-mcp-routing-spec`](docs/common-internal-mcp-routing-spec.md) is the canonical mapping contract.
 
 ## After changing this plugin

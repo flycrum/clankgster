@@ -6,9 +6,9 @@ description: >-
   workflows. Use for comprehensive audit passes and prioritized remediation.
 allowed-tools:
   - AskUserQuestion
-  - mcp__consigliere__PluginsUpdate
-  - mcp__consigliere__SkillsUpdate
-  - mcp__consigliere__ClankMdUpdate
+  - mcp__capo__PluginsUpdate
+  - mcp__capo__SkillsUpdate
+  - mcp__capo__ClankMdUpdate
 ---
 
 # Audit orchestrator

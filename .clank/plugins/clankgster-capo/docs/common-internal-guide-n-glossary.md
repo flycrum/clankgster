@@ -1,6 +1,6 @@
 # Guide and glossary
 
-Background terminology and guardrails for `clankgster-consigliere`.
+Background terminology and guardrails for `clankgster-capo`.
 
 ## Core terms
 

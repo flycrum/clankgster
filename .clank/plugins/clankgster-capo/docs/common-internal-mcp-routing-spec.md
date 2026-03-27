@@ -1,6 +1,6 @@
 # MCP routing spec (internal)
 
-Canonical explicit routing contract for `clankgster-consigliere`.
+Canonical explicit routing contract for `clankgster-capo`.
 
 This is an advanced, edge-case pattern for complex orchestration. It is not the default recommendation for typical plugin authoring.
 

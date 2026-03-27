@@ -1,14 +1,14 @@
 # Self-referential guide: this plugin as a beacon
 
-**Purpose:** The `clankgster-consigliere` plugin is itself a well-structured example of good context engineering. Agents can reference its own structure, files, and write patterns as a concrete model when creating or audit other plugins.
+**Purpose:** The `clankgster-capo` plugin is itself a well-structured example of good context engineering. Agents can reference its own structure, files, and write patterns as a concrete model when creating or audit other plugins.
 
 ## Rule
 
-When creating, audit, or refining plugin content and you need a concrete example of how to structure files, write descriptions, organize content types, or cross-reference between files — use this plugin (`clankgster-consigliere`) as a reference implementation.
+When creating, audit, or refining plugin content and you need a concrete example of how to structure files, write descriptions, organize content types, or cross-reference between files — use this plugin (`clankgster-capo`) as a reference implementation.
 
 ## How to use as reference
 
-Use the Glob tool to scan `.clank/plugins/clankgster-consigliere/` and the Read tool to examine specific files. Treat what you find as a working example of the conventions documented in this plugin's own rules and references.
+Use the Glob tool to scan `.clank/plugins/clankgster-capo/` and the Read tool to examine specific files. Treat what you find as a working example of the conventions documented in this plugin's own rules and references.
 
 Useful patterns to observe:
 

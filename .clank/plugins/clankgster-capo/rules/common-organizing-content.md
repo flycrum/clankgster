@@ -23,7 +23,7 @@
 
 ## Naming
 
-Use the plugin's internal naming standard. For `clankgster-consigliere`, use `plugins-`, `skills-`, `clankmd-`, or `common-` prefixes.
+Use the plugin's internal naming standard. For `clankgster-capo`, use `plugins-`, `skills-`, `clankmd-`, or `common-` prefixes.
 
 ## Cross-references
 

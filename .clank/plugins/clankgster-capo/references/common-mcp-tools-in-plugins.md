@@ -33,10 +33,10 @@ This pattern is recommended only for complex edge cases where you need explicit 
 - Define a canonical route table in docs and code.
 - Reference tools in skill frontmatter only when needed.
 
-## Consigliere-specific implementation
+## Capo-specific implementation
 
 - Canonical spec: [common-internal-mcp-routing-spec.md](../docs/common-internal-mcp-routing-spec.md)
-- Server implementation: [`servers/consigliere-mcp-server.js`](../servers/consigliere-mcp-server.js)
+- Server implementation: [`servers/capo-mcp-server.js`](../servers/capo-mcp-server.js)
 
 ## References
 

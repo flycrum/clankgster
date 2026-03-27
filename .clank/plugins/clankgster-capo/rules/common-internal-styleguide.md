@@ -1,4 +1,4 @@
-# Internal styleguide for clankgster-consigliere
+# Internal styleguide for clankgster-capo
 
 **Purpose:** Define internal naming and organization conventions for this plugin itself.
 
@@ -17,7 +17,7 @@ For skill directories in `skills/`, use the same pathway prefixes.
 
 ## Internal language
 
-Use `internal` when discussing how `clankgster-consigliere` is maintained.
+Use `internal` when discussing how `clankgster-capo` is maintained.
 
 Do not use `external` in file names. Use the word only in this styleguide and [common-internal-guide-n-glossary.md](../docs/common-internal-guide-n-glossary.md) to explain the boundary.
 

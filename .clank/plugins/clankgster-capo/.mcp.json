@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "capo": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/capo-mcp-server.js"]
+    }
+  }
+}
