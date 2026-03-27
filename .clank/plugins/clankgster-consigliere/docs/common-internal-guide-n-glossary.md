@@ -10,6 +10,11 @@ Background terminology and guardrails for `clankgster-consigliere`.
 - **source pathway `CLANK.md`**: canonical context file (these can live at any directory level)
 - **plugin skill**: `skills/<name>/SKILL.md` inside a plugin
 - **standalone skill**: `SKILL.md` in the source pathway `skills/`
+- **routing contract**: explicit, versioned map between MCP tool names and target skill workflows (no implicit binding)
+
+## Advanced pattern label
+
+MCP-to-skill routing contracts are an advanced pattern. They are non-default and should be avoided for most plugins.
 
 ## Naming scheme in this plugin
 
@@ -42,5 +47,4 @@ Use this order:
 
 - MCP is optional and should be used when predictable, structured, chainable actions are useful
 - Skills should remain usable without MCP-only assumptions
-- If an MCP tool exists for a pathway/action, triaging routes to it after pathway selection
-
+- If MCP routing is used, maintain a canonical route table in [common-internal-mcp-routing-spec.md](common-internal-mcp-routing-spec.md)

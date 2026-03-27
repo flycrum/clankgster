@@ -4,7 +4,6 @@ description: >-
   Writes standalone source pathway `skills/` artifacts (`SKILL.md`) with
   discovery-grade descriptions and verification checklists. Use when creating a
   single reusable workflow without a full plugin wrapper.
-allowed-tools: mcp__consigliere__*
 ---
 
 # Writing standalone skills context
@@ -12,6 +11,8 @@ allowed-tools: mcp__consigliere__*
 ## Scope
 
 Create `.clank/skills/<name>/SKILL.md` (or shorthand variants) for one workflow.
+
+This skill is also the target of MCP route `skills.writing` (`SkillsWriting`).
 
 ## Source layouts
 
@@ -25,11 +26,10 @@ Create `.clank/skills/<name>/SKILL.md` (or shorthand variants) for one workflow.
 1. Gather workflow intent and triggers.
 2. Draft frontmatter (`name`, `description`) and body sections.
 3. Validate description specificity and trigger terms.
-4. Call MCP tool `SkillsWriting`.
+4. Produce finalized skill artifact output.
 
 ## Verification
 
 - [ ] Valid `SKILL.md` structure
 - [ ] Description is high signal
 - [ ] Output path is in source pathway `skills/`
-

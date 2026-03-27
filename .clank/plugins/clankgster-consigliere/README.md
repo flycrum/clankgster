@@ -1,6 +1,10 @@
 # clankgster-consigliere plugin
 
-Context engineering toolkit for all three Clankgster source pathways: `plugins/`, `skills/`, and `CLANK.md`. Includes triaging, writing, updating, removing, auditing, and optional MCP tool wiring for chained workflows.
+Context engineering toolkit for all three Clankgster source pathways: `plugins/`, `skills/`, and `CLANK.md`.
+
+## Important caveat
+
+This plugin includes an advanced MCP-to-skill routing pattern for specialized orchestration use cases. It is intentionally overbuilt and is **not** the default recommendation for typical plugin authoring.
 
 ## Layout
 
@@ -55,7 +59,8 @@ Context engineering toolkit for all three Clankgster source pathways: `plugins/`
 
 ### Docs
 
-- [`common-guide-n-glossary`](docs/common-internal-guide-n-glossary.md)
+- [`common-internal-guide-n-glossary`](docs/common-internal-guide-n-glossary.md)
+- [`common-internal-mcp-routing-spec`](docs/common-internal-mcp-routing-spec.md)
 - [`common-content-type-decision-tree`](docs/common-content-type-decision-tree.md)
 - [`common-content-type-comparison-matrix`](docs/common-content-type-comparison-matrix.md)
 - [`common-deep-research-report`](docs/common-deep-research-report.md)
@@ -68,8 +73,9 @@ Context engineering toolkit for all three Clankgster source pathways: `plugins/`
 
 ### MCP
 
-- [`.mcp.json`](.mcp.json) declares plugin-provided MCP tools
-- [`servers/consigliere-mcp-server.js`](servers/consigliere-mcp-server.js) exposes triaging/writing/updating/removing/auditing tool handlers
+- [`.mcp.json`](.mcp.json) declares plugin-provided MCP tools.
+- [`servers/consigliere-mcp-server.js`](servers/consigliere-mcp-server.js) implements explicit tool registration and route handoff payloads.
+- [`common-internal-mcp-routing-spec`](docs/common-internal-mcp-routing-spec.md) is the canonical mapping contract.
 
 ## After changing this plugin
 

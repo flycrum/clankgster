@@ -2,21 +2,26 @@
 name: common-triaging-context-type
 description: >-
   Triages new context requests across Clankgster source pathways (`plugins/`,
-  `skills/`, `CLANK.md`) and routes to pathway-specific writing tools. Use when
+  `skills/`, `CLANK.md`) and dispatches to pathway-specific MCP routes. Use when
   users ask where context should live, what to create first, or how to start a
   new context artifact.
-allowed-tools: mcp__consigliere__*
+allowed-tools:
+  - AskUserQuestion
+  - mcp__consigliere__Triaging
+  - mcp__consigliere__PluginsWriting
+  - mcp__consigliere__SkillsWriting
+  - mcp__consigliere__ClankMdWriting
 ---
 
 # Triaging context type
 
 ## Scope
 
-Choose a source pathway, explain why, and trigger a pathway-specific MCP writing tool.
+Choose a source pathway, explain why, and dispatch to the appropriate MCP route.
 
 ## Steps
 
-1. Present four options with AskQuestion:
+1. Present four options with AskUserQuestion:
    - analyze and recommend
    - source pathway `skills/`
    - source pathway `plugins/`
@@ -28,10 +33,10 @@ Choose a source pathway, explain why, and trigger a pathway-specific MCP writing
    - If source pathway `skills/` is selected, call `SkillsWriting`.
    - If source pathway `plugins/` is selected, call `PluginsWriting`.
    - If source pathway `CLANK.md` is selected, call `ClankMdWriting`.
-5. Return the selected pathway and next action.
+5. Return the selected pathway and routed next action.
 
 ## Verification
 
 - [ ] Exactly one pathway selected
 - [ ] Reasoning included for analyze and recommend selection
-- [ ] MCP tool call made for selected pathway
+- [ ] MCP route dispatch call made for selected pathway

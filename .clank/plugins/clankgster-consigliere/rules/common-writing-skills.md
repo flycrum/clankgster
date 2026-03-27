@@ -21,17 +21,29 @@ Skills are workflow orchestrators. Keep descriptions high-signal and bodies proc
 - Plugin-name prefixes are not required in source skill directory names
 - Sync may add plugin-level namespacing downstream
 
+## Description best practices
+
+- Use user-intent language and trigger phrases
+- Do not encode MCP tool IDs in `description`
+- Put implementation/tool details in the body steps
+
 ## MCP guidance
 
-When a plugin provides MCP tools, document and optionally restrict with `allowed-tools`.
+- `allowed-tools` defines permission scope only
+- `allowed-tools` does not create tool -> skill routing
+- Prefer explicit MCP tool lists when practical
 
 Example:
 
 ```yaml
-allowed-tools: mcp__consigliere__*
+allowed-tools:
+  - AskUserQuestion
+  - mcp__consigliere__PluginsWriting
 ```
 
-Use MCP for structured and chainable workflows. Do not require MCP for simple editing tasks.
+## Guardrail
+
+Do not recommend MCP-to-skill orchestration by default. Treat it as an advanced pattern for high-complexity systems only.
 
 ## Cross-references
 

@@ -4,7 +4,6 @@ description: >-
   Writes source pathway `plugins/` content from raw input using a draft/refine/
   finalize workflow. Use when creating or expanding a plugin with coordinated
   skills, rules, references, docs, and manifests.
-allowed-tools: mcp__consigliere__*
 ---
 
 # Writing plugin context
@@ -12,6 +11,8 @@ allowed-tools: mcp__consigliere__*
 ## Scope
 
 Create or expand plugin content under source pathway `plugins/`.
+
+This skill is a direct execution workflow and is also the target of MCP route `plugins.writing` (`PluginsWriting`).
 
 ## Steps
 
@@ -21,7 +22,6 @@ Create or expand plugin content under source pathway `plugins/`.
 4. Draft files.
 5. Refine descriptions and references.
 6. Finalize and verify naming/link integrity.
-7. Call MCP tool `PluginsWriting` for structured orchestration/handoff.
 
 ## Verification
 

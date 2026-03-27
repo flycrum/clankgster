@@ -1,17 +1,21 @@
 ---
 name: common-auditing-all-orchestrator
 description: >-
-  Orchestrates pathway-aware audits across plugin content, standalone skills, and
-  CLANK.md, then consolidates findings and optionally chains into updating
+  Orchestrates pathway-aware audits across plugin content, standalone skills,
+  and CLANK.md, then consolidates findings and optionally routes into updating
   workflows. Use for comprehensive audit passes and prioritized remediation.
-allowed-tools: mcp__consigliere__*
+allowed-tools:
+  - AskUserQuestion
+  - mcp__consigliere__PluginsUpdating
+  - mcp__consigliere__SkillsUpdating
+  - mcp__consigliere__ClankMdUpdating
 ---
 
 # Auditing orchestrator
 
 ## Scope
 
-Run available audits, summarize findings, and offer a direct update handoff.
+Run available audits, summarize findings, and offer a direct update route handoff.
 
 ## Steps
 
@@ -21,8 +25,8 @@ Run available audits, summarize findings, and offer a direct update handoff.
    - link/content checks for standalone skills and CLANK.md
 3. Consolidate findings by severity.
 4. Produce prioritized remediation actions.
-5. Ask user whether to launch updating flow now.
-6. If yes, call MCP tool:
+5. Ask user whether to launch updating flow now with AskUserQuestion.
+6. If yes, call MCP update route:
    - `PluginsUpdating`
    - `SkillsUpdating`
    - `ClankMdUpdating`
@@ -32,14 +36,14 @@ Run available audits, summarize findings, and offer a direct update handoff.
 - health summary table
 - top findings list
 - concrete update actions
-- optional update handoff confirmation
+- optional update route confirmation
 
 ## Verification
 
 - [ ] Pathway explicitly identified
 - [ ] Only relevant audits were run
 - [ ] Findings include file-level references
-- [ ] Update handoff offered
+- [ ] Update route handoff offered
 
 ## Cross-references
 

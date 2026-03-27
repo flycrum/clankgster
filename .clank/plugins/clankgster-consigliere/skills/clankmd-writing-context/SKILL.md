@@ -2,16 +2,17 @@
 name: clankmd-writing-context
 description: >-
   Writes new source pathway CLANK.md content using condensed global-context
-  conventions. Use when creating or drafting root context that should preload
+  conventions. Use when creating or drafting context files that should preload
   into agent sessions, and enforce brevity plus high-signal linking.
-allowed-tools: mcp__consigliere__*
 ---
 
 # Writing CLANK.md context
 
 ## Scope
 
-Create new `CLANK.md` content for global session preload.
+Create new `CLANK.md` content for session preload behavior.
+
+This skill is also the target of MCP route `clankmd.writing` (`ClankMdWriting`).
 
 ## Steps
 
@@ -19,11 +20,10 @@ Create new `CLANK.md` content for global session preload.
 2. Read existing `CLANK.md` if present.
 3. Keep only high-signal global constraints; move deep detail to links.
 4. Draft using [clankmd-template.md](../../references/clankmd-template.md).
-5. Call MCP tool `ClankMdWriting` with structured draft payload.
+5. Produce finalized CLANK.md output.
 
 ## Verification
 
 - [ ] Draft is concise
 - [ ] Content is global, not plugin-local
 - [ ] Links point to deeper material
-

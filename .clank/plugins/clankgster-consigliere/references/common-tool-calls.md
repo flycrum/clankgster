@@ -242,3 +242,26 @@ allowed-tools:
 - Only grant permissions the skill workflow actually needs
 - Prefer specific patterns (`Bash(npm:*)`) over broad access (`Bash`)
 - Omit `allowed-tools` entirely if the skill does not need elevated permissions
+
+### MCP permission patterns
+
+Use MCP permission names in the form:
+
+- `mcp__<server>__<tool>` for a specific tool
+- `mcp__<server>__*` for wildcard server access
+
+Examples:
+
+```yaml
+allowed-tools:
+  - AskUserQuestion
+  - mcp__consigliere__PluginsWriting
+```
+
+```yaml
+allowed-tools: mcp__consigliere__*
+```
+
+Prefer explicit tool names for sensitive or high-impact skills. Use wildcard access only when the skill genuinely needs many tools from the same server.
+
+Important: these permission entries scope tool access only. They do not create automatic tool -> skill routing.
