@@ -423,6 +423,6 @@ If the user selects **Yes**, use the Write tool to create `<plugin-path>/AUDIT-R
 ## Cross-references
 
 - [Prompt techniques](../../references/common-prompt-techniques.md) — quality criteria for emphasis, XML tags, framing, examples
-- [Write descriptions](../../references/common-write-descriptions.md) — description field evaluation criteria
+- [Write descriptions](../skills-write-context/docs/description-frontmatter.md) — description field evaluation criteria
 - [Write rules](../../rules/common-write-rules.md) — rule file conventions
 - [Write skills](../../rules/common-write-skills.md) — skill file conventions

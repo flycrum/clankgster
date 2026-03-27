@@ -10,11 +10,12 @@ description: >-
 
 ## Steps
 
-1. Identify files to remove.
-2. Scan for inbound references from rules, skills, docs, and references.
-3. Detect orphaned reference files after removal.
-4. Ask user before deleting indirect/orphaned references.
-5. Produce finalized removal + cleanup output.
+1. Read [reference.md](reference.md).
+2. Identify files to remove.
+3. Scan for inbound references from rules, skills, docs, and references.
+4. Detect orphaned reference files after removal.
+5. Ask user before deleting indirect/orphaned references.
+6. Produce finalized removal + cleanup output.
 
 This skill is also the target of MCP route `plugins.remove` (`PluginsRemove`).
 
@@ -23,3 +24,7 @@ This skill is also the target of MCP route `plugins.remove` (`PluginsRemove`).
 - [ ] Primary removals complete
 - [ ] Inbound references cleaned or updated
 - [ ] Orphaned-reference decision confirmed by user
+
+## Cross-references
+
+- [reference.md](reference.md)

@@ -11,9 +11,17 @@ For files in this plugin, use pathway prefixes only:
 - `clankmd-`
 - `common-`
 
-No exceptions for markdown content files in `rules/`, `references/`, and `docs/`.
+No exceptions for markdown content files in plugin-root `rules/`, `references/`, and `docs/`.
 
 For skill directories in `skills/`, use the same pathway prefixes.
+
+## Skill-local exceptions
+
+When documentation is colocated inside a specific skill directory, descriptive topic names are allowed:
+
+- Allowed in `skills/<skill-name>/docs/*.md`, `skills/<skill-name>/references/*.md`, and `skills/<skill-name>/reference.md`
+- Do not require pathway prefixes inside a skill-owned subtree, because the parent skill directory already provides scope
+- Prefer one concern per file and link from the owning skill's `reference.md`
 
 ## Internal language
 

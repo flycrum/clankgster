@@ -21,7 +21,7 @@ Useful patterns to observe:
 | Comparison matrix with footnotes | [common-content-type-comparison-matrix.md](../docs/common-content-type-comparison-matrix.md) |
 | Plugin manifests (Claude + Cursor) | `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json` |
 | README as index | `README.md` |
-| Template files for each content type | [plugins-template-skill.md](../references/plugins-template-skill.md), [common-template-rule.md](../references/common-template-rule.md), [common-template-command.md](../references/common-template-command.md), [common-template-hooks.md](../references/common-template-hooks.md), [common-template-agent.md](../references/common-template-agent.md), [clankmd-template.md](../references/clankmd-template.md) |
+| Template files for each content type | [template-skill.md](../skills/skills-write-context/docs/template-skill.md), [template-rule.md](../skills/plugins-write-context/docs/template-rule.md), [template-command.md](../skills/plugins-write-context/docs/template-command.md), [template-hooks.md](../skills/plugins-write-context/docs/template-hooks.md), [template-agent.md](../skills/plugins-write-context/docs/template-agent.md), [clankmd-template.md](../references/clankmd-template.md) |
 
 ## Guard rails
 

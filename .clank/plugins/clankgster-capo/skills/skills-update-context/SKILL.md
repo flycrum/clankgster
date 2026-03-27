@@ -11,9 +11,10 @@ description: >-
 ## Steps
 
 1. Read existing `SKILL.md`.
-2. Apply requested changes.
-3. Re-check frontmatter and trigger phrases.
-4. Produce finalized update output.
+2. Read [../skills-write-context/reference.md](../skills-write-context/reference.md) before making updates.
+3. Apply requested changes.
+4. Re-check frontmatter and trigger phrases against the shared guidance docs.
+5. Produce finalized update output.
 
 This skill is also the target of MCP route `skills.update` (`SkillsUpdate`).
 
@@ -22,3 +23,7 @@ This skill is also the target of MCP route `skills.update` (`SkillsUpdate`).
 - [ ] Existing workflow intent preserved
 - [ ] YAML frontmatter remains valid
 - [ ] Description still discoverable
+
+## Cross-references
+
+- [skills-write-context reference hub](../skills-write-context/reference.md)

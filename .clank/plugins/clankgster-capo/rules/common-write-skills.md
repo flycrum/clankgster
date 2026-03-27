@@ -47,6 +47,6 @@ Do not recommend MCP-to-skill orchestration by default. Treat it as an advanced 
 
 ## Cross-references
 
-- [common-write-descriptions.md](../references/common-write-descriptions.md)
+- [description-frontmatter.md](../skills/skills-write-context/docs/description-frontmatter.md)
 - [common-progressive-disclosure.md](../references/common-progressive-disclosure.md)
 - [common-mcp-tools-in-plugins.md](../references/common-mcp-tools-in-plugins.md)

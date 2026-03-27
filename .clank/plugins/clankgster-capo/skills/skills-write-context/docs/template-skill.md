@@ -1,6 +1,11 @@
-# Template: skill file
+# Template: SKILL.md file
 
-Annotated template for writing `SKILL.md` files in `.clank/plugins/<plugin>/skills/<skill-name>/`. Skills are multi-step workflows agents execute on invocation. The description field controls auto-discovery and is the most important part.
+Annotated template for writing `SKILL.md` files for both:
+
+- standalone source pathway `skills/` (`.clank/skills/<name>/SKILL.md`)
+- plugin skill directories (`.clank/plugins/<plugin>/skills/<name>/SKILL.md`)
+
+Skills are multi-step workflows agents execute on invocation. The description field controls auto-discovery and is the most important part.
 
 ## Template
 

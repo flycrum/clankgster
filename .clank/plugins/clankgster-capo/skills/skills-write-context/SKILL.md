@@ -24,12 +24,17 @@ This skill is also the target of MCP route `skills.write` (`SkillsWrite`).
 ## Steps
 
 1. Gather workflow intent and triggers.
-2. Draft frontmatter (`name`, `description`) and body sections.
-3. Validate description specificity and trigger terms.
-4. Produce finalized skill artifact output.
+2. Read [reference.md](reference.md) to load the canonical skill-authoring guidance.
+3. Draft frontmatter (`name`, `description`) and body sections using the referenced guidance.
+4. Validate description specificity and trigger terms.
+5. Produce finalized skill artifact output.
 
 ## Verification
 
 - [ ] Valid `SKILL.md` structure
 - [ ] Description is high signal
 - [ ] Output path is in source pathway `skills/`
+
+## Cross-references
+
+- [reference.md](reference.md)

@@ -10,10 +10,11 @@ description: >-
 
 ## Steps
 
-1. Confirm target standalone skill path.
-2. Search for references to that skill in docs/rules/other skills.
-3. Remove file and propose cleanup edits.
-4. Produce finalized removal + cleanup output.
+1. Read [reference.md](reference.md).
+2. Confirm target standalone skill path.
+3. Search for references to that skill in docs/rules/other skills.
+4. Remove file and propose cleanup edits.
+5. Produce finalized removal + cleanup output.
 
 This skill is also the target of MCP route `skills.remove` (`SkillsRemove`).
 
@@ -22,3 +23,7 @@ This skill is also the target of MCP route `skills.remove` (`SkillsRemove`).
 - [ ] Removal target confirmed
 - [ ] Reference fallout reviewed
 - [ ] Cleanup suggestions included
+
+## Cross-references
+
+- [reference.md](reference.md)

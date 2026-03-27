@@ -16,6 +16,8 @@ How each content type enters the agent's context window, what it costs in tokens
 
 When the user invokes a **skill** (via `/skill-name` or when the agent auto-selects it), the full `SKILL.md` body is loaded into context. Any files in the skill's `references/` directory may also be pulled in if the skill body links to them.
 
+Skill-local support paths such as `reference.md`, `references/`, or `docs/` are not a new auto-load tier by themselves. They follow the same link-driven behavior as other files: they load only when the active skill/rule explicitly links to them or the agent is told to read them.
+
 **Commands** behave similarly: the full `.md` body loads when the user types the slash command. Commands are simpler and shorter, so the load is typically small.
 
 **Agents** load their full persona file when spawned as a sub-agent. The sub-agent then operates in a forked context with that persona active.
@@ -27,6 +29,8 @@ When the user invokes a **skill** (via `/skill-name` or when the agent auto-sele
 **References** load when an active skill or rule links to them. For example, a skill body might contain `[see details](../../references/some-reference.md)`, and the agent reads that file when it follows the link. References never load on their own.
 
 **Docs** load only when someone (user or agent) explicitly reads the file. They are background knowledge and archival content, not wired into any automatic loading mechanism.
+
+This applies equally to plugin-root docs and skill-local docs (for example `skills/<name>/docs/*.md`): location affects ownership and organization, not loading tier.
 
 Skills, rules, commands, and agents do not have an on-demand loading mode separate from their invocation or auto-load behavior.
 

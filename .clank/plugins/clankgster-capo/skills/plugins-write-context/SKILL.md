@@ -14,14 +14,45 @@ Create or expand plugin content under source pathway `plugins/`.
 
 This skill is a direct execution workflow and is also the target of MCP route `plugins.write` (`PluginsWrite`).
 
+## Plugin content type notes
+
+### Skills
+
+Plugin skills use the same `SKILL.md` structure and frontmatter conventions as standalone source pathway `skills/`, but they live under `plugins/<plugin>/skills/` and are coordinated with sibling plugin content types. For canonical SKILL.md authoring guidance, use [skills-write-context/reference.md](../skills-write-context/reference.md).
+
+### Rules
+
+Rules define conventions and constraints (not workflows). Use [template-rule.md](docs/template-rule.md).
+
+### References
+
+References hold detailed guidance linked from active skills and rules. Keep one concern per file and avoid inlining into SKILL bodies. Use [common-progressive-disclosure.md](../../references/common-progressive-disclosure.md).
+
+### Docs
+
+Docs are deep/background material that should be read explicitly when needed. Use [plugins-matrix-loading-behavior.md](../../docs/plugins-matrix-loading-behavior.md).
+
+### Commands
+
+Commands are deterministic slash workflows and should remain focused and concise. Use [template-command.md](docs/template-command.md).
+
+### Agents
+
+Agents are persona-driven sub-agents for specialized tasks. Use [template-agent.md](docs/template-agent.md).
+
+### Hooks
+
+Hooks are event-driven automations and should remain deterministic and scoped. Use [template-hooks.md](docs/template-hooks.md).
+
 ## Steps
 
 1. Gather input (text, files, URLs).
-2. Classify by plugin content type (`skills/`, `rules/`, `references/`, `docs/`).
-3. Plan file list and cross-links.
-4. Draft files.
-5. Refine descriptions and references.
-6. Finalize and verify naming/link integrity.
+2. Read [reference.md](reference.md) for plugin content-type guidance and links.
+3. Classify by plugin content type (`skills/`, `rules/`, `references/`, `docs/`, `commands/`, `agents/`, `hooks/`).
+4. Plan file list and cross-links.
+5. Draft files.
+6. Refine descriptions and references.
+7. Finalize and verify naming/link integrity.
 
 ## Verification
 
@@ -32,7 +63,4 @@ This skill is a direct execution workflow and is also the target of MCP route `p
 
 ## Cross-references
 
-- [common-content-type-decision-tree.md](../../docs/common-content-type-decision-tree.md)
-- [common-content-type-comparison-matrix.md](../../docs/common-content-type-comparison-matrix.md)
-- [common-write-skills.md](../../rules/common-write-skills.md)
-- [common-write-rules.md](../../rules/common-write-rules.md)
+- [reference.md](reference.md)

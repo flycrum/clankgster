@@ -8,7 +8,7 @@ The `description` field in SKILL.md frontmatter is the single most important fie
 
 1. [How descriptions work](#how-descriptions-work)
 2. [Constraints](#constraints)
-3. [Writing voice](#write-voice)
+3. [Writing voice](#writing-voice)
 4. [Structure pattern](#structure-pattern)
 5. [Trigger phrases](#trigger-phrases)
 6. [Scope boundaries](#scope-boundaries)

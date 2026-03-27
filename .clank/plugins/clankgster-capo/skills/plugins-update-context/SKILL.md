@@ -10,10 +10,11 @@ description: >-
 
 ## Steps
 
-1. Read affected plugin files.
-2. Apply requested edits with pathway prefix conventions.
-3. Re-check internal links and file references.
-4. Produce finalized update output.
+1. Read [reference.md](reference.md).
+2. Read affected plugin files.
+3. Apply requested edits with pathway prefix conventions.
+4. Re-check internal links and file references.
+5. Produce finalized update output.
 
 This skill is also the target of MCP route `plugins.update` (`PluginsUpdate`).
 
@@ -22,3 +23,7 @@ This skill is also the target of MCP route `plugins.update` (`PluginsUpdate`).
 - [ ] Updated files keep naming conventions
 - [ ] Cross-links resolve after edits
 - [ ] No stale references remain
+
+## Cross-references
+
+- [reference.md](reference.md)

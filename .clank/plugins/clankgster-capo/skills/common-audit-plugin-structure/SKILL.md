@@ -154,4 +154,4 @@ Output a markdown table:
 
 - [Organizing plugin content](../../rules/common-organizing-content.md) — canonical content type placement rules
 - [Write skills](../../rules/common-write-skills.md) — SKILL.md structure requirements
-- [Write descriptions](../../references/common-write-descriptions.md) — description field criteria
+- [Write descriptions](../skills-write-context/docs/description-frontmatter.md) — description field criteria

@@ -27,6 +27,28 @@ All files in this plugin use one of these prefixes:
 - `clankmd-` for source pathway `CLANK.md` specific content
 - `common-` for shared cross-pathway content
 
+### Skill-local support files
+
+Skill folders may own support material next to `SKILL.md`:
+
+- `reference.md` for a single skill-owned hub or index
+- `references/` when a skill needs multiple first-class reference files
+- `docs/` for skill-owned deep dives and single-concern background files
+
+Use this ownership rule:
+
+- If content is primarily about one skill workflow, colocate it in that skill folder.
+- If content is shared broadly across pathways or content types, keep it in plugin-root `references/` or `docs/`.
+- Other skills should link to the owning skill's `reference.md` when it exists.
+
+### Boundary guardrail (enforced)
+
+**STRICT REQUIREMENT:** Files under plugin-root `references/` must not link into `skills/`, `rules/`, `commands/`, or `agents/` directories.
+
+- Treat plugin-root `references/` as boundary-safe shared material.
+- If guidance belongs to one skill, keep it in that skill's folder and link to it from skills/rules/docs directly.
+- Do not create cross-boundary links from `references/` into executable content trees.
+
 ### Standardized action verbs
 
 Action names in this plugin must use base-form verbs:
@@ -45,7 +67,8 @@ Good:
 
 - `skills/plugins-write-context/SKILL.md`
 - `skills/clankmd-update-context/SKILL.md`
-- `references/common-write-descriptions.md`
+- `skills/skills-write-context/reference.md`
+- `skills/skills-write-context/docs/description-frontmatter.md`
 - `rules/common-write-rules.md`
 
 Bad:

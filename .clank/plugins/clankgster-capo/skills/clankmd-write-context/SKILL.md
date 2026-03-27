@@ -17,13 +17,18 @@ This skill is also the target of MCP route `clankmd.write` (`ClankMdWrite`).
 ## Steps
 
 1. Gather input requirements and intended audience.
-2. Read existing `CLANK.md` if present.
-3. Keep only high-signal global constraints; move deep detail to links.
-4. Draft using [clankmd-template.md](../../references/clankmd-template.md).
-5. Produce finalized CLANK.md output.
+2. Read [reference.md](reference.md).
+3. Read existing `CLANK.md` if present.
+4. Keep only high-signal global constraints; move deep detail to links.
+5. Draft using [clankmd-template.md](../../references/clankmd-template.md).
+6. Produce finalized CLANK.md output.
 
 ## Verification
 
 - [ ] Draft is concise
 - [ ] Content is global, not plugin-local
 - [ ] Links point to deeper material
+
+## Cross-references
+
+- [reference.md](reference.md)

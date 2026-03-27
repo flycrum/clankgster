@@ -10,10 +10,11 @@ description: >-
 
 ## Steps
 
-1. Read current `CLANK.md`.
-2. Apply requested edits with concise wording.
-3. Keep global-only guidance; move specifics to linked docs.
-4. Produce finalized CLANK.md update output.
+1. Read [reference.md](reference.md).
+2. Read current `CLANK.md`.
+3. Apply requested edits with concise wording.
+4. Keep global-only guidance; move specifics to linked docs.
+5. Produce finalized CLANK.md update output.
 
 This skill is also the target of MCP route `clankmd.update` (`ClankMdUpdate`).
 
@@ -22,3 +23,7 @@ This skill is also the target of MCP route `clankmd.update` (`ClankMdUpdate`).
 - [ ] Existing intent preserved
 - [ ] No large procedural expansion added
 - [ ] Updated content remains high-signal
+
+## Cross-references
+
+- [reference.md](reference.md)

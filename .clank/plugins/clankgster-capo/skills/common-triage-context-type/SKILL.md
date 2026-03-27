@@ -21,22 +21,27 @@ Choose a source pathway, explain why, and dispatch to the appropriate MCP route.
 
 ## Steps
 
-1. Present four options with AskUserQuestion:
+1. Read [reference.md](reference.md).
+2. Present four options with AskUserQuestion:
    - analyze and recommend
    - source pathway `skills/`
    - source pathway `plugins/`
    - source pathway `CLANK.md`
-2. If analyze and recommend is selected, inspect user intent and map to one pathway.
-3. Confirm pathway choice in one sentence.
-4. Call the matching MCP tool:
+3. If analyze and recommend is selected, inspect user intent and map to one pathway.
+4. Confirm pathway choice in one sentence.
+5. Call the matching MCP tool:
    - If analyze and recommend is selected, call `Triage`.
    - If source pathway `skills/` is selected, call `SkillsWrite`.
    - If source pathway `plugins/` is selected, call `PluginsWrite`.
    - If source pathway `CLANK.md` is selected, call `ClankMdWrite`.
-5. Return the selected pathway and routed next action.
+6. Return the selected pathway and routed next action.
 
 ## Verification
 
 - [ ] Exactly one pathway selected
 - [ ] Reasoning included for analyze and recommend selection
 - [ ] MCP route dispatch call made for selected pathway
+
+## Cross-references
+
+- [reference.md](reference.md)

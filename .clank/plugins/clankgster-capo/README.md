@@ -46,16 +46,16 @@ This plugin includes an advanced MCP-to-skill routing pattern for specialized or
 ### References
 
 - [`common-prompt-techniques`](references/common-prompt-techniques.md)
-- [`common-write-descriptions`](references/common-write-descriptions.md)
+- [`skills-write-context description-frontmatter`](skills/skills-write-context/docs/description-frontmatter.md)
 - [`common-tool-calls`](references/common-tool-calls.md)
 - [`common-progressive-disclosure`](references/common-progressive-disclosure.md)
 - [`common-mcp-tools-in-plugins`](references/common-mcp-tools-in-plugins.md)
 - [`clankmd-template`](references/clankmd-template.md)
-- [`plugins-template-skill`](references/plugins-template-skill.md)
-- [`common-template-rule`](references/common-template-rule.md)
-- [`common-template-command`](references/common-template-command.md)
-- [`common-template-hooks`](references/common-template-hooks.md)
-- [`common-template-agent`](references/common-template-agent.md)
+- [`skills-write-context template-skill`](skills/skills-write-context/docs/template-skill.md)
+- [`plugins-write-context template-rule`](skills/plugins-write-context/docs/template-rule.md)
+- [`plugins-write-context template-command`](skills/plugins-write-context/docs/template-command.md)
+- [`plugins-write-context template-hooks`](skills/plugins-write-context/docs/template-hooks.md)
+- [`plugins-write-context template-agent`](skills/plugins-write-context/docs/template-agent.md)
 
 ### Docs
 
