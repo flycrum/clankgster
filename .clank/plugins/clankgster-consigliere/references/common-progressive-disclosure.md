@@ -76,7 +76,6 @@ Each layer is more expensive: it consumes more context window budget and takes m
 - **What:** `references/` files when the agent follows a link from the SKILL.md body. `scripts/` output when the agent runs a preprocessing command. `assets/` when the agent reads a template.
 - **Budget:** Variable per file. Keep individual reference files focused. Use a table of contents for files over 100 lines.
 - **Implication:** References load only when the agent decides to follow the link. Write SKILL.md links as clear recommendations, not optional footnotes.
-- **Key constraint:** Keep references **one level deep** from SKILL.md. Two-hop chains (SKILL.md → A → B) cause agents to partially read files or miss information entirely.
 
 ### Layer 4: Explicit read
 
@@ -158,7 +157,6 @@ Files in `docs/` never auto-load. They are useful for:
 - Table of contents for files over 100 lines
 - Can be longer than skills/rules (the agent loads these only when needed)
 - Use descriptive file names (the agent uses the name to decide whether to follow the link)
-- Keep reference chains one level deep
 
 ### For Layer 4 (docs)
 
@@ -175,12 +173,6 @@ Files in `docs/` never auto-load. They are useful for:
 Loading detailed instructions as always-on rules or in the description burns budget for every session, even when the skill is not invoked.
 
 **Fix:** Move detailed instructions to the SKILL.md body (Layer 2) or references (Layer 3). Keep Layer 0 lean.
-
-### Two-hop reference chains
-
-SKILL.md links to Reference A, which links to Reference B. The agent may follow the first link but miss or partially read the second.
-
-**Fix:** Link directly from SKILL.md to the reference the agent needs. If Reference B is important, link it from SKILL.md too.
 
 ### Inlining reference content in SKILL.md
 

@@ -94,7 +94,7 @@ Return the commit message as a single code block, no explanation.
 
 ### Nesting and hierarchy
 
-Nest tags when content has a natural parent-child relationship. Keep nesting to 2 levels maximum — deeper nesting reduces readability for both agents and humans.
+Nest tags when content has a natural parent-child relationship.
 
 ```xml
 <workflow>
