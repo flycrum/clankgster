@@ -30,8 +30,10 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 3. Collect full reports and build:
    - summary table
    - full appended reports by audit type
-4. Ask user whether to run healer flow via `ClankMdUpdate`.
-5. If yes, call `ClankMdUpdate` with target file and aggregated findings.
+4. Assign overall pathway grade using [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md).
+5. Include grade characterization, ASCII badge, and severity distribution in output.
+6. Ask user whether to run healer flow via `ClankMdUpdate`.
+7. If yes, call `ClankMdUpdate` with target file and aggregated findings.
 
 ## Sub-agent execution contract
 
@@ -43,6 +45,7 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 
 - `# CLANK.md audit: <clankmd-path>`
 - `## Summary` table
+- `## Grade` with letter grade, characterization, and ASCII badge
 - appended full reports
 - optional healer handoff result
 
@@ -50,6 +53,7 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 
 - [ ] All 5 CLANK.md audits executed through sub-agents
 - [ ] Summary table and full reports are consistent
+- [ ] Grade and badge derived from aggregated findings
 - [ ] Healer question asked before update call
 
 ## Cross-references
@@ -57,3 +61,4 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 - [clankmd-write.md](../../rules/clankmd-write.md)
 - [common-internal-mcp-routing-spec.md](../../docs/common-internal-mcp-routing-spec.md)
 - [skill-asking-for-user-input.md](../skills-write-context/docs/skill-asking-for-user-input.md)
+- [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md)

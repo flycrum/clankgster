@@ -31,8 +31,10 @@ Run the full plugin audit suite against one plugin under `.clank/plugins/<plugin
 4. Collect all responses and build:
    - cross-audit summary table
    - full appended reports, in audit-type sections
-5. Ask user if they want healer flow via `PluginsUpdate`.
-6. If user confirms, call `PluginsUpdate` with target path and aggregated findings context.
+5. Assign overall pathway grade using [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md).
+6. Include grade characterization, ASCII badge, and severity distribution in output.
+7. Ask user if they want healer flow via `PluginsUpdate`.
+8. If user confirms, call `PluginsUpdate` with target path and aggregated findings context.
 
 ## Sub-agent execution contract
 
@@ -44,6 +46,7 @@ Run the full plugin audit suite against one plugin under `.clank/plugins/<plugin
 
 - `# Plugins audit: <plugin-name>`
 - `## Summary` table (audit, status, issues)
+- `## Grade` with letter grade, characterization, and ASCII badge
 - full per-audit reports, appended as-is
 - optional healer handoff result
 
@@ -52,9 +55,11 @@ Run the full plugin audit suite against one plugin under `.clank/plugins/<plugin
 - [ ] All 7 plugin audits executed through sub-agents
 - [ ] Summary table reflects leaf report outcomes
 - [ ] Full reports preserved without data loss
+- [ ] Grade and badge derived from aggregated findings
 - [ ] Healer prompt shown to user
 
 ## Cross-references
 
 - [audit-chain-methodology.md](docs/audit-chain-methodology.md)
+- [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md)
 - [common-internal-mcp-routing-spec.md](../../docs/common-internal-mcp-routing-spec.md)
