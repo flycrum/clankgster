@@ -16,15 +16,32 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | `plugins.write` | `PluginsWrite` | `plugins-write-context` | `plugins` | `write` |
 | `plugins.update` | `PluginsUpdate` | `plugins-update-context` | `plugins` | `update` |
 | `plugins.remove` | `PluginsRemove` | `plugins-remove-context` | `plugins` | `remove` |
-| `plugins.audit` | `PluginsAudit` | `common-audit-all-orchestrator` | `plugins` | `audit` |
+| `plugins.audit` | `PluginsAudit` | `plugins-audit-all` | `plugins` | `audit` |
+| `plugins.audit.contentQuality` | `PluginsAuditContentQuality` | `plugins-audit-content-quality` | `plugins` | `audit` |
+| `plugins.audit.externalLinks` | `PluginsAuditExternalLinks` | `plugins-audit-external-links` | `plugins` | `audit` |
+| `plugins.audit.factCheck` | `PluginsAuditFactCheck` | `plugins-audit-fact-check` | `plugins` | `audit` |
+| `plugins.audit.internalLinks` | `PluginsAuditInternalLinks` | `plugins-audit-internal-links` | `plugins` | `audit` |
+| `plugins.audit.sourceFreshness` | `PluginsAuditSourceFreshness` | `plugins-audit-source-freshness` | `plugins` | `audit` |
+| `plugins.audit.comparisonMatrix` | `PluginsAuditComparisonMatrix` | `plugins-audit-comparison-matrix` | `plugins` | `audit` |
+| `plugins.audit.structure` | `PluginsAuditStructure` | `plugins-audit-structure` | `plugins` | `audit` |
 | `skills.write` | `SkillsWrite` | `skills-write-context` | `skills` | `write` |
 | `skills.update` | `SkillsUpdate` | `skills-update-context` | `skills` | `update` |
 | `skills.remove` | `SkillsRemove` | `skills-remove-context` | `skills` | `remove` |
-| `skills.audit` | `SkillsAudit` | `common-audit-all-orchestrator` | `skills` | `audit` |
+| `skills.audit` | `SkillsAudit` | `skills-audit-all` | `skills` | `audit` |
+| `skills.audit.contentQuality` | `SkillsAuditContentQuality` | `skills-audit-content-quality` | `skills` | `audit` |
+| `skills.audit.externalLinks` | `SkillsAuditExternalLinks` | `skills-audit-external-links` | `skills` | `audit` |
+| `skills.audit.factCheck` | `SkillsAuditFactCheck` | `skills-audit-fact-check` | `skills` | `audit` |
+| `skills.audit.internalLinks` | `SkillsAuditInternalLinks` | `skills-audit-internal-links` | `skills` | `audit` |
+| `skills.audit.sourceFreshness` | `SkillsAuditSourceFreshness` | `skills-audit-source-freshness` | `skills` | `audit` |
 | `clankmd.write` | `ClankMdWrite` | `clankmd-write-context` | `clankmd` | `write` |
 | `clankmd.update` | `ClankMdUpdate` | `clankmd-update-context` | `clankmd` | `update` |
 | `clankmd.remove` | `ClankMdRemove` | `clankmd-remove-context` | `clankmd` | `remove` |
-| `clankmd.audit` | `ClankMdAudit` | `common-audit-all-orchestrator` | `clankmd` | `audit` |
+| `clankmd.audit` | `ClankMdAudit` | `clankmd-audit-all` | `clankmd` | `audit` |
+| `clankmd.audit.contentQuality` | `ClankMdAuditContentQuality` | `clankmd-audit-content-quality` | `clankmd` | `audit` |
+| `clankmd.audit.externalLinks` | `ClankMdAuditExternalLinks` | `clankmd-audit-external-links` | `clankmd` | `audit` |
+| `clankmd.audit.factCheck` | `ClankMdAuditFactCheck` | `clankmd-audit-fact-check` | `clankmd` | `audit` |
+| `clankmd.audit.internalLinks` | `ClankMdAuditInternalLinks` | `clankmd-audit-internal-links` | `clankmd` | `audit` |
+| `clankmd.audit.sourceFreshness` | `ClankMdAuditSourceFreshness` | `clankmd-audit-source-freshness` | `clankmd` | `audit` |
 
 ## Input payload shape
 

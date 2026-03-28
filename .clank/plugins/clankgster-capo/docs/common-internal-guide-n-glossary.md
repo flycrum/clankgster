@@ -27,6 +27,12 @@ All files in this plugin use one of these prefixes:
 - `clankmd-` for source pathway `CLANK.md` specific content
 - `common-` for shared cross-pathway content
 
+Audit actions are pathway-specific when prefixed by pathway:
+
+- `plugins-audit-*` for plugin-target audits
+- `skills-audit-*` for standalone skills-target audits
+- `clankmd-audit-*` for single-file CLANK.md audits
+
 ### Boundary guardrail (enforced)
 
 **STRICT REQUIREMENT:** Files under plugin-root `references/` must not link into `skills/`, `rules/`, `commands/`, or `agents/` directories.

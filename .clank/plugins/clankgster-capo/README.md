@@ -25,14 +25,29 @@ This plugin includes an advanced MCP-to-skill routing pattern for specialized or
 
 #### **Audit suite**
 
-- [`common-audit-all-orchestrator`](skills/common-audit-all-orchestrator/SKILL.md)
-- [`common-audit-content-quality`](skills/common-audit-content-quality/SKILL.md)
-- [`common-audit-plugin-structure`](skills/common-audit-plugin-structure/SKILL.md)
-- [`common-audit-internal-links`](skills/common-audit-internal-links/SKILL.md)
-- [`common-audit-external-links`](skills/common-audit-external-links/SKILL.md)
-- [`common-audit-source-freshness`](skills/common-audit-source-freshness/SKILL.md)
-- [`common-audit-fact-check`](skills/common-audit-fact-check/SKILL.md)
-- [`common-audit-comparison-matrix`](skills/common-audit-comparison-matrix/SKILL.md)
+- **plugins/**:
+  - [`plugins-audit-all`](skills/plugins-audit-all/SKILL.md)
+  - [`plugins-audit-content-quality`](skills/plugins-audit-content-quality/SKILL.md)
+  - [`plugins-audit-internal-links`](skills/plugins-audit-internal-links/SKILL.md)
+  - [`plugins-audit-external-links`](skills/plugins-audit-external-links/SKILL.md)
+  - [`plugins-audit-fact-check`](skills/plugins-audit-fact-check/SKILL.md)
+  - [`plugins-audit-source-freshness`](skills/plugins-audit-source-freshness/SKILL.md)
+  - [`plugins-audit-comparison-matrix`](skills/plugins-audit-comparison-matrix/SKILL.md)
+  - [`plugins-audit-structure`](skills/plugins-audit-structure/SKILL.md)
+- **skills/**:
+  - [`skills-audit-all`](skills/skills-audit-all/SKILL.md)
+  - [`skills-audit-content-quality`](skills/skills-audit-content-quality/SKILL.md)
+  - [`skills-audit-internal-links`](skills/skills-audit-internal-links/SKILL.md)
+  - [`skills-audit-external-links`](skills/skills-audit-external-links/SKILL.md)
+  - [`skills-audit-fact-check`](skills/skills-audit-fact-check/SKILL.md)
+  - [`skills-audit-source-freshness`](skills/skills-audit-source-freshness/SKILL.md)
+- **CLANK.md**:
+  - [`clankmd-audit-all`](skills/clankmd-audit-all/SKILL.md)
+  - [`clankmd-audit-content-quality`](skills/clankmd-audit-content-quality/SKILL.md)
+  - [`clankmd-audit-internal-links`](skills/clankmd-audit-internal-links/SKILL.md)
+  - [`clankmd-audit-external-links`](skills/clankmd-audit-external-links/SKILL.md)
+  - [`clankmd-audit-fact-check`](skills/clankmd-audit-fact-check/SKILL.md)
+  - [`clankmd-audit-source-freshness`](skills/clankmd-audit-source-freshness/SKILL.md)
 
 ### Rules
 
