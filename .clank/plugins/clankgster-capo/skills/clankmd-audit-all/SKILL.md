@@ -18,7 +18,7 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 
 ## Steps
 
-1. Resolve target `CLANK.md` using [clankmd-target-resolution.md](resources/clankmd-target-resolution.md):
+1. Establish which `CLANK.md` to audit using [clankmd-target-input.md](resources/clankmd-target-input.md):
    - if user or MCP already names the file path, validate and use (no extra question)
    - otherwise always `AskUserQuestion` before audits; include focused `CLANK.md` as first option when known, plus other candidates and **Other**
 2. Launch leaf audits via sub-agents:
@@ -54,7 +54,7 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 - [ ] All 5 CLANK.md audits executed through sub-agents
 - [ ] Summary table and full reports are consistent
 - [ ] Grade and badge derived from aggregated findings
-- [ ] Target `CLANK.md` resolved per binding rules (asked when not explicit)
+- [ ] Target `CLANK.md` established per target input rules (asked when not explicit)
 - [ ] Healer question asked before update call
 
 ## Cross-references

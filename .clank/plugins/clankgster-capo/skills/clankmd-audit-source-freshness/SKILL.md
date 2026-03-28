@@ -14,7 +14,7 @@ Shared scope guidance: [source-freshness-scope.md](../../references/common-audit
 
 ## Steps
 
-First resolve target path via [clankmd-target-resolution.md](../clankmd-audit-all/resources/clankmd-target-resolution.md).
+First establish which `CLANK.md` file to audit per [clankmd-target-input.md](../clankmd-audit-all/resources/clankmd-target-input.md).
 
 Use shared steps: [source-freshness-steps.md](../../references/common-audit/source-freshness-steps.md)
 

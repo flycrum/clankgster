@@ -1,4 +1,4 @@
-# Plugin target resolution (aggregators and plugin audits)
+# Plugin target input (aggregators and plugin audits)
 
 Use before any `plugins-audit-*` workflow that needs a single plugin root directory.
 

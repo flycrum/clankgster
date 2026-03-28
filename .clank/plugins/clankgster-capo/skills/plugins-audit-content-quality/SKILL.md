@@ -15,7 +15,7 @@ Shared scope guidance: [content-quality-scope.md](../../references/common-audit/
 
 ## Steps
 
-First resolve target plugin directory per [plugins-target-resolution.md](../plugins-audit-all/resources/plugins-target-resolution.md).
+First establish the audit target (plugin directory) per [plugins-target-input.md](../plugins-audit-all/resources/plugins-target-input.md).
 
 Use shared steps: [content-quality-steps.md](../../references/common-audit/content-quality-steps.md)
 

@@ -1,4 +1,4 @@
-# CLANK.md target resolution (shared)
+# CLANK.md target input (shared)
 
 Use this decision path before running any `clankmd-audit-*` workflow.
 
@@ -42,7 +42,7 @@ If explicit binding does not apply, **always** call `AskUserQuestion` before rea
 - Parse **Other** into a path; validate existence and `CLANK.md` basename.
 - Echo the chosen path in the report header before leaf audits.
 
-## Resolution order (summary)
+## Flow (summary)
 
 1. Explicit binding? → validate → use
 2. Else → `AskUserQuestion` (focused file as first option when applicable + candidates + Other) → validate → use

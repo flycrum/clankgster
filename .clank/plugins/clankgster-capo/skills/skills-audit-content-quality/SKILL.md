@@ -22,7 +22,7 @@ Shared scope guidance: [content-quality-scope.md](../../references/common-audit/
 
 ## Steps
 
-First resolve target standalone skill directory per [skills-target-resolution.md](../skills-audit-all/resources/skills-target-resolution.md).
+First establish the audit target (standalone skill directory) per [skills-target-input.md](../skills-audit-all/resources/skills-target-input.md).
 
 Use shared steps: [content-quality-steps.md](../../references/common-audit/content-quality-steps.md)
 

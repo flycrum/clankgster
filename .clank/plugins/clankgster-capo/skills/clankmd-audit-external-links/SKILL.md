@@ -14,7 +14,7 @@ Shared scope guidance: [external-links-scope.md](../../references/common-audit/e
 
 ## Steps
 
-First resolve target path via [clankmd-target-resolution.md](../clankmd-audit-all/resources/clankmd-target-resolution.md).
+First establish which `CLANK.md` file to audit per [clankmd-target-input.md](../clankmd-audit-all/resources/clankmd-target-input.md).
 
 Use shared steps: [external-links-steps.md](../../references/common-audit/external-links-steps.md)
 

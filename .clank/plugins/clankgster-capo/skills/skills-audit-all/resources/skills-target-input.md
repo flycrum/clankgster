@@ -1,4 +1,4 @@
-# Standalone skill target resolution (aggregators and skills audits)
+# Standalone skill target input (aggregators and skills audits)
 
 Use before any `skills-audit-*` workflow that needs a single **standalone skill directory** (the folder that owns that workflow’s `SKILL.md`).
 

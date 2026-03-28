@@ -14,7 +14,7 @@ Shared scope guidance: [fact-check-scope.md](../../references/common-audit/fact-
 
 ## Steps
 
-First resolve target path via [clankmd-target-resolution.md](../clankmd-audit-all/resources/clankmd-target-resolution.md).
+First establish which `CLANK.md` file to audit per [clankmd-target-input.md](../clankmd-audit-all/resources/clankmd-target-input.md).
 
 Use shared steps: [fact-check-steps.md](../../references/common-audit/fact-check-steps.md)
 
