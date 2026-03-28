@@ -1,5 +1,5 @@
 ---
-name: docsraw-analyze-existing
+name: rawdocs-analyze-existing
 description: >-
   Analyzes the current structure and writing conventions of a target plugin
   while strictly excluding its `rawdocs/` directory. Produces an extensive
@@ -10,7 +10,7 @@ disable-model-invocation: true
 user-invocable: false
 ---
 
-# docsraw analyze existing
+# rawdocs analyze existing
 
 ## Scope
 
@@ -82,6 +82,6 @@ Return an extensive package with:
 
 ## Cross-references
 
-- [../docsraw-structify/SKILL.md](../docsraw-structify/SKILL.md)
-- [../../references/docsraw-structify-architecture.md](../../references/docsraw-structify-architecture.md)
+- [../rawdocs-structify/SKILL.md](../rawdocs-structify/SKILL.md)
+- [../../references/rawdocs-structify-architecture.md](../../references/rawdocs-structify-architecture.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)

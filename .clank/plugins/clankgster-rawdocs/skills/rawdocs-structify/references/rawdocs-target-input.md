@@ -1,6 +1,6 @@
-# docsraw target input gate
+# rawdocs target input gate
 
-Use this gate before running `docsraw-structify`.
+Use this gate before running `rawdocs-structify`.
 
 ## Mandatory first step
 

@@ -1,6 +1,6 @@
-# docsraw structify architecture
+# rawdocs structify architecture
 
-Detailed architecture for `docsraw-structify`, including isolation boundaries, data contracts, and continuity strategy.
+Detailed architecture for `rawdocs-structify`, including isolation boundaries, data contracts, and continuity strategy.
 
 ## Goals
 
@@ -23,22 +23,22 @@ Detailed architecture for `docsraw-structify`, including isolation boundaries, d
 
 Run two analysis workflows in separate sub-agents to avoid context bleed:
 
-1. `docsraw-analyze-raw`
+1. `rawdocs-analyze-raw`
    - Reads only `rawdocs/` recursively.
    - Produces source-truth analysis package.
-2. `docsraw-analyze-existing`
+2. `rawdocs-analyze-existing`
    - Reads all plugin content recursively except `rawdocs/`.
    - Produces continuity and structure analysis package.
 
 ## Non-overlap contract
 
-- `docsraw-analyze-raw` must not inspect files outside `rawdocs/`.
-- `docsraw-analyze-existing` must explicitly exclude `rawdocs/`.
+- `rawdocs-analyze-raw` must not inspect files outside `rawdocs/`.
+- `rawdocs-analyze-existing` must explicitly exclude `rawdocs/`.
 - Combined outputs should cover the complete plugin state with zero overlap.
 
 ## Output contracts
 
-### `docsraw-analyze-raw` output package
+### `rawdocs-analyze-raw` output package
 
 - Resolved rawdocs file inventory
 - Text-file eligibility map and skipped non-text files list
@@ -49,7 +49,7 @@ Run two analysis workflows in separate sub-agents to avoid context bleed:
 - Capo-linked structure lens notes
 - External pattern research digest
 
-### `docsraw-analyze-existing` output package
+### `rawdocs-analyze-existing` output package
 
 - Plugin sitemap excluding `rawdocs/`
 - Empty/near-empty determination
@@ -59,7 +59,7 @@ Run two analysis workflows in separate sub-agents to avoid context bleed:
 
 ## Planning model
 
-`docsraw-structify` synthesizes both analysis outputs into:
+`rawdocs-structify` synthesizes both analysis outputs into:
 
 1. Draft migration/update plan
 2. Refinement pass plan
@@ -96,8 +96,8 @@ Plan priorities:
 
 ## Cross-references
 
-- [`docsraw-structify`](../skills/docsraw-structify/SKILL.md)
-- [`docsraw-analyze-raw`](../skills/docsraw-analyze-raw/SKILL.md)
-- [`docsraw-analyze-existing`](../skills/docsraw-analyze-existing/SKILL.md)
+- [`rawdocs-structify`](../skills/rawdocs-structify/SKILL.md)
+- [`rawdocs-analyze-raw`](../skills/rawdocs-analyze-raw/SKILL.md)
+- [`rawdocs-analyze-existing`](../skills/rawdocs-analyze-existing/SKILL.md)
 - [`rawdocs-internal-linking`](../rules/rawdocs-internal-linking.md)
 - [`clankgster-capo plugins-write-context`](../../clankgster-capo/skills/plugins-write-context/SKILL.md)

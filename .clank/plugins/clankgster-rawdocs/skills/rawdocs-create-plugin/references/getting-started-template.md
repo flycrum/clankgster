@@ -53,9 +53,9 @@ Sample output:
 
 ## next commands
 
-- `/docsraw-create-plugin`
+- `/rawdocs-create-plugin`
   - scaffolds a new rawdocs-enabled plugin with starter files
-- `/docsraw-structify`
+- `/rawdocs-structify`
   - analyzes rawdocs + existing plugin structure and emits organized plugin context
 
 Status note: this template is intentionally starter-grade. Replace and expand sections with your plugin's real direction.

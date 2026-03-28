@@ -1,6 +1,6 @@
-# docsraw first-pass integrated plan spec
+# rawdocs first-pass integrated plan spec
 
-This reference defines the detailed operating method for step 5 in `docsraw-structify`.
+This reference defines the detailed operating method for step 5 in `rawdocs-structify`.
 
 ## Why this exists
 
@@ -15,8 +15,8 @@ Step 5 is the architectural center of the structify sync workflow. It must merge
 
 You must have completed and validated both analyzer outputs:
 
-1. `docsraw-analyze-raw` output package
-2. `docsraw-analyze-existing` output package
+1. `rawdocs-analyze-raw` output package
+2. `rawdocs-analyze-existing` output package
 
 You must also carry normalized path variables from step 1:
 

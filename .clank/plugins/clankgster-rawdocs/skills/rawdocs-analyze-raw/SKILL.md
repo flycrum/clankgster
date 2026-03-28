@@ -1,5 +1,5 @@
 ---
-name: docsraw-analyze-raw
+name: rawdocs-analyze-raw
 description: >-
   Analyzes only a target plugin's `rawdocs/` directory in isolation, including
   nested text-based files, then returns a detailed synthesis package covering
@@ -10,7 +10,7 @@ disable-model-invocation: true
 user-invocable: false
 ---
 
-# docsraw analyze raw
+# rawdocs analyze raw
 
 ## Scope
 
@@ -104,4 +104,4 @@ Return an extensive package with:
 ## Cross-references
 
 - [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
-- [../docsraw-structify/SKILL.md](../docsraw-structify/SKILL.md)
+- [../rawdocs-structify/SKILL.md](../rawdocs-structify/SKILL.md)

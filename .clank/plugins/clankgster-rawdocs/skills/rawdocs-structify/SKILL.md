@@ -1,5 +1,5 @@
 ---
-name: docsraw-structify
+name: rawdocs-structify
 description: >-
   Runs a full rawdocs-to-plugin synchronization workflow for a user-selected
   target plugin. Collects explicit path input, launches two isolated
@@ -9,7 +9,7 @@ description: >-
   preserving source writing style as closely as possible.
 ---
 
-# docsraw structify
+# rawdocs structify
 
 ## Scope
 
@@ -28,8 +28,8 @@ This skill is orchestration-first and intentionally verbose in execution records
 - `rawdocs/` is mandatory ingestion input and must remain unmodified.
 - `rawdocs/` must never be linked by authored plugin markdown files.
 - Analysis scopes must not overlap:
-  - `docsraw-analyze-raw` -> only `rawdocs/`
-  - `docsraw-analyze-existing` -> everything except `rawdocs/`
+  - `rawdocs-analyze-raw` -> only `rawdocs/`
+  - `rawdocs-analyze-existing` -> everything except `rawdocs/`
 
 ## Pre-checks
 
@@ -41,7 +41,7 @@ This skill is orchestration-first and intentionally verbose in execution records
 
 ## 1) Gather and normalize target input
 
-1. Use AskUserQuestion first, following [`docsraw-target-input.md`](references/docsraw-target-input.md).
+1. Use AskUserQuestion first, following [`rawdocs-target-input.md`](references/rawdocs-target-input.md).
 2. Accept either:
    - plugin root path, or
    - `rawdocs/` path.
@@ -52,7 +52,7 @@ This skill is orchestration-first and intentionally verbose in execution records
 
 ## 2) Launch isolated rawdocs analysis sub-agent
 
-Run `docsraw-analyze-raw` in a dedicated sub-agent with an explicit prompt that includes:
+Run `rawdocs-analyze-raw` in a dedicated sub-agent with an explicit prompt that includes:
 
 - normalized `target_rawdocs_path`
 - explicit ban on reading outside `rawdocs/`
@@ -71,7 +71,7 @@ Require output package to include:
 
 ## 3) Launch isolated existing-plugin analysis sub-agent (parallel)
 
-Run `docsraw-analyze-existing` in a separate sub-agent with:
+Run `rawdocs-analyze-existing` in a separate sub-agent with:
 
 - normalized `target_plugin_path`
 - explicit exclusion of `target_rawdocs_path`
@@ -97,12 +97,12 @@ If overlap or omission is detected, rerun the affected analyzer with tighter sco
 ## 5) Build first-pass integrated plan
 
 Use both analysis outputs to create a first-pass plan following
-[`docsraw-first-pass-integrated-plan-spec.md`](references/docsraw-first-pass-integrated-plan-spec.md).
+[`rawdocs-first-pass-integrated-plan-spec.md`](references/rawdocs-first-pass-integrated-plan-spec.md).
 
 Required planning order:
 
-1. Lock source constraints from `docsraw-analyze-raw` (meaning, style, and fidelity constraints).
-2. Lock continuity constraints from `docsraw-analyze-existing` (structure continuity anchors and style continuity anchors).
+1. Lock source constraints from `rawdocs-analyze-raw` (meaning, style, and fidelity constraints).
+2. Lock continuity constraints from `rawdocs-analyze-existing` (structure continuity anchors and style continuity anchors).
 3. Draft architecture candidates for target plugin output (outside `rawdocs/` only).
 4. Score and select the best candidate using continuity, scalability, and minimal-churn criteria.
 5. Emit a concrete migration package that can be executed deterministically.
@@ -178,8 +178,8 @@ Return a structify sync report with:
 ## Verification
 
 - [ ] User target path was explicitly provided and normalized
-- [ ] `docsraw-analyze-raw` read only `rawdocs/`
-- [ ] `docsraw-analyze-existing` excluded `rawdocs/`
+- [ ] `rawdocs-analyze-raw` read only `rawdocs/`
+- [ ] `rawdocs-analyze-existing` excluded `rawdocs/`
 - [ ] Combined analyzer coverage had no overlap and no omissions
 - [ ] `rawdocs/` was preserved through cleanup
 - [ ] No markdown links target `rawdocs/`
@@ -187,8 +187,8 @@ Return a structify sync report with:
 
 ## Cross-references
 
-- [references/docsraw-execution-notes.md](references/docsraw-execution-notes.md)
-- [references/docsraw-target-input.md](references/docsraw-target-input.md)
-- [references/docsraw-first-pass-integrated-plan-spec.md](references/docsraw-first-pass-integrated-plan-spec.md)
-- [../../references/docsraw-structify-architecture.md](../../references/docsraw-structify-architecture.md)
+- [references/rawdocs-execution-notes.md](references/rawdocs-execution-notes.md)
+- [references/rawdocs-target-input.md](references/rawdocs-target-input.md)
+- [references/rawdocs-first-pass-integrated-plan-spec.md](references/rawdocs-first-pass-integrated-plan-spec.md)
+- [../../references/rawdocs-structify-architecture.md](../../references/rawdocs-structify-architecture.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)

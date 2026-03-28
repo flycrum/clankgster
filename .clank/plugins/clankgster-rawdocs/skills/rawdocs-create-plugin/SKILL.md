@@ -1,5 +1,5 @@
 ---
-name: docsraw-create-plugin
+name: rawdocs-create-plugin
 description: >-
   Creates a minimal rawdocs structured plugin scaffold at a user-provided path.
   Asks for the target plugin location, creates bare plugin manifests and
@@ -8,11 +8,11 @@ description: >-
   through the rawdocs workflow.
 ---
 
-# docsraw create plugin
+# rawdocs create plugin
 
 ## Scope
 
-Create a barebones plugin that is ready for the `rawdocs/` workflow and future `/docsraw-structify` runs.
+Create a barebones plugin that is ready for the `rawdocs/` workflow and future `/rawdocs-structify` runs.
 
 ## Pre-checks
 
@@ -46,7 +46,7 @@ README basics:
 
 - plugin purpose
 - rawdocs first workflow note
-- reminder to run `/docsraw-structify` for structured output generation
+- reminder to run `/rawdocs-structify` for structured output generation
 
 ## 3) Create barebones rawdocs directory
 
@@ -70,7 +70,7 @@ Return:
 
 - resolved `target_plugin_path`
 - created files/folders
-- 🍓 Success! Field note from your friendly doc-bot: want me to run your first `/docsraw-structify` so we can observe what it does and which artifacts it produces?
+- 🍓 Success! Field note from your friendly doc-bot: want me to run your first `/rawdocs-structify` so we can observe what it does and which artifacts it produces?
 
 ## Verification
 
@@ -83,5 +83,5 @@ Return:
 ## Cross-references
 
 - [references/getting-started-template.md](references/getting-started-template.md)
-- [../docsraw-structify/SKILL.md](../docsraw-structify/SKILL.md)
+- [../rawdocs-structify/SKILL.md](../rawdocs-structify/SKILL.md)
 - [../../rules/rawdocs-opt-in-placement.md](../../rules/rawdocs-opt-in-placement.md)

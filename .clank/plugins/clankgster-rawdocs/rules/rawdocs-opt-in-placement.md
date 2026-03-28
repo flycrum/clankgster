@@ -7,7 +7,7 @@
 Rawdocs mode is enabled implicitly when a plugin contains a top-level `rawdocs/` directory.
 
 - `rawdocs/` must be colocated with standard plugin folders (`rules/`, `skills/`, `references/`, `docs/`, `commands/`, `agents/`, `hooks/`) at the same directory level.
-- `docsraw-structify` should accept either plugin root path or rawdocs path, then normalize to:
+- `rawdocs-structify` should accept either plugin root path or rawdocs path, then normalize to:
   - `target_plugin_path`
   - `target_rawdocs_path`
 - If `rawdocs/` is missing, stop and ask the user to create it before structify sync.

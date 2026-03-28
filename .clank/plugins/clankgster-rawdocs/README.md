@@ -22,10 +22,10 @@ See [`rules/rawdocs-opt-in-placement.md`](rules/rawdocs-opt-in-placement.md).
 
 ## Core skills
 
-- [`docsraw-create-plugin`](skills/docsraw-create-plugin/SKILL.md): Creates a minimal rawdocs-enabled plugin scaffold and starter `rawdocs/getting-started.md`.
-- [`docsraw-structify`](skills/docsraw-structify/SKILL.md): Orchestrates full structify sync lifecycle across isolated sub-agent analyses, planning, refinement, reset (excluding `rawdocs/`), and rewrite.
-- [`docsraw-analyze-raw`](skills/docsraw-analyze-raw/SKILL.md): Analyzes only `rawdocs/` recursively.
-- [`docsraw-analyze-existing`](skills/docsraw-analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
+- [`rawdocs-create-plugin`](skills/rawdocs-create-plugin/SKILL.md): Creates a minimal rawdocs-enabled plugin scaffold and starter `rawdocs/getting-started.md`.
+- [`rawdocs-structify`](skills/rawdocs-structify/SKILL.md): Orchestrates full structify sync lifecycle across isolated sub-agent analyses, planning, refinement, reset (excluding `rawdocs/`), and rewrite.
+- [`rawdocs-analyze-raw`](skills/rawdocs-analyze-raw/SKILL.md): Analyzes only `rawdocs/` recursively.
+- [`rawdocs-analyze-existing`](skills/rawdocs-analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
 
 ## Capo dependency
 
@@ -41,19 +41,19 @@ The canonical internal plan and near-verbatim prompt transcript are documented i
 
 ### Common tasks
 
-- **Create a new rawdocs structured plugin** -> use [`/docsraw-create-plugin`](skills/docsraw-create-plugin/SKILL.md)
-- **Update (structify sync) an existing rawdocs structured plugin** -> use [`/docsraw-structify`](skills/docsraw-structify/SKILL.md)
+- **Create a new rawdocs structured plugin** -> use [`/rawdocs-create-plugin`](skills/rawdocs-create-plugin/SKILL.md)
+- **Update (structify sync) an existing rawdocs structured plugin** -> use [`/rawdocs-structify`](skills/rawdocs-structify/SKILL.md)
 
 ### Prompt examples
 
 #### Create a new rawdocs structured plugin
 
 ```text
-Use /docsraw-create-plugin to scaffold a new plugin at .clank/plugins/my-plugin.
+Use /rawdocs-create-plugin to scaffold a new plugin at .clank/plugins/my-plugin.
 ```
 
 #### Update (structify sync) an existing rawdocs structured plugin
 
 ```text
-Use /docsraw-structify for .clank/plugins/my-plugin.
+Use /rawdocs-structify for .clank/plugins/my-plugin.
 ```
