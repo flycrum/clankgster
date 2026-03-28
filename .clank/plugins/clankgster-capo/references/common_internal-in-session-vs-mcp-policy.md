@@ -1,5 +1,7 @@
 # In-session orchestration vs MCP (internal policy)
 
+> 🔑🔑🔑 **Scope (clankgster-capo only).** Non-portability: [common-internal-disclosure-instructions.md](common-internal-disclosure-instructions.md).
+
 **Purpose:** Single place for how `clankgster-capo` skills should chain work **inside an agent session** versus when to use **capo MCP tools**.
 
 **Audience:** Maintainers editing this plugin. Not a general Clankgster author guide.

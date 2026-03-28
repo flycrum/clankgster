@@ -1,5 +1,7 @@
 # Internal styleguide for clankgster-capo
 
+> 🔑🔑🔑 **Scope (clankgster-capo only).** Non-portability: [common-internal-disclosure-instructions.md](../references/common-internal-disclosure-instructions.md).
+
 **Purpose:** Define internal naming and organization conventions **only** for the `.clank/plugins/clankgster-capo` plugin and its nested files and contents.
 
 ## Rule
@@ -15,6 +17,7 @@ No exceptions for markdown content files in plugin-root `rules/`, `references/`,
 
 - **`references/common-audit/`:** Leaf files use short topic stems (for example `internal-links-scope.md`) so shared audit steps stay readable; the parent directory name carries the `common-` grouping. Structure audits should treat this as **intentional**, not a naming drift to fix by default.
 - **`references/common_internal-*.md`:** Internal maintainer policy (underscore distinguishes from shared `common-*` references). Use for cross-cutting rules such as in-session vs MCP invocation.
+- **`references/common-internal-disclosure-instructions.md`:** Shared non-portability text; docs that need it use one blockquote line: 🔑 scope + inline link to this file (no duplicated paragraphs).
 
 For skill directories in `skills/`, use the same pathway prefixes.
 

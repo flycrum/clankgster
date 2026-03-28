@@ -1,5 +1,7 @@
 # Guide and glossary
 
+> 🔑🔑🔑 **Scope (clankgster-capo only).** Non-portability: [common-internal-disclosure-instructions.md](../references/common-internal-disclosure-instructions.md).
+
 Background terminology and guardrails for `clankgster-capo`.
 
 ## Core terms

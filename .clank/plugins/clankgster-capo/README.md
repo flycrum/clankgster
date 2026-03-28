@@ -67,6 +67,7 @@ This plugin includes an MCP route registry for tool-first clients. **In-session*
 - [`common-progressive-disclosure`](references/common-progressive-disclosure.md)
 - [`common-mcp-tools-in-plugins`](references/common-mcp-tools-in-plugins.md)
 - [`common_internal-in-session-vs-mcp-policy`](references/common_internal-in-session-vs-mcp-policy.md)
+- [`common-internal-disclosure-instructions`](references/common-internal-disclosure-instructions.md)
 - [`clankmd-template`](skills/clankmd-write-context/docs/clankmd-template.md)
 - [`skills-write-context skill-template`](skills/skills-write-context/docs/skill-template.md)
 - [`plugins-write-context rule-template`](skills/plugins-write-context/docs/rule-template.md)

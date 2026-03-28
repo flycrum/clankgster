@@ -1,5 +1,7 @@
 # MCP routing spec (internal)
 
+> 🔑🔑🔑 **Scope (clankgster-capo only).** Non-portability: [common-internal-disclosure-instructions.md](../references/common-internal-disclosure-instructions.md).
+
 Canonical explicit routing contract for `clankgster-capo` (aka `.clank/plugins/clankgster-capo`).
 
 This is an advanced, edge-case pattern for complex orchestration. It is not the default recommendation for typical plugin authoring.

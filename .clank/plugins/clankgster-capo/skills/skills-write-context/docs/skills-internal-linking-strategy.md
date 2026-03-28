@@ -1,5 +1,7 @@
 # Internal linking and ownership (clankgster-capo skills)
 
+> 🔑🔑🔑 **Scope (clankgster-capo only).** Non-portability: [common-internal-disclosure-instructions.md](../../../references/common-internal-disclosure-instructions.md).
+
 This document describes how **this plugin** organizes markdown under `skills/<skill-name>/` versus plugin-root `references/`, `rules/`, and `docs/`, and why those choices exist. It is **internal** maintenance context for `clankgster-capo` authors and agents refactoring this tree—not a portable standard for every Clankgster plugin.
 
 ---
