@@ -4,7 +4,7 @@ description: >-
   Analyzes the current structure and writing conventions of a target plugin
   while strictly excluding its `rawdocs/` directory. Produces an extensive
   continuity-focused package (sitemap, style profile, file-purpose summaries,
-  and evolution guidance) for downstream sync planning. Returns "New and or
+  and evolution guidance) for downstream structify sync planning. Returns "New and or
   empty" flow guidance when the plugin has no authored content outside rawdocs.
 disable-model-invocation: true
 user-invocable: false
@@ -16,7 +16,7 @@ user-invocable: false
 
 Analyze all current plugin content except `rawdocs/`, recursively.
 
-This skill provides continuity context and structure guidance for sync planning.
+This skill provides continuity context and structure guidance for structify sync planning.
 
 ## Absolute boundaries
 
@@ -36,7 +36,7 @@ If filtered sitemap has no meaningful authored content:
 
 - return status: `New and or empty`
 - stop further file-reading steps
-- advise parent workflow to proceed from-scratch sync
+- advise parent workflow to proceed from-scratch structify sync
 
 ## 3) Read remaining text-based files
 
@@ -82,6 +82,6 @@ Return an extensive package with:
 
 ## Cross-references
 
-- [../docsraw-sync-run/SKILL.md](../docsraw-sync-run/SKILL.md)
-- [../../references/docsraw-sync-architecture.md](../../references/docsraw-sync-architecture.md)
+- [../docsraw-structify/SKILL.md](../docsraw-structify/SKILL.md)
+- [../../references/docsraw-structify-architecture.md](../../references/docsraw-structify-architecture.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)

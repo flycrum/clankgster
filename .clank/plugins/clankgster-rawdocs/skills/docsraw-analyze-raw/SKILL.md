@@ -104,4 +104,4 @@ Return an extensive package with:
 ## Cross-references
 
 - [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
-- [../docsraw-sync-run/SKILL.md](../docsraw-sync-run/SKILL.md)
+- [../docsraw-structify/SKILL.md](../docsraw-structify/SKILL.md)

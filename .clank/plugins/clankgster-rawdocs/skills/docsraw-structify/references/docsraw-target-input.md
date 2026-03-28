@@ -1,6 +1,6 @@
 # docsraw target input gate
 
-Use this gate before running `docsraw-sync-run`.
+Use this gate before running `docsraw-structify`.
 
 ## Mandatory first step
 

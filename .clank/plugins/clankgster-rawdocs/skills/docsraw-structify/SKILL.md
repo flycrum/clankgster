@@ -1,5 +1,5 @@
 ---
-name: docsraw-sync-run
+name: docsraw-structify
 description: >-
   Runs a full rawdocs-to-plugin synchronization workflow for a user-selected
   target plugin. Collects explicit path input, launches two isolated
@@ -9,15 +9,15 @@ description: >-
   preserving source writing style as closely as possible.
 ---
 
-# docsraw sync run
+# docsraw structify
 
 ## Scope
 
-Execute the complete `rawdocs/` sync lifecycle for one target plugin path:
+Execute the complete `rawdocs/` structify sync lifecycle for one target plugin path:
 
 1. Ask for target path.
 2. Run isolated analysis sub-agents.
-3. Build + refine final sync plan.
+3. Build + refine final structify sync plan.
 4. Clear plugin content except `rawdocs/`.
 5. Rebuild structured plugin output.
 
@@ -129,7 +129,7 @@ Hard rules during step 5:
 
 Run a refinement pass focused on:
 
-- continuity across repeated sync runs
+- continuity across repeated structify sync runs
 - minimizing churn in stable structure
 - evolving structure only where growth demands it
 - preserving section styles, tone, quote preferences, and formatting habits
@@ -167,7 +167,7 @@ Validate:
 - cross-links resolve
 - style profile alignment recorded
 
-Return a sync report with:
+Return a structify sync report with:
 
 - resolved target paths
 - analyzer scope verification
@@ -190,5 +190,5 @@ Return a sync report with:
 - [references/docsraw-execution-notes.md](references/docsraw-execution-notes.md)
 - [references/docsraw-target-input.md](references/docsraw-target-input.md)
 - [references/docsraw-first-pass-integrated-plan-spec.md](references/docsraw-first-pass-integrated-plan-spec.md)
-- [../../references/docsraw-sync-architecture.md](../../references/docsraw-sync-architecture.md)
+- [../../references/docsraw-structify-architecture.md](../../references/docsraw-structify-architecture.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)

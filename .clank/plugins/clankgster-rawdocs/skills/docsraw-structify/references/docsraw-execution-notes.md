@@ -1,6 +1,6 @@
-# docsraw sync run execution notes
+# docsraw structify execution notes
 
-Detailed execution notes for `docsraw-sync-run`.
+Detailed execution notes for `docsraw-structify`.
 
 ## Required path state
 
@@ -58,6 +58,6 @@ Before deletion:
 ## Cross-references
 
 - [../SKILL.md](../SKILL.md)
-- [../../references/docsraw-sync-architecture.md](../../references/docsraw-sync-architecture.md)
+- [../../references/docsraw-structify-architecture.md](../../references/docsraw-structify-architecture.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)
 - [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)

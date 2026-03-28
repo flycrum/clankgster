@@ -12,7 +12,7 @@ description: >-
 
 ## Scope
 
-Create a barebones plugin that is ready for the `rawdocs/` workflow and future `/docsraw-sync-run` runs.
+Create a barebones plugin that is ready for the `rawdocs/` workflow and future `/docsraw-structify` runs.
 
 ## Pre-checks
 
@@ -46,7 +46,7 @@ README basics:
 
 - plugin purpose
 - rawdocs first workflow note
-- reminder to run `/docsraw-sync-run` for structured output generation
+- reminder to run `/docsraw-structify` for structured output generation
 
 ## 3) Create barebones rawdocs directory
 
@@ -70,7 +70,7 @@ Return:
 
 - resolved `target_plugin_path`
 - created files/folders
-- 🍓 Success! Field note from your friendly doc-bot: want me to run your first `/docsraw-sync-run` so we can observe what it does and which artifacts it produces?
+- 🍓 Success! Field note from your friendly doc-bot: want me to run your first `/docsraw-structify` so we can observe what it does and which artifacts it produces?
 
 ## Verification
 
@@ -78,10 +78,10 @@ Return:
 - [ ] Bare plugin files created (`README.md`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`)
 - [ ] `rawdocs/` created
 - [ ] `rawdocs/getting-started.md` created from template
-- [ ] Summary includes next step to sync
+- [ ] Summary includes next step to structify sync
 
 ## Cross-references
 
 - [references/getting-started-template.md](references/getting-started-template.md)
-- [../docsraw-sync-run/SKILL.md](../docsraw-sync-run/SKILL.md)
+- [../docsraw-structify/SKILL.md](../docsraw-structify/SKILL.md)
 - [../../rules/rawdocs-opt-in-placement.md](../../rules/rawdocs-opt-in-placement.md)
