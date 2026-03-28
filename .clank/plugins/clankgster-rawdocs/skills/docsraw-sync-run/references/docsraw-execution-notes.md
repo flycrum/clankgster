@@ -1,0 +1,63 @@
+# docsraw sync run execution notes
+
+Detailed execution notes for `docsraw-sync-run`.
+
+## Required path state
+
+After input normalization, these variables are mandatory:
+
+- `target_plugin_path`
+- `target_rawdocs_path`
+
+Both values must be reused exactly in delegated prompts to ensure consistency.
+
+## Delegation prompt requirements
+
+When delegating to analyzer sub-agents, prompt must include:
+
+1. Exact target path variable
+2. Explicit exclusion/inclusion boundaries
+3. Required output sections
+4. Reminder that rawdocs style fidelity is priority
+
+## Output merge strategy
+
+Merge order:
+
+1. Rawdocs meaning and style constraints
+2. Existing structure continuity anchors
+3. Structural evolution decisions
+4. Final write operations
+
+If there is conflict:
+
+- Prefer rawdocs meaning.
+- Prefer existing structure for continuity.
+- Document rationale for any structural break from existing pattern.
+
+## Cleanup guard strategy
+
+Before deletion:
+
+1. Build candidate deletion list from `target_plugin_path`.
+2. Remove candidates that are `rawdocs/` or descendants.
+3. Execute deletion only on filtered list.
+4. Re-check `rawdocs/` existence and content count.
+
+## Recommended report sections
+
+1. Resolved target paths
+2. Analyzer scope compliance checks
+3. Rawdocs synthesis summary
+4. Existing plugin continuity summary
+5. First-pass plan
+6. Refinement pass adjustments
+7. Cleanup and rebuild outcomes
+8. Validation checklist
+
+## Cross-references
+
+- [../SKILL.md](../SKILL.md)
+- [../../references/docsraw-sync-architecture.md](../../references/docsraw-sync-architecture.md)
+- [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)
+- [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
