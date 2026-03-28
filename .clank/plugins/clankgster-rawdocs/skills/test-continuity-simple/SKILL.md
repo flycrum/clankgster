@@ -15,13 +15,11 @@ Execute a fixed-path continuity test focused on `.clank/plugins/hello-world` and
 
 ## Pre-checks
 
-**STOP** if the user does not explicitly approve writing to `.clank/plugins/hello-world`.
-
 **STOP** if `.clank/plugins/hello-world` already exists and the user does not explicitly allow overwrite or reuse.
 
 ## Steps
 
-1. Create `.clank/plugins/hello-world` using [`rawdocs-create-plugin`](../create-plugin/SKILL.md) and wait for completion.
+1. In a sub-agent, create `.clank/plugins/hello-world` using [`rawdocs-create-plugin`](../create-plugin/SKILL.md) and wait for completion.
 2. Read and summarize `.clank/plugins/hello-world/rawdocs/getting-started.md`.
 3. Run [`rawdocs-struct-sync`](../struct-sync/SKILL.md) for `.clank/plugins/hello-world` and wait for completion.
 4. Snapshot and analyze resulting changes under `.clank/plugins/hello-world` outside `rawdocs/` (file list + content-level summary).
