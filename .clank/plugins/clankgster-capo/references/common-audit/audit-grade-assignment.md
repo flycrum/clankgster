@@ -1,6 +1,6 @@
 # Audit grade assignment (aggregators)
 
-Use this in top-level pathway aggregators (`plugins-audit-all`, `skills-audit-all`, `clankmd-audit-all`) after collecting all leaf reports.
+Use this in top-level pathway aggregators (`plugins-audit-full-suite-plugin`, `skills-audit-full-suite-skill`, `clankmd-audit-full-suite-md`) after collecting all leaf reports.
 
 ## 5. Grade assignment
 

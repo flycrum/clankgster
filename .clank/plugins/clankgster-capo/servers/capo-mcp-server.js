@@ -86,7 +86,7 @@ const ROUTES = [
   {
     routeId: 'plugins.audit',
     toolName: 'PluginsAudit',
-    targetSkillId: 'plugins-audit-all',
+    targetSkillId: 'plugins-audit-full-suite-plugin',
     pathway: 'plugins',
     action: 'audit',
     description: 'Route plugin audit workflows',
@@ -185,7 +185,7 @@ const ROUTES = [
   {
     routeId: 'skills.audit',
     toolName: 'SkillsAudit',
-    targetSkillId: 'skills-audit-all',
+    targetSkillId: 'skills-audit-full-suite-skill',
     pathway: 'skills',
     action: 'audit',
     description: 'Route standalone skill audit workflows',
@@ -266,7 +266,7 @@ const ROUTES = [
   {
     routeId: 'clankmd.audit',
     toolName: 'ClankMdAudit',
-    targetSkillId: 'clankmd-audit-all',
+    targetSkillId: 'clankmd-audit-full-suite-md',
     pathway: 'clankmd',
     action: 'audit',
     description: 'Route CLANK.md audit workflows',

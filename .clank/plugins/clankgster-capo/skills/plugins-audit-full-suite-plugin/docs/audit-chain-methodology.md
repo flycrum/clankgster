@@ -12,9 +12,9 @@ The prior audit model grouped by audit type first (`common-audit-content-quality
 
 So the orchestration axis should match user intent:
 
-- `plugins-audit-all`
-- `skills-audit-all`
-- `clankmd-audit-all`
+- `plugins-audit-full-suite-plugin`
+- `skills-audit-full-suite-skill`
+- `clankmd-audit-full-suite-md`
 
 Each top-level aggregator runs all relevant audit types for that single target.
 
@@ -23,7 +23,7 @@ Each top-level aggregator runs all relevant audit types for that single target.
 Aggregator skills call leaf audits via sub-agents. Leaf audits return complete markdown reports. Aggregator preserves full reports and adds a lightweight summary.
 
 ```text
-plugins-audit-all
+plugins-audit-full-suite-plugin
   -> plugins-audit-content-quality
   -> plugins-audit-internal-links
   -> plugins-audit-external-links
@@ -32,14 +32,14 @@ plugins-audit-all
   -> plugins-audit-comparison-matrix
   -> plugins-audit-structure
 
-skills-audit-all
+skills-audit-full-suite-skill
   -> skills-audit-content-quality
   -> skills-audit-internal-links
   -> skills-audit-external-links
   -> skills-audit-fact-check
   -> skills-audit-source-freshness
 
-clankmd-audit-all
+clankmd-audit-full-suite-md
   -> clankmd-audit-content-quality
   -> clankmd-audit-internal-links
   -> clankmd-audit-external-links

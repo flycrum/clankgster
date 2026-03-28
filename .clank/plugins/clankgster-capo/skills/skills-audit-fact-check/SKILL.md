@@ -15,7 +15,7 @@ Shared scope guidance: [fact-check-scope.md](../../references/common-audit/fact-
 
 ## Steps
 
-Apply [skills-target-input.md](../skills-audit-all/resources/skills-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
+Apply [skills-target-input.md](../skills-audit-full-suite-skill/resources/skills-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
 
 Use shared steps: [fact-check-steps.md](../../references/common-audit/fact-check-steps.md)
 

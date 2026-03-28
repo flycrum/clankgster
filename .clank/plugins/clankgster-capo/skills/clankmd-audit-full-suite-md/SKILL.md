@@ -1,5 +1,5 @@
 ---
-name: clankmd-audit-all
+name: clankmd-audit-full-suite-md
 description: >-
   Runs all CLANK.md audits via sub-agents for one target CLANK.md file and
   returns a combined report. Optionally triggers ClankMdUpdate as a healer flow

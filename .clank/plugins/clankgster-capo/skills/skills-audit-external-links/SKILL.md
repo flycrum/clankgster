@@ -14,7 +14,7 @@ Shared scope guidance: [external-links-scope.md](../../references/common-audit/e
 
 ## Steps
 
-Apply [skills-target-input.md](../skills-audit-all/resources/skills-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
+Apply [skills-target-input.md](../skills-audit-full-suite-skill/resources/skills-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
 
 Use shared steps: [external-links-steps.md](../../references/common-audit/external-links-steps.md)
 

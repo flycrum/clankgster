@@ -14,7 +14,7 @@ Shared scope guidance: [fact-check-scope.md](../../references/common-audit/fact-
 
 ## Steps
 
-Apply [clankmd-target-input.md](../clankmd-audit-all/resources/clankmd-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
+Apply [clankmd-target-input.md](../clankmd-audit-full-suite-md/resources/clankmd-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
 
 Use shared steps: [fact-check-steps.md](../../references/common-audit/fact-check-steps.md)
 

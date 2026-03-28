@@ -29,7 +29,7 @@ Do **not** infer the skill directory from editor focus, open tabs, attachments, 
 
 ## Sub-agent handoff (same target, no second question)
 
-When a **parent** workflow (e.g. `skills-audit-all`) already ran this gate and the **sub-agent prompt for this leaf audit** explicitly states the **validated** standalone skill directory to use, **skip** a second `AskUserQuestion` for that leaf. Still **re-validate** the path before reads.
+When a **parent** workflow (e.g. `skills-audit-full-suite-skill`) already ran this gate and the **sub-agent prompt for this leaf audit** explicitly states the **validated** standalone skill directory to use, **skip** a second `AskUserQuestion` for that leaf. Still **re-validate** the path before reads.
 
 Do **not** use this shortcut from vague chat context, `@` mentions alone, editor focus, or search — only from an **explicit path string in the delegated prompt** for this run.
 

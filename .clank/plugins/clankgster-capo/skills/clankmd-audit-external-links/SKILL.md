@@ -14,7 +14,7 @@ Shared scope guidance: [external-links-scope.md](../../references/common-audit/e
 
 ## Steps
 
-Apply [clankmd-target-input.md](../clankmd-audit-all/resources/clankmd-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
+Apply [clankmd-target-input.md](../clankmd-audit-full-suite-md/resources/clankmd-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
 
 Use shared steps: [external-links-steps.md](../../references/common-audit/external-links-steps.md)
 

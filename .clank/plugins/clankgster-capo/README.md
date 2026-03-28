@@ -26,7 +26,7 @@ This plugin includes an advanced MCP-to-skill routing pattern for specialized or
 #### **Audit suite**
 
 - **plugins/**:
-  - [`plugins-audit-all`](skills/plugins-audit-all/SKILL.md)
+  - [`plugins-audit-full-suite-plugin`](skills/plugins-audit-full-suite-plugin/SKILL.md)
   - [`plugins-audit-content-quality`](skills/plugins-audit-content-quality/SKILL.md)
   - [`plugins-audit-internal-links`](skills/plugins-audit-internal-links/SKILL.md)
   - [`plugins-audit-external-links`](skills/plugins-audit-external-links/SKILL.md)
@@ -35,14 +35,14 @@ This plugin includes an advanced MCP-to-skill routing pattern for specialized or
   - [`plugins-audit-comparison-matrix`](skills/plugins-audit-comparison-matrix/SKILL.md)
   - [`plugins-audit-structure`](skills/plugins-audit-structure/SKILL.md)
 - **skills/**:
-  - [`skills-audit-all`](skills/skills-audit-all/SKILL.md)
+  - [`skills-audit-full-suite-skill`](skills/skills-audit-full-suite-skill/SKILL.md)
   - [`skills-audit-content-quality`](skills/skills-audit-content-quality/SKILL.md)
   - [`skills-audit-internal-links`](skills/skills-audit-internal-links/SKILL.md)
   - [`skills-audit-external-links`](skills/skills-audit-external-links/SKILL.md)
   - [`skills-audit-fact-check`](skills/skills-audit-fact-check/SKILL.md)
   - [`skills-audit-source-freshness`](skills/skills-audit-source-freshness/SKILL.md)
 - **CLANK.md**:
-  - [`clankmd-audit-all`](skills/clankmd-audit-all/SKILL.md)
+  - [`clankmd-audit-full-suite-md`](skills/clankmd-audit-full-suite-md/SKILL.md)
   - [`clankmd-audit-content-quality`](skills/clankmd-audit-content-quality/SKILL.md)
   - [`clankmd-audit-internal-links`](skills/clankmd-audit-internal-links/SKILL.md)
   - [`clankmd-audit-external-links`](skills/clankmd-audit-external-links/SKILL.md)

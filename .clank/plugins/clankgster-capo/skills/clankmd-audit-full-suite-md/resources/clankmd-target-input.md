@@ -18,7 +18,7 @@ Auditing the wrong `CLANK.md` wastes time and erodes trust. This pathway **does 
 
 ## Sub-agent handoff (same target, no second question)
 
-When a **parent** workflow (e.g. `clankmd-audit-all`) already ran this gate and the **sub-agent prompt for this leaf audit** explicitly states the **validated** `CLANK.md` path to use, **skip** a second `AskUserQuestion` for that leaf. Still **re-validate** the path (exists, basename `CLANK.md`) before reads.
+When a **parent** workflow (e.g. `clankmd-audit-full-suite-md`) already ran this gate and the **sub-agent prompt for this leaf audit** explicitly states the **validated** `CLANK.md` path to use, **skip** a second `AskUserQuestion` for that leaf. Still **re-validate** the path (exists, basename `CLANK.md`) before reads.
 
 Do **not** use this shortcut from vague chat context, `@` mentions alone, editor focus, or search — only from an **explicit path string in the delegated prompt** for this run.
 

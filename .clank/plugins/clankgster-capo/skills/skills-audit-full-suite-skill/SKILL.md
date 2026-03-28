@@ -1,5 +1,5 @@
 ---
-name: skills-audit-all
+name: skills-audit-full-suite-skill
 description: >-
   Runs all standalone skills audits via sub-agents for one target skill
   directory and returns a combined report. Optionally triggers SkillsUpdate as a

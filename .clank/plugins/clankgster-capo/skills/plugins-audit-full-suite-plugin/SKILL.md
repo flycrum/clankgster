@@ -1,5 +1,5 @@
 ---
-name: plugins-audit-all
+name: plugins-audit-full-suite-plugin
 description: >-
   Runs all plugin audit types via sub-agents for one target plugin and returns
   a combined report with a summary table. Optionally triggers PluginsUpdate as a

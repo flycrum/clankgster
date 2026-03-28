@@ -14,7 +14,7 @@ Shared scope guidance: [source-freshness-scope.md](../../references/common-audit
 
 ## Steps
 
-Apply [skills-target-input.md](../skills-audit-all/resources/skills-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
+Apply [skills-target-input.md](../skills-audit-full-suite-skill/resources/skills-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
 
 Use shared steps: [source-freshness-steps.md](../../references/common-audit/source-freshness-steps.md)
 

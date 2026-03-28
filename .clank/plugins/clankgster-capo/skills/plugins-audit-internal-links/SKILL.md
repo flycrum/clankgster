@@ -18,7 +18,7 @@ Shared scope guidance: [internal-links-scope.md](../../references/common-audit/i
 
 ## Steps
 
-Apply [plugins-target-input.md](../plugins-audit-all/resources/plugins-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
+Apply [plugins-target-input.md](../plugins-audit-full-suite-plugin/resources/plugins-target-input.md): user path gate and validation as written (including sub-agent handoff); then shared audit steps.
 
 Use shared steps: [internal-links-steps.md](../../references/common-audit/internal-links-steps.md)
 

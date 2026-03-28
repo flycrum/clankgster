@@ -16,7 +16,7 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | `plugins.write` | `PluginsWrite` | `plugins-write-context` | `plugins` | `write` |
 | `plugins.update` | `PluginsUpdate` | `plugins-update-context` | `plugins` | `update` |
 | `plugins.remove` | `PluginsRemove` | `plugins-remove-context` | `plugins` | `remove` |
-| `plugins.audit` | `PluginsAudit` | `plugins-audit-all` | `plugins` | `audit` |
+| `plugins.audit` | `PluginsAudit` | `plugins-audit-full-suite-plugin` | `plugins` | `audit` |
 | `plugins.audit.contentQuality` | `PluginsAuditContentQuality` | `plugins-audit-content-quality` | `plugins` | `audit` |
 | `plugins.audit.externalLinks` | `PluginsAuditExternalLinks` | `plugins-audit-external-links` | `plugins` | `audit` |
 | `plugins.audit.factCheck` | `PluginsAuditFactCheck` | `plugins-audit-fact-check` | `plugins` | `audit` |
@@ -27,7 +27,7 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | `skills.write` | `SkillsWrite` | `skills-write-context` | `skills` | `write` |
 | `skills.update` | `SkillsUpdate` | `skills-update-context` | `skills` | `update` |
 | `skills.remove` | `SkillsRemove` | `skills-remove-context` | `skills` | `remove` |
-| `skills.audit` | `SkillsAudit` | `skills-audit-all` | `skills` | `audit` |
+| `skills.audit` | `SkillsAudit` | `skills-audit-full-suite-skill` | `skills` | `audit` |
 | `skills.audit.contentQuality` | `SkillsAuditContentQuality` | `skills-audit-content-quality` | `skills` | `audit` |
 | `skills.audit.externalLinks` | `SkillsAuditExternalLinks` | `skills-audit-external-links` | `skills` | `audit` |
 | `skills.audit.factCheck` | `SkillsAuditFactCheck` | `skills-audit-fact-check` | `skills` | `audit` |
@@ -36,7 +36,7 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | `clankmd.write` | `ClankMdWrite` | `clankmd-write-context` | `clankmd` | `write` |
 | `clankmd.update` | `ClankMdUpdate` | `clankmd-update-context` | `clankmd` | `update` |
 | `clankmd.remove` | `ClankMdRemove` | `clankmd-remove-context` | `clankmd` | `remove` |
-| `clankmd.audit` | `ClankMdAudit` | `clankmd-audit-all` | `clankmd` | `audit` |
+| `clankmd.audit` | `ClankMdAudit` | `clankmd-audit-full-suite-md` | `clankmd` | `audit` |
 | `clankmd.audit.contentQuality` | `ClankMdAuditContentQuality` | `clankmd-audit-content-quality` | `clankmd` | `audit` |
 | `clankmd.audit.externalLinks` | `ClankMdAuditExternalLinks` | `clankmd-audit-external-links` | `clankmd` | `audit` |
 | `clankmd.audit.factCheck` | `ClankMdAuditFactCheck` | `clankmd-audit-fact-check` | `clankmd` | `audit` |

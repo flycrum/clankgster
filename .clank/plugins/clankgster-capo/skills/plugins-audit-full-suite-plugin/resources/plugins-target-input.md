@@ -29,7 +29,7 @@ Human-in-the-loop patterns recommend **explicit human control** when scope is am
 
 ## Sub-agent handoff (same target, no second question)
 
-When a **parent** workflow (e.g. `plugins-audit-all`) already ran this gate and the **sub-agent prompt for this leaf audit** explicitly states the **validated** plugin root directory to use, **skip** a second `AskUserQuestion` for that leaf. Still **re-validate** the path before reads.
+When a **parent** workflow (e.g. `plugins-audit-full-suite-plugin`) already ran this gate and the **sub-agent prompt for this leaf audit** explicitly states the **validated** plugin root directory to use, **skip** a second `AskUserQuestion` for that leaf. Still **re-validate** the path before reads.
 
 Do **not** use this shortcut from vague chat context, `@` mentions alone, editor focus, or tree search — only from an **explicit path string in the delegated prompt** for this run.
 

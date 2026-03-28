@@ -13,7 +13,7 @@ Audit one plugin directory under `.clank/plugins/<plugin>/`.
 
 ## Steps
 
-1. Apply [plugins-target-input.md](../plugins-audit-all/resources/plugins-target-input.md): user path gate and validation as written (including sub-agent handoff).
+1. Apply [plugins-target-input.md](../plugins-audit-full-suite-plugin/resources/plugins-target-input.md): user path gate and validation as written (including sub-agent handoff).
 2. Scan directory tree.
 3. Check required files and manifests.
 4. Validate `SKILL.md` frontmatter and naming alignment.
