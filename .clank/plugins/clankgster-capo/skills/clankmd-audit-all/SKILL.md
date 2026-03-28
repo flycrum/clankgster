@@ -18,7 +18,9 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 
 ## Steps
 
-1. Resolve target `CLANK.md` file path.
+1. Resolve target `CLANK.md` file path using [clankmd-target-resolution.md](resources/clankmd-target-resolution.md):
+   - if focused file is `CLANK.md`, use it
+   - otherwise ask user to select/provide target path
 2. Launch leaf audits via sub-agents:
    - `clankmd-audit-content-quality`
    - `clankmd-audit-internal-links`
@@ -54,3 +56,4 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 
 - [clankmd-write.md](../../rules/clankmd-write.md)
 - [common-internal-mcp-routing-spec.md](../../docs/common-internal-mcp-routing-spec.md)
+- [skill-asking-for-user-input.md](../skills-write-context/docs/skill-asking-for-user-input.md)

@@ -1,0 +1,31 @@
+---
+name: clankmd-audit-external-links
+description: >-
+  Audits external URLs in a single source pathway `CLANK.md` file and reports
+  broken, redirected, or inaccessible links.
+---
+
+# Audit CLANK.md external links
+
+## Scope
+
+Audit `http://` and `https://` links in one `CLANK.md` file.
+Shared scope guidance: [external-links-scope.md](../../references/common-audit/external-links-scope.md)
+
+## Steps
+
+First resolve target path via [clankmd-target-resolution.md](../clankmd-audit-all/resources/clankmd-target-resolution.md).
+
+Use shared steps: [external-links-steps.md](../../references/common-audit/external-links-steps.md)
+
+## Output format
+
+Use shared output format: [external-links-output-format.md](../../references/common-audit/external-links-output-format.md)
+
+## Verification
+
+Use shared verification: [external-links-verification.md](../../references/common-audit/external-links-verification.md)
+
+## Cross-references
+
+Use shared references: [external-links-cross-references.md](../../references/common-audit/external-links-cross-references.md)
