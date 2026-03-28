@@ -6,7 +6,7 @@ YAML frontmatter fields available to each content type, what they control, and h
 
 ## YAML frontmatter support
 
-**Skills** require YAML frontmatter. The `name` and `description` fields are mandatory. Without frontmatter, a skill file will not be discovered or cataloged correctly.
+**Skills** require YAML frontmatter for discovery. For **portable Agent Skills** ([specification](https://agentskills.io/specification)), `name` and `description` are required in `SKILL.md`. **Claude Code** documents additional fields as optional and may default `name` from the directory—see [Claude Code skills](https://code.claude.com/docs/en/skills); phrase requirements per target runtime when authoring.
 
 **Rules** have optional frontmatter. In Cursor's `.mdc` format, frontmatter controls `alwaysApply`, `globs`, and `description`. In Claude Code, rules in `.claude/rules/` do not require frontmatter (the file name and content are sufficient). Clankgster sync writes agent-agnostic `.md` rules and transforms them to `.mdc` with appropriate frontmatter for Cursor.
 
@@ -20,7 +20,7 @@ YAML frontmatter fields available to each content type, what they control, and h
 
 The `name` field identifies the content type in the agent's catalog and slash menu.
 
-- **Skills**: Required. 1-64 characters, kebab-case (e.g., `process-pull-request`, `debug-test-failure`). This becomes the slash command name.
+- **Skills**: Required for portable Agent Skills; Claude Code may omit `name` (directory fallback). When present: 1-64 characters, kebab-case (e.g., `process-pull-request`, `debug-test-failure`). Often becomes the slash command name.
 - **Agents**: Required. Identifies the sub-agent for spawning and logging.
 - All other types: Not applicable. Rules, commands, and references derive their identity from the file name or path.
 
@@ -90,7 +90,7 @@ The `hooks` field defines lifecycle hooks scoped to the skill's execution.
 The `paths` field specifies file glob patterns that trigger the skill when the agent operates on matching files.
 
 - **Skills**: Supported in frontmatter. When the agent edits or reads a file matching the glob, the skill becomes a candidate for auto-invocation.
-- **Rules**: In Cursor's `.mdc` format, the `globs` frontmatter field serves the same purpose. In Claude Code, glob-based rule activation is not natively supported in `.claude/rules/`.
+- **Rules**: In Cursor's `.mdc` format, the `globs` frontmatter field scopes activation. In Claude Code, use the **`paths`** field in `.claude/rules/*.md` YAML frontmatter for path-scoped (glob) activation—see [path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules).
 - All other types: Not applicable.
 
 ## Other skill-specific fields

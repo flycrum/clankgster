@@ -95,7 +95,7 @@ Include the exact phrases a user might type that should activate this skill. Fro
 - Action phrases: "write plugin content", "create a skill from this"
 - Domain terms: "context engineer", "plugin authoring", "optimize for agents"
 - File references: "SKILL.md", "rules file", "plugin references"
-- Contextual situations: "after editing plugins", "when rules are not update"
+- Contextual situations: "after editing plugins", "when rules are not updated"
 
 ### Placement
 
@@ -122,7 +122,7 @@ Include what the skill does NOT do when ambiguity is likely. This prevents false
 
 ```yaml
 description: >-
-  Generate commit messages from staged git diffs. Use when write
+  Generate commit messages from staged git diffs. Use when writing
   commit messages or reviewing staged changes. Does not handle
   unstaged changes or branch management.
 ```

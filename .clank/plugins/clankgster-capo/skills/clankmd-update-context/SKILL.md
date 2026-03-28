@@ -8,6 +8,10 @@ description: >-
 
 # Update CLANK.md context
 
+## Scope
+
+Source pathway `CLANK.md` files only. Preserves condensed global-context and link-first style.
+
 ## Steps
 
 1. Read [reference.md](reference.md).

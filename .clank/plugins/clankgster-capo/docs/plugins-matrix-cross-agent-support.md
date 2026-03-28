@@ -9,7 +9,7 @@ How each content type works across Claude Code, Cursor, and Codex, and which typ
 Claude Code has the most complete support for all content types:
 
 - **Skills**: Full support. Claude Code natively understands `SKILL.md` files with YAML frontmatter, supports all frontmatter fields (`name`, `description`, `allowed-tools`, `model`, `effort`, `context: fork`, `hooks`, `paths`, `argument-hint`, `disable-model-invocation`, `user-invocable`, `shell`), and provides both slash-command and description-match invocation.
-- **Rules**: Full support. Rules in `.claude/rules/` are loaded as always-on context. Claude Code reads the markdown content directly.
+- **Rules**: Full support. Rules in `.claude/rules/` use [path-specific loading](https://code.claude.com/docs/en/memory#path-specific-rules): files **without** `paths` in YAML frontmatter load for the session; files **with** `paths` load when matching files are in play. Claude Code reads the markdown content directly.
 - **Commands**: Full support, though commands are considered legacy. Claude Code supports slash-command invocation for command files in `.claude/commands/`.
 - **References**: Supported via skill `references/` directories. When a skill body links to a reference file, Claude Code follows the link and reads the content.
 - **Docs**: Manual read only. Claude Code can read doc files when instructed but does not auto-load them.

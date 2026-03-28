@@ -15,6 +15,8 @@ Skills are workflow orchestrators. Keep descriptions high-signal and bodies proc
 5. Verification checklist
 6. Cross-references
 
+Omit `## Pre-checks` when there are no step-zero gates beyond what the numbered steps already cover (common in this plugin). Remove/update skills may use `## Steps` immediately after `## Scope` when Scope is a single pathway line.
+
 ## Description best practices
 
 - Use user-intent language and trigger phrases

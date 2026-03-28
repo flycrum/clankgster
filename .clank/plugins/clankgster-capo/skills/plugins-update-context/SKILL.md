@@ -8,6 +8,10 @@ description: >-
 
 # Update plugin context
 
+## Scope
+
+Source pathway `plugins/` content only. Edits existing plugin trees with cross-link validation.
+
 ## Steps
 
 1. Read [reference.md](reference.md).

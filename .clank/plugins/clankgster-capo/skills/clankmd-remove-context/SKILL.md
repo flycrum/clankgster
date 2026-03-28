@@ -7,6 +7,10 @@ description: >-
 
 # Remove CLANK.md context
 
+## Scope
+
+Source pathway `CLANK.md` files only. Removes obsolete sections and cleans up dependent links.
+
 ## Steps
 
 1. Read [reference.md](reference.md).

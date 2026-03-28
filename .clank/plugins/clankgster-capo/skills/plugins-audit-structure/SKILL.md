@@ -9,7 +9,7 @@ description: >-
 
 ## Scope
 
-Audit one plugin directory under `.clank/plugins/<plugin>/`.
+Audit one plugin directory whose root validates per [plugins-target-input.md](../plugins-audit-full-suite-plugin/resources/plugins-target-input.md) (any of the four allowed plugin containers).
 
 ## Steps
 

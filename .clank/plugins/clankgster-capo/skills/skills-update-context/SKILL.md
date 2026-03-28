@@ -8,6 +8,10 @@ description: >-
 
 # Update standalone skills context
 
+## Scope
+
+Standalone source pathway `skills/` workflows only. Refines `SKILL.md` and colocated docs.
+
 ## Steps
 
 1. Read existing `SKILL.md`.

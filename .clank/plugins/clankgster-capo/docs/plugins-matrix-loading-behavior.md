@@ -8,7 +8,7 @@ How each content type enters the agent's context window, what it costs in tokens
 
 **Skills** load only their description at startup (roughly 100 tokens). The agent sees a short summary in its skill catalog and can decide whether to invoke the full body later. This keeps idle cost low while still allowing the agent to discover the skill by description match.
 
-**Rules** are the primary always-on content type. An always-on rule (the default for Claude Code) is injected into the context window at session start and stays there for the entire conversation. Conditional rules (glob-matched or description-matched) load only when the agent touches a matching file or topic. In Cursor, `alwaysApply: true` in the `.mdc` frontmatter controls this; in Codex, rules live in `AGENTS.md` and are always loaded for that directory scope.
+**Rules** are often always-on, but behavior is platform-specific. In **Claude Code**, a `.claude/rules/*.md` file **without** `paths` in YAML frontmatter is injected for the session; rules **with** `paths` are path-scoped per [official memory docs](https://code.claude.com/docs/en/memory#path-specific-rules). In **Cursor**, `alwaysApply` and `globs` in `.mdc` frontmatter control always-on vs conditional loading. In **Codex**, rules live in `AGENTS.md` and follow that file’s merge and scope rules for the directory tree.
 
 **Commands, references, docs, and agents** are never auto-loaded. They contribute zero tokens at idle.
 

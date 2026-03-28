@@ -11,7 +11,9 @@ For files in this plugin, use pathway prefixes only:
 - `clankmd-`
 - `common-`
 
-No exceptions for markdown content files in plugin-root `rules/`, `references/`, and `docs/`.
+No exceptions for markdown content files in plugin-root `rules/`, `references/`, and `docs/` **except** the next bullet.
+
+- **`references/common-audit/`:** Leaf files use short topic stems (for example `internal-links-scope.md`) so shared audit steps stay readable; the parent directory name carries the `common-` grouping. Structure audits should treat this as **intentional**, not a naming drift to fix by default.
 
 For skill directories in `skills/`, use the same pathway prefixes.
 

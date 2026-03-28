@@ -1,6 +1,6 @@
 # Self-referential guide: this plugin as a beacon
 
-**Purpose:** The `clankgster-capo` plugin is itself a well-structured example of good context engineering. Agents can reference its own structure, files, and write patterns as a concrete model when creating or audit other plugins.
+**Purpose:** The `clankgster-capo` plugin is itself a well-structured example of good context engineering. Agents can reference its own structure, files, and write patterns as a concrete model when creating or auditing other plugins.
 
 ## Rule
 
@@ -32,8 +32,8 @@ Useful patterns to observe:
 ## When it applies
 
 - Creating a new plugin and unsure how to structure it
-- Write a SKILL.md and need to see a real example of the format
-- Audit a plugin and need a "known good" to compare against
+- Writing a SKILL.md and needing a real example of the format
+- Auditing a plugin and needing a "known good" to compare against
 - Explaining plugin conventions to a user
 
 ## When it does not apply

@@ -60,7 +60,7 @@ Reasons:
 
 ## Target scope by pathway
 
-- `plugins-audit-*`: one plugin directory under `.clank/plugins/<plugin>/`
+- `plugins-audit-*`: one plugin root directory per [plugins-target-input.md](../resources/plugins-target-input.md) **Allowed roots** (`.clank/plugins/<plugin>/`, `.clank/plugins.local/<plugin>/`, `.clank-plugins/<plugin>/`, or `.clank-plugins.local/<plugin>/`)
 - `skills-audit-*`: one standalone skill directory (for example `.clank/skills/<name>/`)
 - `clankmd-audit-*`: one `CLANK.md` file path
 

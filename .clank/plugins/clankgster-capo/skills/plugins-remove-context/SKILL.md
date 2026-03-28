@@ -8,6 +8,10 @@ description: >-
 
 # Remove plugin context
 
+## Scope
+
+Source pathway `plugins/` content only. Deletes plugin files and repairs inbound references.
+
 ## Steps
 
 1. Read [reference.md](reference.md).

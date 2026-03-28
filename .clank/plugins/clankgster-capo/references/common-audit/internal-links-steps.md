@@ -1,7 +1,7 @@
 # Common steps: internal links audit
 
 1. Resolve target and collect markdown files (or single markdown file target).
-2. Extract markdown links and filter to relative links.
+2. Extract markdown links and filter to relative links. Exclude targets that appear only inside fenced code blocks (see [internal-links-scope.md](internal-links-scope.md)); do not classify those as Broken or Mismatch.
 3. Resolve each target path from source location.
 4. Validate existence.
 5. For existing targets, validate label-to-content alignment.

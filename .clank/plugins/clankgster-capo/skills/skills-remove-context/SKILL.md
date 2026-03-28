@@ -8,6 +8,10 @@ description: >-
 
 # Remove standalone skills context
 
+## Scope
+
+Standalone source pathway `skills/` workflows only. Deprecation and reference cleanup.
+
 ## Steps
 
 1. Read [reference.md](reference.md).

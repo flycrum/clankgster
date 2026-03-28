@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | Granularity | Collection of files | Single skill folder | Single markdown file |
 | Best for | Related systems of guidance | One reusable workflow | Critical global preload |
-| Idle context cost | Mostly rules/descriptions | Skill descriptions | Entire file |
+| Idle context cost | Rules, skill catalog descriptions, and similar idle signals | Skill descriptions | Entire file |
 | Typical actions | write/update/remove/audit | write/update/remove/audit | write/update/remove/audit |
 | MCP suitability | High | Medium | Medium |
 
@@ -16,6 +16,7 @@
 | --- | --- | --- | --- |
 | Skill | Workflow | Description only | Medium |
 | Rule | Convention | Yes/conditional by platform | Small |
+| Command | Single-action slash workflow | No (full body on `/` invocation) | Small |
 | Reference | Shared detail | No (on-demand via links) | Medium-large |
 | Doc | Background | No | Any |
 | Agent | Sub-agent persona | On spawn | Medium |

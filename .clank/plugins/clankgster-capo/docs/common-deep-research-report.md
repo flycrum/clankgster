@@ -24,7 +24,7 @@ Comprehensive findings from research into skills, rules, plugins, prompt enginee
 
 ## Agent Skills open standard
 
-Published by Anthropic at [agentskills.io](https://agentskills.io) in December 2025. Now adopted by 26+ platforms including:
+Published by Anthropic at [agentskills.io](https://agentskills.io) in December 2025. Widely adopted across major coding agents and IDEs, including:
 
 - Claude Code (Anthropic)
 - OpenAI Codex
@@ -63,7 +63,7 @@ Extensions are safely ignored by agents that do not support them:
 
 **Claude Code extensions:** `context`, `agent`, `hooks`, `argument-hint`, `user-invocable`, `model`, `effort`, `disable-model-invocation`, `paths`, `shell`
 
-**Cursor extensions:** `license`, `compatibility`, `metadata`
+**Cursor extensions:** `license`, `compatibility`, `metadata`, `disable-model-invocation` (non-exhaustive; see [Cursor Agent Skills](https://cursor.com/docs/skills))
 
 **Codex extensions:** `interface` (via `agents/openai.yaml`), `policy`
 
@@ -106,14 +106,14 @@ LLM-generated context files (auto-generated AGENTS.md, rules) may often **hinder
 
 ## Claude 4.6 behavior and calibration
 
-Source: [Anthropic prompting best practices](https://platform.claude.com/docs/en/docs/build-with-claude/prompt-engineering)
+Source: [Anthropic prompt engineering overview](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) (model-specific detail links to [prompting best practices](https://docs.anthropic.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) from there)
 
 ### Behavioral changes from previous models
 
 1. **More proactive** — Claude 4.6 does significantly more upfront exploration and may take initiative without being asked
 2. **May overtrigger** — Instructions that needed aggressive emphasis on previous models now trigger too aggressively
 3. **Strong sub-agent preference** — Claude 4.6 has a predilection for spawning sub-agents; may need guidance about when they are/aren't warranted
-4. **Adaptive thinking** — Replaces manual `budget_tokens` configuration with automatic calibration
+4. **Adaptive thinking** — Newer models prefer adaptive thinking and related settings; `budget_tokens` may still appear in APIs but is deprecated for many Claude 4.x flows in favor of documented adaptive options
 5. **More responsive to system prompt** — System prompt instructions carry more weight than in previous generations
 
 ### Calibration guidance
@@ -165,8 +165,8 @@ Source: [Anthropic Engineering Blog](https://www.anthropic.com/engineering/effec
 - Cannot start or end with hyphen
 - Cannot contain consecutive hyphens (`--`)
 - Must match the parent directory name
-- Cannot contain XML tags
-- Cannot contain reserved words: "anthropic", "claude"
+- Avoid raw angle-bracket markup in `name` values when targeting strict validators (product-specific lint may apply)
+- Some **vendor** skill validators add extra naming rules beyond the open spec; confirm against the runtime you ship to
 
 ### String substitutions available in skills
 
@@ -227,7 +227,7 @@ Use **gerund form** (verb + -ing) for skill names:
 | Agent | Root context file |
 | --- | --- |
 | Claude Code | `CLAUDE.md` (also reads `AGENTS.md`) |
-| Cursor | `.cursorrules` (also reads `AGENTS.md`) |
+| Cursor | `.cursor/rules/` (`.md`/`.mdc`), `AGENTS.md`; legacy `.cursorrules` may still be honored |
 | Codex | `AGENTS.md` (primary) |
 
 ### Shared vs agent-specific features
@@ -239,7 +239,7 @@ Use **gerund form** (verb + -ing) for skill names:
 | `description` frontmatter | Yes | — | — | — |
 | `allowed-tools` | Experimental | Full support | — | — |
 | `context: fork` | — | Yes | — | — |
-| `disable-model-invocation` | — | Yes | — | — |
+| `disable-model-invocation` | — | Yes | Yes (skills; see Cursor docs) | — |
 | `user-invocable` | — | Yes | — | — |
 | `model` override | — | Yes | — | — |
 | `effort` | — | Yes | — | — |
@@ -504,7 +504,7 @@ Environment variables available in hook scripts:
 - [Claude Code Skills Documentation](https://code.claude.com/docs/en/skills)
 - [Claude Code Plugins Reference](https://code.claude.com/docs/en/plugins-reference)
 - [Claude Code Tools Reference](https://code.claude.com/docs/en/tools-reference)
-- [Anthropic Prompting Best Practices](https://platform.claude.com/docs/en/docs/build-with-claude/prompt-engineering)
+- [Anthropic prompt engineering overview](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)
 - [Effective Context Engineering — Anthropic Engineering Blog](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
 - [Context Engineering for Coding Agents — Martin Fowler](https://martinfowler.com/articles/exploring-gen-ai/context-engineering-coding-agents.html)
 - [Cursor Rules Documentation](https://cursor.com/docs/context/rules)
@@ -512,7 +512,7 @@ Environment variables available in hook scripts:
 - [Codex Skills](https://developers.openai.com/codex/skills)
 - [ETH Zurich AGENTS.md Research — InfoQ, March 2026](https://www.infoq.com/news/2026/03/agents-context-file-value-review/)
 - [Anthropic Skills GitHub Repository](https://github.com/anthropics/skills)
-- [Claude Code Plugin Dev Skill](https://github.com/anthropics/claude-code/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md)
+- [Claude Code Plugin Dev Skill (raw)](https://raw.githubusercontent.com/anthropics/claude-code/main/plugins/plugin-dev/skills/skill-development/SKILL.md) · [GitHub UI](https://github.com/anthropics/claude-code/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md)
 - [VS Code Agent Skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills)
 - [How to Write a Good Spec for AI Agents — Addy Osmani](https://addyosmani.com/blog/good-spec/)
 - [Context Engineering Guide — Vibehackers](https://vibehackers.io/blog/context-engineering-guide)

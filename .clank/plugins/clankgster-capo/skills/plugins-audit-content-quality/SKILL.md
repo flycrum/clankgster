@@ -10,7 +10,7 @@ description: >-
 
 ## Scope
 
-Audit markdown writing quality for one plugin under `.clank/plugins/<plugin>/`.
+Audit markdown writing quality for one plugin whose root validates per [plugins-target-input.md](../plugins-audit-full-suite-plugin/resources/plugins-target-input.md) (any of the four allowed plugin containers, not only `.clank/plugins/<plugin>/`).
 Shared scope guidance: [content-quality-scope.md](../../references/common-audit/content-quality-scope.md)
 
 ## Steps

@@ -16,7 +16,7 @@ How each content type gets activated: user-initiated slash commands, agent-initi
 
 **Skills** can be auto-invoked when the agent determines that the user's request matches a skill's description. The agent reads skill descriptions from the catalog and selects the best match. This is why the `description` field in skill frontmatter is critical: it is the primary signal the agent uses for auto-matching.
 
-**Rules** are auto-applied by nature. Always-on rules are injected without any decision. Conditional rules fire based on file globs (the agent is editing a `.ts` file that matches the rule's glob) or description matching (similar to skills but for guidance rather than workflows).
+**Rules** are auto-applied by nature. Always-on rules are injected without any decision. **Cursor** often uses `globs` and `description` on `.mdc` rules for conditional loading. **Claude Code** uses **`paths`** (glob patterns) in `.claude/rules/*.md` YAML frontmatter for path-scoped rules, per [path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules).
 
 **Commands** are never auto-invoked. They require explicit user `/` invocation. This is one key behavioral difference between commands and skills.
 
@@ -26,13 +26,13 @@ How each content type gets activated: user-initiated slash commands, agent-initi
 
 **Skills** support `disable-model-invocation: true` in their YAML frontmatter. When set, the agent will not auto-select the skill based on description matching. The skill remains available via explicit `/skill-name` invocation. This is useful for skills that should only run when the user deliberately requests them (e.g., destructive operations, publishing workflows).
 
-**Rules** can disable auto-application in Cursor by setting `alwaysApply: false` in the `.mdc` frontmatter, which makes the rule conditional (glob or description matched) rather than always-on. In Claude Code, rules in `.claude/rules/` are always-on by default; there is no built-in toggle to make them conditional except by restructuring into a different content type.
+**Rules** can disable always-on behavior in Cursor by setting `alwaysApply: false` in the `.mdc` frontmatter, which makes the rule conditional (`globs` / `description`) rather than always-on. In Claude Code, use **`paths`** on `.claude/rules/*.md` to scope a rule to matching files; rules **without** `paths` remain session-wide. Restructuring into another content type is only needed when rules are the wrong abstraction.
 
 Commands, references, docs, and agents do not have auto-invocation to disable.
 
 ## Hiding from the slash menu
 
-**Skills** support `user-invocable: false` in their frontmatter. When set, the skill does not appear in the slash menu but can still be auto-invoked by the agent via description matching. This is useful for skills that should run as background automations, not as user-facing commands.
+**Skills** support `user-invocable: false` in their frontmatter. When set, the skill is **not user-invokable** via slash (per [Claude Code skills](https://code.claude.com/docs/en/skills#control-who-invokes-a-skill)); the agent may still auto-invoke it when appropriate. This is useful for skills that should run as background automations, not as user-facing commands.
 
 **Commands** cannot be hidden from the slash menu. If a command file exists in `commands/`, it appears.
 
@@ -53,7 +53,7 @@ Each content type has a distinct trigger mechanism:
 
 **Skills** have the most flexible triggering: both user-initiated and agent-initiated paths. The description serves as a semantic trigger for auto-invocation, while the slash command serves as an explicit trigger.
 
-**Rules** have the broadest automatic triggering. Always-on rules fire unconditionally. Glob-matched rules fire when the agent operates on files matching the pattern. Description-matched rules fire when the conversation topic matches.
+**Rules** have the broadest automatic triggering. Always-on rules fire unconditionally. **Cursor** uses `globs` (and sometimes `description`) for conditional rules. **Claude Code** uses **`paths`** on `.claude/rules/*.md` for path-scoped rules. Description-matched rules (where supported) fire when the conversation topic matches.
 
 **Commands** have the simplest trigger: the user types the slash command. No other path exists.
 

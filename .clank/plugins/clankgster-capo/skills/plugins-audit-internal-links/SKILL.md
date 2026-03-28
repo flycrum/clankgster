@@ -14,7 +14,12 @@ Shared scope guidance: [internal-links-scope.md](../../references/common-audit/i
 
 ## Out of scope
 
-- Same-file anchors only (`#...`)
+- Same-file anchors only (`#...`) as the **sole** target (no file path)
+- Relative targets that appear only inside fenced code blocks (template examples); see [internal-links-scope.md](../../references/common-audit/internal-links-scope.md)
+
+## In scope
+
+- Cross-file relative links in normal markdown body text (rendered as followable links)
 
 ## Steps
 

@@ -5,7 +5,7 @@ Background terminology and guardrails for `clankgster-capo`.
 ## Core terms
 
 - **source pathway**: one of the three canonical Clankgster source locations where context is authored before sync (`plugins/`, `skills/`, or `CLANK.md`)
-- **source pathway `plugins/`**: `.clank/plugins/<plugin>/` collections (skills, rules, references, docs, agents, hooks)
+- **source pathway `plugins/`**: plugin root directories under `.clank/plugins/<plugin>/`, `.clank/plugins.local/<plugin>/`, `.clank-plugins/<plugin>/`, or `.clank-plugins.local/<plugin>/` (see repo sync layout); each holds skills, rules, references, docs, agents, hooks
 - **source pathway `skills/`**: `.clank/skills/<name>/SKILL.md` standalone skill workflows
 - **source pathway `CLANK.md`**: canonical context file (these can live at any directory level)
 - **plugin skill**: `skills/<name>/SKILL.md` inside a plugin
@@ -73,8 +73,8 @@ Bad:
 
 ## Internal vs external usage language
 
-- **internal**: used explicitly and only for guidance about how this plugin itself is structured and maintained
-- **external**: used implicitly and it's default for nearly all other files that teach users how to author other context content
+- **internal**: explicit; only for guidance about how this plugin itself is structured and maintained
+- **external**: implicit default for nearly all other files that teach users how to author context outside this plugin (the word **external** itself is restricted; see below)
 
 Use the word "external" only in:
 
