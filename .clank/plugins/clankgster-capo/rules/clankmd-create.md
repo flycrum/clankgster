@@ -1,4 +1,4 @@
-# Write CLANK.md effectively
+# Create CLANK.md effectively
 
 **Purpose:** Conventions for authoring `CLANK.md` source files that sync into `CLAUDE.md`, `AGENTS.md`, and other agent entry files.
 

@@ -134,7 +134,7 @@ Files in `docs/` never auto-load. They are useful for:
 - Under 1,024 characters
 - Include trigger phrases
 - Front-load distinctive terms
-- See the skill-owned description-frontmatter guidance in `skills-write-context/docs/description-frontmatter.md`
+- See the skill-owned description-frontmatter guidance in `skills-create-context/docs/description-frontmatter.md`
 
 ### For Layer 1 (contextual rules)
 

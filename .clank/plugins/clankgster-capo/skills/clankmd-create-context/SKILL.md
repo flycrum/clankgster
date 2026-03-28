@@ -1,18 +1,18 @@
 ---
-name: clankmd-write-context
+name: clankmd-create-context
 description: >-
-  Writes new source pathway CLANK.md content using condensed global-context
+  Creates new source pathway CLANK.md content using condensed global-context
   conventions. Use when creating or drafting context files that should preload
   into agent sessions, and enforce brevity plus high-signal linking.
 ---
 
-# Write CLANK.md context
+# Create CLANK.md context
 
 ## Scope
 
 Create new `CLANK.md` content for session preload behavior.
 
-In-session agents follow this `SKILL.md` body; capo MCP route `clankmd.write` (`ClankMdWrite`) is an optional tool surface — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+In-session agents follow this `SKILL.md` body; capo MCP route `clankmd.create` (`ClankMdCreate`) is an optional tool surface — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Steps
 

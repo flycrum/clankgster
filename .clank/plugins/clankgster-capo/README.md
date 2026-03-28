@@ -13,13 +13,13 @@ This plugin includes an MCP route registry for tool-first clients. **In-session*
 #### **Core action skills**
 
 - [`common-triage-context-type`](skills/common-triage-context-type/SKILL.md)
-- [`plugins-write-context`](skills/plugins-write-context/SKILL.md)
+- [`plugins-create-context`](skills/plugins-create-context/SKILL.md)
 - [`plugins-update-context`](skills/plugins-update-context/SKILL.md)
 - [`plugins-remove-context`](skills/plugins-remove-context/SKILL.md)
-- [`skills-write-context`](skills/skills-write-context/SKILL.md)
+- [`skills-create-context`](skills/skills-create-context/SKILL.md)
 - [`skills-update-context`](skills/skills-update-context/SKILL.md)
 - [`skills-remove-context`](skills/skills-remove-context/SKILL.md)
-- [`clankmd-write-context`](skills/clankmd-write-context/SKILL.md)
+- [`clankmd-create-context`](skills/clankmd-create-context/SKILL.md)
 - [`clankmd-update-context`](skills/clankmd-update-context/SKILL.md)
 - [`clankmd-remove-context`](skills/clankmd-remove-context/SKILL.md)
 
@@ -51,29 +51,29 @@ This plugin includes an MCP route registry for tool-first clients. **In-session*
 
 ### Rules
 
-- [`common-write-rules`](rules/common-write-rules.md)
-- [`skills-write-rules`](rules/skills-write-rules.md)
+- [`common-create-rules`](rules/common-create-rules.md)
+- [`skills-create-rules`](rules/skills-create-rules.md)
 - [`common-organizing-content`](rules/common-organizing-content.md)
 - [`common-internal-styleguide`](rules/common-internal-styleguide.md)
-- [`clankmd-write`](rules/clankmd-write.md)
+- [`clankmd-create`](rules/clankmd-create.md)
 - [`plugins-self-referential-beacon`](rules/plugins-self-referential-beacon.md)
 
 ### References
 
 - [`common-prompt-techniques`](references/common-prompt-techniques.md)
-- [`skills-write-context skill-prompt-techniques` (addendum)](skills/skills-write-context/references/skill-prompt-techniques.md)
-- [`skills-write-context description-frontmatter`](skills/skills-write-context/docs/description-frontmatter.md)
+- [`skills-create-context skill-prompt-techniques` (addendum)](skills/skills-create-context/references/skill-prompt-techniques.md)
+- [`skills-create-context description-frontmatter`](skills/skills-create-context/docs/description-frontmatter.md)
 - [`common-tool-calls`](references/common-tool-calls.md)
 - [`common-progressive-disclosure`](references/common-progressive-disclosure.md)
 - [`common-mcp-tools-in-plugins`](references/common-mcp-tools-in-plugins.md)
 - [`common_internal-in-session-vs-mcp-policy`](references/common_internal-in-session-vs-mcp-policy.md)
 - [`common-internal-disclosure-instructions`](references/common-internal-disclosure-instructions.md)
-- [`clankmd-template`](skills/clankmd-write-context/docs/clankmd-template.md)
-- [`skills-write-context skill-template`](skills/skills-write-context/docs/skill-template.md)
-- [`plugins-write-context rule-template`](skills/plugins-write-context/docs/rule-template.md)
-- [`plugins-write-context command-template`](skills/plugins-write-context/docs/command-template.md)
-- [`plugins-write-context hooks-template`](skills/plugins-write-context/docs/hooks-template.md)
-- [`plugins-write-context agent-template`](skills/plugins-write-context/docs/agent-template.md)
+- [`clankmd-template`](skills/clankmd-create-context/docs/clankmd-template.md)
+- [`skills-create-context skill-template`](skills/skills-create-context/docs/skill-template.md)
+- [`plugins-create-context rule-template`](skills/plugins-create-context/docs/rule-template.md)
+- [`plugins-create-context command-template`](skills/plugins-create-context/docs/command-template.md)
+- [`plugins-create-context hooks-template`](skills/plugins-create-context/docs/hooks-template.md)
+- [`plugins-create-context agent-template`](skills/plugins-create-context/docs/agent-template.md)
 
 ### Docs
 

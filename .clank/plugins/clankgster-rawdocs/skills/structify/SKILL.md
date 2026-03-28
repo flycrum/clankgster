@@ -57,8 +57,8 @@ Run `rawdocs-analyze-raw` in a dedicated sub-agent with an explicit prompt that 
 - normalized `target_rawdocs_path`
 - explicit ban on reading outside `rawdocs/`
 - requirement to reference capo writing guidance:
-  - [`clankgster-capo plugins-write-context/SKILL.md`](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
-  - [`clankgster-capo plugins-write-context/reference.md`](../../../clankgster-capo/skills/plugins-write-context/reference.md)
+  - [`clankgster-capo plugins-create-context/SKILL.md`](../../../clankgster-capo/skills/plugins-create-context/SKILL.md)
+  - [`clankgster-capo plugins-create-context/reference.md`](../../../clankgster-capo/skills/plugins-create-context/reference.md)
 
 Require output package to include:
 

@@ -58,7 +58,7 @@ Run the full CLANK.md audit suite against one `CLANK.md` file.
 
 ## Cross-references
 
-- [clankmd-write.md](../../rules/clankmd-write.md)
-- [skill-asking-for-user-input.md](../skills-write-context/docs/skill-asking-for-user-input.md)
+- [clankmd-create.md](../../rules/clankmd-create.md)
+- [skill-asking-for-user-input.md](../skills-create-context/docs/skill-asking-for-user-input.md)
 - [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md)
 - [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md)

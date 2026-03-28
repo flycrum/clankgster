@@ -1,7 +1,7 @@
 {
   "name": "clankgster-capo",
   "version": "0.1.0",
-  "description": "Context engineering toolkit for Clankgster source pathways (`plugins/`, `skills/`, `CLANK.md`). Provides triage, write, update, remove, audit, and optional MCP tool orchestration.",
+  "description": "Context engineering toolkit for Clankgster source pathways (`plugins/`, `skills/`, `CLANK.md`). Provides triage, create, update, remove, audit, and optional MCP tool orchestration.",
   "author": {
     "name": "clankgster"
   }

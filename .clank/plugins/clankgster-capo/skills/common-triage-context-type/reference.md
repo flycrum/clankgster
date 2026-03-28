@@ -12,5 +12,5 @@ Use this hub for pathway selection and dispatch conventions.
 
 - Choose pathway before action
 - Explain pathway choice in one sentence
-- **Primary handoff:** read and follow the matching pathway `*-write-context` `SKILL.md` (see triage skill steps)
+- **Primary handoff:** read and follow the matching pathway `*-create-context` `SKILL.md` (see triage skill steps)
 - **Optional:** dispatch via capo MCP tool when the host exposes tools and structured routing is desired

@@ -29,8 +29,8 @@ User workflow:
 
 Primary references:
 
-- `../../clankgster-capo/skills/plugins-write-context/SKILL.md`
-- `../../clankgster-capo/skills/plugins-write-context/reference.md`
+- `../../clankgster-capo/skills/plugins-create-context/SKILL.md`
+- `../../clankgster-capo/skills/plugins-create-context/reference.md`
 
 ## Non-negotiable boundary rules
 
@@ -277,12 +277,12 @@ So, a few important things to note:
 
 the primary skill should be named `rawdocs-structify` and will:
 
-1. run the following in a new sub-agent to take either the user's input to their target plugin path OR `rawdocs/` path as INPUT (for example, using `@.clank/plugins/clankgster-capo/skills/skills-write-context/docs/skill-asking-for-user-input.md`, like this `@.clank/plugins/clankgster-capo/skills/skills-audit-full-suite-skill/resources/skills-target-input.md`, but not exactly; we can write our own steps and context for this). Also make sure to track the path the user provides as the user's "target plugin" path, as we will reference it throughout this skill and need to use it again in later steps.
+1. run the following in a new sub-agent to take either the user's input to their target plugin path OR `rawdocs/` path as INPUT (for example, using `@.clank/plugins/clankgster-capo/skills/skills-create-context/docs/skill-asking-for-user-input.md`, like this `@.clank/plugins/clankgster-capo/skills/skills-audit-full-suite-skill/resources/skills-target-input.md`, but not exactly; we can write our own steps and context for this). Also make sure to track the path the user provides as the user's "target plugin" path, as we will reference it throughout this skill and need to use it again in later steps.
 2. then this skill will run in a new sub-agent (so context does not bleed into the rest of the skill's context window; it needs to be isolated) and will analyze **only** the user's custom plugin's **`rawdocs/`** directory and its contents/context (including nested files). Restricting the analyze step to only this `rawdocs/` is absolutely critical to output success. This analyze step, running in a sub-agent, should be a separate skill from `rawdocs-structify`, named `rawdocs-analyze-raw`. Its job is:
-   a. REFERENCE CAPO: reference `clankgster-capo` docs on how to create, organize, and write a plugin (link to `@.clank/plugins/clankgster-capo/skills/plugins-write-context/SKILL.md`)
+   a. REFERENCE CAPO: reference `clankgster-capo` docs on how to create, organize, and structure a plugin (link to `@.clank/plugins/clankgster-capo/skills/plugins-create-context/SKILL.md`)
    b. READ RAWDOCS: read raw/unstructured file contents (text-based formats only; do not read non-text like images, binary, zip, etc.) within target plugin `rawdocs/` and determine high-level themes/objectives (examples: typescript, figma-to-code, ui design, testing, publish to npm, deploy to CI, monorepo conventions, error debugging, security compliance, security scanning, frontend playbook, backend playbook, git pr workflows, documentation, database design, database migration, codebase cleanup, accessibility/compliance, etc.). Pay attention to writing style (very important), tone, habits, preference for single vs double quotes in code, section header patterns, and more so we can guide future writing.
    c. RESEARCH THEME: do web research for how others have written similar plugins for those themes/objectives
-   d. ANALYZE RAWDOCS: analyze `rawdocs/` from the perspective of organization, grouping, file breakout strategy, and logical content structure, through the lens of capo guidance in `@.clank/plugins/clankgster-capo/skills/plugins-write-context/reference.md`. Highly respect existing writing. Goal is not wordsmithing. Creativity should be virtually zero; temperature near 0. Spelling/grammar updates are allowed but must be judicious.
+   d. ANALYZE RAWDOCS: analyze `rawdocs/` from the perspective of organization, grouping, file breakout strategy, and logical content structure, through the lens of capo guidance in `@.clank/plugins/clankgster-capo/skills/plugins-create-context/reference.md`. Highly respect existing writing. Goal is not wordsmithing. Creativity should be virtually zero; temperature near 0. Spelling/grammar updates are allowed but must be judicious.
    e. OUTPUT: output from this sub-agent must be extensive and complete for later steps.
 3. simultaneously, run a separate new sub-agent (isolated context) to read all other plugin contents/context (including nested), excluding **`rawdocs/`**. This should also be a separate skill from `rawdocs-structify`, named `rawdocs-analyze-existing`. Its job is:
    a. IDENTIFY CURRENT STRUCTURE: recursively scan and formulate a sitemap of current file structure for target plugin excluding `rawdocs/`; determine high-level organization/themes. Empty or near-empty plugin is acceptable; if empty aside from `rawdocs/`, skip sub-steps and return output indicating plugin is "New and or empty" and sync should proceed "from scratch"

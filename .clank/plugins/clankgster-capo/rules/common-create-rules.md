@@ -1,4 +1,4 @@
-# Write effective rules
+# Create effective rules
 
 **Purpose:** Conventions for writing plugin rule files that agents consume reliably.
 

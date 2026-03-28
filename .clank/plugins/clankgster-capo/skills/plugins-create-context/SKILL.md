@@ -1,18 +1,18 @@
 ---
-name: plugins-write-context
+name: plugins-create-context
 description: >-
-  Writes source pathway `plugins/` content from raw input using a draft/refine/
+  Creates source pathway `plugins/` content from raw input using a draft/refine/
   finalize workflow. Use when creating or expanding a plugin with coordinated
   skills, rules, references, docs, and manifests.
 ---
 
-# Write plugin context
+# Create plugin context
 
 ## Scope
 
 Create or expand plugin content under source pathway `plugins/`.
 
-This skill is a direct execution workflow. In-session agents should follow this `SKILL.md` body; capo MCP route `plugins.write` (`PluginsWrite`) is an optional tool surface for the same workflow — see [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+This skill is a direct execution workflow. In-session agents should follow this `SKILL.md` body; capo MCP route `plugins.create` (`PluginsCreate`) is an optional tool surface for the same workflow — see [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Naming portability guardrail
 
@@ -25,7 +25,7 @@ When authoring a target plugin, follow that target plugin's own naming conventio
 
 ### Skills
 
-Plugin skills use the same `SKILL.md` structure and frontmatter conventions as standalone source pathway `skills/`, but they live under `plugins/<plugin>/skills/` and are coordinated with sibling plugin content types. For canonical SKILL.md authoring guidance, use [skills-write-context/reference.md](../skills-write-context/reference.md).
+Plugin skills use the same `SKILL.md` structure and frontmatter conventions as standalone source pathway `skills/`, but they live under `plugins/<plugin>/skills/` and are coordinated with sibling plugin content types. For canonical SKILL.md authoring guidance, use [skills-create-context/reference.md](../skills-create-context/reference.md).
 
 ### Rules
 

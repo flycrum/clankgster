@@ -49,4 +49,4 @@ If there is **no** interactive user (batch job, headless MCP), **stop** and requ
 
 ## Cross-references (plain paths)
 
-- Skill input pattern: `.clank/plugins/clankgster-capo/skills/skills-write-context/docs/skill-asking-for-user-input.md`
+- Skill input pattern: `.clank/plugins/clankgster-capo/skills/skills-create-context/docs/skill-asking-for-user-input.md`

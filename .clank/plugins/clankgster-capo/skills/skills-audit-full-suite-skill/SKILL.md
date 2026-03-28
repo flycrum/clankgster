@@ -59,7 +59,7 @@ Run the full standalone `skills/` audit suite against one target skill directory
 
 ## Cross-references
 
-- [skill-asking-for-user-input.md](../skills-write-context/docs/skill-asking-for-user-input.md)
+- [skill-asking-for-user-input.md](../skills-create-context/docs/skill-asking-for-user-input.md)
 - [skills-target-input.md](resources/skills-target-input.md)
 - [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md)
 - [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md)

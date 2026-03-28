@@ -146,7 +146,7 @@ Codex CLI exposes these capabilities:
 | Action | Claude Code | Cursor | Codex |
 | -------- | ------------- | -------- | ------- |
 | Read a file | `Read` tool | File read | File read |
-| Create/overwrite file | `Write` tool | File create | File write |
+| Create/overwrite file | `Write` tool | File create | File create/overwrite |
 | Edit existing file | `Edit` tool | File edit | File patch |
 | Find files by name | `Glob` tool | Codebase search | File search |
 | Search file contents | `Grep` tool | Codebase search | File search |
@@ -255,7 +255,7 @@ Examples:
 ```yaml
 allowed-tools:
   - AskUserQuestion
-  - mcp__capo__PluginsWrite
+  - mcp__capo__PluginsCreate
 ```
 
 ```yaml

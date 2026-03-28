@@ -36,4 +36,4 @@ Audit one plugin directory whose root validates per [plugins-target-input.md](..
 ## Cross-references
 
 - [common-organizing-content.md](../../rules/common-organizing-content.md)
-- [skills-write-rules.md](../../rules/skills-write-rules.md)
+- [skills-create-rules.md](../../rules/skills-create-rules.md)

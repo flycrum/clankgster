@@ -7,7 +7,7 @@
 | Granularity | Collection of files | Single skill folder | Single markdown file |
 | Best for | Related systems of guidance | One reusable workflow | Critical global preload |
 | Idle context cost | Rules, skill catalog descriptions, and similar idle signals | Skill descriptions | Entire file |
-| Typical actions | write/update/remove/audit | write/update/remove/audit | write/update/remove/audit |
+| Typical actions | create/update/remove/audit | create/update/remove/audit | create/update/remove/audit |
 | MCP suitability | High | Medium | Medium |
 
 ## Plugin content-type matrix

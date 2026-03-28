@@ -58,6 +58,6 @@ Before deletion:
 ## Cross-references
 
 - [../SKILL.md](../SKILL.md)
-- [../../references/rawdocs-structify-architecture.md](../../references/rawdocs-structify-architecture.md)
-- [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)
-- [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
+- [../../../references/rawdocs-structify-architecture.md](../../../references/rawdocs-structify-architecture.md)
+- [../../../rules/rawdocs-internal-linking.md](../../../rules/rawdocs-internal-linking.md)
+- [../../../../clankgster-capo/skills/plugins-create-context/SKILL.md](../../../../clankgster-capo/skills/plugins-create-context/SKILL.md)

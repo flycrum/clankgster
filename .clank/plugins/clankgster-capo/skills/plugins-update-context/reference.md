@@ -4,7 +4,7 @@ Use this hub when updating existing source pathway `plugins/` content.
 
 ## Read order
 
-1. [../plugins-write-context/reference.md](../plugins-write-context/reference.md)
+1. [../plugins-create-context/reference.md](../plugins-create-context/reference.md)
 2. [common-organizing-content.md](../../rules/common-organizing-content.md)
 
 ## Focus

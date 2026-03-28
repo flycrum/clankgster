@@ -1,18 +1,18 @@
 ---
-name: skills-write-context
+name: skills-create-context
 description: >-
-  Writes standalone source pathway `skills/` artifacts (`SKILL.md`) with
+  Creates standalone source pathway `skills/` artifacts (`SKILL.md`) with
   discovery-grade descriptions and verification checklists. Use when creating a
   single reusable workflow without a full plugin wrapper.
 ---
 
-# Write standalone skills context
+# Create standalone skills context
 
 ## Scope
 
 Create `.clank/skills/<name>/SKILL.md` (or shorthand variants) for one workflow.
 
-In-session agents follow this `SKILL.md` body; capo MCP route `skills.write` (`SkillsWrite`) is an optional tool surface — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+In-session agents follow this `SKILL.md` body; capo MCP route `skills.create` (`SkillsCreate`) is an optional tool surface — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Source layouts
 

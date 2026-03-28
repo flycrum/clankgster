@@ -17,7 +17,7 @@ In-session agents follow this `SKILL.md` body; MCP route `skills.update` (`Skill
 ## Steps
 
 1. Read existing `SKILL.md`.
-2. Read [../skills-write-context/reference.md](../skills-write-context/reference.md) before making updates.
+2. Read [../skills-create-context/reference.md](../skills-create-context/reference.md) before making updates.
 3. Apply requested changes.
 4. Re-check frontmatter and trigger phrases against the shared guidance docs.
 5. Produce finalized update output.
@@ -30,4 +30,4 @@ In-session agents follow this `SKILL.md` body; MCP route `skills.update` (`Skill
 
 ## Cross-references
 
-- [skills-write-context reference hub](../skills-write-context/reference.md)
+- [skills-create-context reference hub](../skills-create-context/reference.md)

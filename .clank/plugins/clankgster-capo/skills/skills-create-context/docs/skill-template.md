@@ -107,8 +107,8 @@ For each piece of content, determine:
      omits (progressive disclosure). Agents follow links on demand. -->
 ## Cross-references
 
-- [Detailed technique A](../../references/plugin-name-technique-a.md)
-- [Detailed technique B](../../references/plugin-name-technique-b.md)
+- [Detailed technique A](../references/skill-prompt-techniques.md)
+- [Detailed technique B](../../../references/common-prompt-techniques.md)
 ````
 
 ## Checklist

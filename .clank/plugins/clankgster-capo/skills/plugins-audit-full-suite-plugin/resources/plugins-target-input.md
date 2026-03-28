@@ -60,4 +60,4 @@ If there is **no** interactive user, **stop** and require an explicit plugin roo
 
 ## Cross-references (plain paths)
 
-- Skill input pattern: `.clank/plugins/clankgster-capo/skills/skills-write-context/docs/skill-asking-for-user-input.md`
+- Skill input pattern: `.clank/plugins/clankgster-capo/skills/skills-create-context/docs/skill-asking-for-user-input.md`

@@ -29,8 +29,8 @@ This skill exists for ingestion analysis, not output writing.
 
 Read and note organizing lens from:
 
-- [`clankgster-capo plugins-write-context/SKILL.md`](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
-- [`clankgster-capo plugins-write-context/reference.md`](../../../clankgster-capo/skills/plugins-write-context/reference.md)
+- [`clankgster-capo plugins-create-context/SKILL.md`](../../../clankgster-capo/skills/plugins-create-context/SKILL.md)
+- [`clankgster-capo plugins-create-context/reference.md`](../../../clankgster-capo/skills/plugins-create-context/reference.md)
 
 Use this guidance only as organization lens; do not rewrite rawdocs voice.
 
@@ -104,5 +104,5 @@ Return an extensive package with:
 
 ## Cross-references
 
-- [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
+- [../../../clankgster-capo/skills/plugins-create-context/SKILL.md](../../../clankgster-capo/skills/plugins-create-context/SKILL.md)
 - [../structify/SKILL.md](../structify/SKILL.md)

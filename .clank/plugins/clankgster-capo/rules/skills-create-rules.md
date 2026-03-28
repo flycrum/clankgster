@@ -1,4 +1,4 @@
-# Write effective skills
+# Create effective skills
 
 **Purpose:** Conventions for writing `SKILL.md` files for both source pathway `plugins/skills/` and source pathway `skills/`.
 
@@ -35,7 +35,7 @@ Example:
 ```yaml
 allowed-tools:
   - AskUserQuestion
-  - mcp__capo__PluginsWrite
+  - mcp__capo__PluginsCreate
 ```
 
 ## Guardrail
@@ -44,5 +44,5 @@ Do not recommend MCP-to-skill orchestration by default. Treat it as an advanced 
 
 ## Cross-references
 
-- [description-frontmatter.md](../skills/skills-write-context/docs/description-frontmatter.md)
+- [description-frontmatter.md](../skills/skills-create-context/docs/description-frontmatter.md)
 - [common-progressive-disclosure.md](../references/common-progressive-disclosure.md)

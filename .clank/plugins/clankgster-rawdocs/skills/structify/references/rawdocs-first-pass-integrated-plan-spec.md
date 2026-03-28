@@ -173,6 +173,6 @@ Use this exact skeleton shape (fill with run-specific content):
 ## Cross-references
 
 - [../SKILL.md](../SKILL.md)
-- [../../../clankgster-capo/skills/plugins-write-context/SKILL.md](../../../clankgster-capo/skills/plugins-write-context/SKILL.md)
-- [../../../clankgster-capo/skills/plugins-write-context/reference.md](../../../clankgster-capo/skills/plugins-write-context/reference.md)
-- [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)
+- [../../../../clankgster-capo/skills/plugins-create-context/SKILL.md](../../../../clankgster-capo/skills/plugins-create-context/SKILL.md)
+- [../../../../clankgster-capo/skills/plugins-create-context/reference.md](../../../../clankgster-capo/skills/plugins-create-context/reference.md)
+- [../../../rules/rawdocs-internal-linking.md](../../../rules/rawdocs-internal-linking.md)

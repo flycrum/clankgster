@@ -4,8 +4,8 @@ Use this hub when removing obsolete CLANK.md sections.
 
 ## Read order
 
-1. [../clankmd-write-context/reference.md](../clankmd-write-context/reference.md)
-2. [clankmd-write.md](../../rules/clankmd-write.md)
+1. [../clankmd-create-context/reference.md](../clankmd-create-context/reference.md)
+2. [clankmd-create.md](../../rules/clankmd-create.md)
 
 ## Focus
 

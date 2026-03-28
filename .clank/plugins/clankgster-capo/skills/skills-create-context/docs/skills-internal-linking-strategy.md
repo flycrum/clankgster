@@ -34,7 +34,7 @@ Nothing here defines a **new** auto-load tier: skill-local files load when linke
 - **`reference.md` only** — Enough when the skill has a short read order and all depth lives in plugin-root `references/` or `docs/`.
 - **`docs/` only** — Rare without a hub; without `reference.md`, callers must link each `docs/*.md` path directly.
 - **`references/` under the skill** — Use when the skill owns multiple support files at similar “weight” (e.g. a prompt addendum separate from the hub).
-- **Hub + `docs/` + `references/`** — Valid when one index (`reference.md`) sequences **both** `docs/*.md` and `references/*.md`. Example in this plugin: `skills-write-context` lists description guides and templates under `docs/`, and `references/skill-prompt-techniques.md` for orchestration addenda, all from one hub.
+- **Hub + `docs/` + `references/`** — Valid when one index (`reference.md`) sequences **both** `docs/*.md` and `references/*.md`. Example in this plugin: `skills-create-context` lists description guides and templates under `docs/`, and `references/skill-prompt-techniques.md` for orchestration addenda, all from one hub.
 
 Prefer **one hub read** per workflow: `SKILL.md` steps point to `reference.md`; the hub lists deeper files so the agent does not chase duplicate cross-references.
 
@@ -54,7 +54,7 @@ Colocation rule: if material is **mostly** about one skill’s execution, keep i
 Allowed (markdown links):
 
 - **Skill → plugin-root `references/` or `docs/`** — Normal; shared baselines live there.
-- **Skill → another skill’s `reference.md`, `docs/`, or `references/`** — Normal when one workflow defers to another hub (e.g. plugin authoring deferring to `skills-write-context` for `SKILL.md` depth).
+- **Skill → another skill’s `reference.md`, `docs/`, or `references/`** — Normal when one workflow defers to another hub (e.g. plugin authoring deferring to `skills-create-context` for `SKILL.md` depth).
 - **`rules/` → `skills/`** — Normal; rules often point authors at the right skill hub.
 - **Plugin `docs/` → `skills/`** — Normal for deep internal docs.
 
@@ -77,8 +77,8 @@ Skill-owned templates and addenda use **type-first** filenames where practical (
 
 ## Relation to pathway rules
 
-- **`rules/skills-write-rules.md`** — Short always-on conventions for any `SKILL.md` in this repo (structure, description rules, MCP frontmatter guardrails). It links **into** `skills-write-context` for depth.
-- **`skills-write-context`** — The authoring **hub** for standalone and plugin `SKILL.md` quality, via `reference.md` and owned `docs/` / `references/`.
+- **`rules/skills-create-rules.md`** — Short always-on conventions for any `SKILL.md` in this repo (structure, description rules, MCP frontmatter guardrails). It links **into** `skills-create-context` for depth.
+- **`skills-create-context`** — The authoring **hub** for standalone and plugin `SKILL.md` quality, via `reference.md` and owned `docs/` / `references/`.
 
 ---
 

@@ -17,7 +17,7 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | Route ID | MCP tool | Target skill ID | Pathway | Action |
 | --- | --- | --- | --- | --- |
 | `common.triage` | `Triage` | `common-triage-context-type` | `common` | `triage` |
-| `plugins.write` | `PluginsWrite` | `plugins-write-context` | `plugins` | `write` |
+| `plugins.create` | `PluginsCreate` | `plugins-create-context` | `plugins` | `create` |
 | `plugins.update` | `PluginsUpdate` | `plugins-update-context` | `plugins` | `update` |
 | `plugins.remove` | `PluginsRemove` | `plugins-remove-context` | `plugins` | `remove` |
 | `plugins.audit` | `PluginsAudit` | `plugins-audit-full-suite-plugin` | `plugins` | `audit` |
@@ -28,7 +28,7 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | `plugins.audit.sourceFreshness` | `PluginsAuditSourceFreshness` | `plugins-audit-source-freshness` | `plugins` | `audit` |
 | `plugins.audit.comparisonMatrix` | `PluginsAuditComparisonMatrix` | `plugins-audit-comparison-matrix` | `plugins` | `audit` |
 | `plugins.audit.structure` | `PluginsAuditStructure` | `plugins-audit-structure` | `plugins` | `audit` |
-| `skills.write` | `SkillsWrite` | `skills-write-context` | `skills` | `write` |
+| `skills.create` | `SkillsCreate` | `skills-create-context` | `skills` | `create` |
 | `skills.update` | `SkillsUpdate` | `skills-update-context` | `skills` | `update` |
 | `skills.remove` | `SkillsRemove` | `skills-remove-context` | `skills` | `remove` |
 | `skills.audit` | `SkillsAudit` | `skills-audit-full-suite-skill` | `skills` | `audit` |
@@ -37,7 +37,7 @@ This is an advanced, edge-case pattern for complex orchestration. It is not the 
 | `skills.audit.factCheck` | `SkillsAuditFactCheck` | `skills-audit-fact-check` | `skills` | `audit` |
 | `skills.audit.internalLinks` | `SkillsAuditInternalLinks` | `skills-audit-internal-links` | `skills` | `audit` |
 | `skills.audit.sourceFreshness` | `SkillsAuditSourceFreshness` | `skills-audit-source-freshness` | `skills` | `audit` |
-| `clankmd.write` | `ClankMdWrite` | `clankmd-write-context` | `clankmd` | `write` |
+| `clankmd.create` | `ClankMdCreate` | `clankmd-create-context` | `clankmd` | `create` |
 | `clankmd.update` | `ClankMdUpdate` | `clankmd-update-context` | `clankmd` | `update` |
 | `clankmd.remove` | `ClankMdRemove` | `clankmd-remove-context` | `clankmd` | `remove` |
 | `clankmd.audit` | `ClankMdAudit` | `clankmd-audit-full-suite-md` | `clankmd` | `audit` |

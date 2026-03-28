@@ -14,14 +14,14 @@ Useful patterns to observe:
 
 | Pattern | Where to find it |
 | ------ | ------ |
-| SKILL.md with 3-pass workflow | [plugins-write-context](../skills/plugins-write-context/SKILL.md) |
-| Focused rule with Purpose/Rule/When | [common-write-rules.md](common-write-rules.md) |
-| Reference with TOC and examples | [common-prompt-techniques.md](../references/common-prompt-techniques.md); skill workflow addendum [skill-prompt-techniques.md](../skills/skills-write-context/references/skill-prompt-techniques.md) |
+| SKILL.md with 3-pass workflow | [plugins-create-context](../skills/plugins-create-context/SKILL.md) |
+| Focused rule with Purpose/Rule/When | [common-create-rules.md](common-create-rules.md) |
+| Reference with TOC and examples | [common-prompt-techniques.md](../references/common-prompt-techniques.md); skill workflow addendum [skill-prompt-techniques.md](../skills/skills-create-context/references/skill-prompt-techniques.md) |
 | Decision tree | [common-content-type-decision-tree.md](../references/common-content-type-decision-tree.md) |
 | Comparison matrix with footnotes | [common-content-type-comparison-matrix.md](../references/common-content-type-comparison-matrix.md) |
 | Plugin manifests (Claude + Cursor) | `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json` |
 | README as index | `README.md` |
-| Template files for each content type | [skill-template.md](../skills/skills-write-context/docs/skill-template.md), [rule-template.md](../skills/plugins-write-context/docs/rule-template.md), [command-template.md](../skills/plugins-write-context/docs/command-template.md), [hooks-template.md](../skills/plugins-write-context/docs/hooks-template.md), [agent-template.md](../skills/plugins-write-context/docs/agent-template.md), [clankmd-template.md](../skills/clankmd-write-context/docs/clankmd-template.md) |
+| Template files for each content type | [skill-template.md](../skills/skills-create-context/docs/skill-template.md), [rule-template.md](../skills/plugins-create-context/docs/rule-template.md), [command-template.md](../skills/plugins-create-context/docs/command-template.md), [hooks-template.md](../skills/plugins-create-context/docs/hooks-template.md), [agent-template.md](../skills/plugins-create-context/docs/agent-template.md), [clankmd-template.md](../skills/clankmd-create-context/docs/clankmd-template.md) |
 
 ## Guard rails
 

@@ -16,10 +16,10 @@
 ## Default: in-session chaining
 
 1. **Aggregator → leaves:** Use the **Agent** tool (sub-agents). Each sub-agent prompt must name the leaf skill id and pass the **same validated target** (path) the aggregator collected. Do **not** invoke MCP tools to run leaf audits inside the same chat.
-2. **Triage → write:** After pathway selection, **read and execute** the pathway write skill body:
-   - Plain path: `.clank/plugins/clankgster-capo/skills/plugins-write-context/SKILL.md`
-   - Plain path: `.clank/plugins/clankgster-capo/skills/skills-write-context/SKILL.md`
-   - Plain path: `.clank/plugins/clankgster-capo/skills/clankmd-write-context/SKILL.md`
+2. **Triage → create:** After pathway selection, **read and execute** the pathway create skill body:
+   - Plain path: `.clank/plugins/clankgster-capo/skills/plugins-create-context/SKILL.md`
+   - Plain path: `.clank/plugins/clankgster-capo/skills/skills-create-context/SKILL.md`
+   - Plain path: `.clank/plugins/clankgster-capo/skills/clankmd-create-context/SKILL.md`
 3. **Healer (audit → update):** After user confirms, **read and execute** the matching update skill:
    - `.clank/plugins/clankgster-capo/skills/plugins-update-context/SKILL.md`
    - `.clank/plugins/clankgster-capo/skills/skills-update-context/SKILL.md`
@@ -36,8 +36,8 @@ This keeps behavior correct when MCP is disconnected and matches how slash-invok
 
 ## Anti-patterns
 
-- Chaining **leaf** audits or write flows by calling **MCP tools** from one skill to another **inside** a normal Cursor/Claude session that already loaded skills
-- Treating `allowed-tools` entries as mandatory routing (they are **permission scope** only; see `rules/skills-write-rules.md`)
+- Chaining **leaf** audits or create flows by calling **MCP tools** from one skill to another **inside** a normal Cursor/Claude session that already loaded skills
+- Treating `allowed-tools` entries as mandatory routing (they are **permission scope** only; see `rules/skills-create-rules.md`)
 - Documenting skills as “call MCP only” when the primary path should be readable `SKILL.md` execution
 
 ## Related docs

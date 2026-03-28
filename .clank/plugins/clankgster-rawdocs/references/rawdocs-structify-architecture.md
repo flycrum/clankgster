@@ -100,4 +100,4 @@ Plan priorities:
 - [`rawdocs-analyze-raw`](../skills/analyze-raw/SKILL.md)
 - [`rawdocs-analyze-existing`](../skills/analyze-existing/SKILL.md)
 - [`rawdocs-internal-linking`](../rules/rawdocs-internal-linking.md)
-- [`clankgster-capo plugins-write-context`](../../clankgster-capo/skills/plugins-write-context/SKILL.md)
+- [`clankgster-capo plugins-create-context`](../../clankgster-capo/skills/plugins-create-context/SKILL.md)

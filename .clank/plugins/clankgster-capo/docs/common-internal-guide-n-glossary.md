@@ -62,7 +62,7 @@ Portability guardrail: these prefix rules are internal to `clankgster-capo` and 
 Action names in this plugin must use base-form verbs:
 
 - `triage`
-- `write`
+- `create`
 - `update`
 - `remove`
 - `audit`
@@ -73,19 +73,19 @@ Do not use present-participle (`-ing`) forms for action names in files, folders,
 
 Good:
 
-- `skills/plugins-write-context/SKILL.md`
-- `skills/clankmd-update-context/SKILL.md`
-- `skills/skills-write-context/reference.md`
-- `skills/skills-write-context/docs/description-frontmatter.md`
-- `rules/common-write-rules.md`
-- `rules/skills-write-rules.md`
+- `skills/<pathway>-create-context/SKILL.md`
+- `skills/<pathway>-update-context/SKILL.md`
+- `skills/<pathway>-create-context/reference.md`
+- `skills/<pathway>-create-context/docs/<topic>.md`
+- `rules/common-create-<topic>.md`
+- `rules/skills-create-<topic>.md`
 
 Bad:
 
-- `skills/plugins-writing-context/SKILL.md`
-- `skills/clankmd-updating-context/SKILL.md`
-- `references/common-writing-descriptions.md`
-- `rules/common-writing-rules.md`
+- `skills/<pathway>-creating-context/SKILL.md`
+- `skills/<pathway>-updating-context/SKILL.md`
+- `references/common-creating-descriptions.md`
+- `rules/common-creating-rules.md`
 
 ## Internal vs external usage language
 
@@ -102,7 +102,7 @@ Use the word "external" only in:
 Use this order:
 
 1. Decide pathway first (`plugins/`, `skills/`, `CLANK.md`)
-2. Then choose a base-form action verb (`triage`, `write`, `update`, `remove`, `audit`)
+2. Then choose a base-form action verb (`triage`, `create`, `update`, `remove`, `audit`)
 3. Then choose files inside the selected pathway
 
 ## MCP conventions for this plugin
