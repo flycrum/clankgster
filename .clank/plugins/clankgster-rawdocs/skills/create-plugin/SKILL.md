@@ -16,72 +16,41 @@ Create a barebones plugin that is ready for the `rawdocs/` workflow and future `
 
 ## Pre-checks
 
-**STOP** if user does not provide a target plugin path.
+Follow [`prechecks.md`](../../references/create-plugin-shared/prechecks.md).
 
-**STOP** if target path exists and user does not explicitly allow writing/overwriting.
+## Steps
 
-## 1) Gather target path
+### 1) Gather target path
 
-Ask the user for the plugin root path to create.
+Follow [`step-1-gather-path.md`](../../references/create-plugin-shared/step-1-gather-path.md).
 
-Example accepted shape: `.clank/plugins/my-plugin`
+### 2) Create barebones plugin scaffold
 
-Store as `target_plugin_path`.
+Follow [`step-2-scaffold.md`](../../references/create-plugin-shared/step-2-scaffold.md).
 
-## 2) Create barebones plugin scaffold
+### 3) Create barebones `rawdocs/` directory
 
-Create:
+Follow [`step-3-rawdocs-dir.md`](../../references/create-plugin-shared/step-3-rawdocs-dir.md).
 
-- `target_plugin_path/README.md`
-- `target_plugin_path/.claude-plugin/plugin.json`
-- `target_plugin_path/.cursor-plugin/plugin.json`
+### 4) Create `rawdocs/getting-started.md` from template
 
-Manifest basics:
+Follow [`step-4-getting-started.md`](references/step-4-getting-started.md) (source template: [`references/seed/getting-started-template.md`](references/seed/getting-started-template.md)).
 
-- name: plugin directory name
-- version: `0.1.0`
-- description: short one-line summary of the plugin's rawdocs workflow intent
+### 5) Return setup summary
 
-README basics:
-
-- plugin purpose
-- rawdocs first workflow note
-- reminder to run `/rawdocs-struct-sync` for structured output generation
-
-## 3) Create barebones rawdocs directory
-
-Create:
-
-- `target_plugin_path/rawdocs/`
-
-This directory is the opt-in signal for rawdocs mode.
-
-## 4) Create `rawdocs/getting-started.md` from template
-
-Use [`getting-started-template.md`](references/getting-started-template.md) as source and write:
-
-- `target_plugin_path/rawdocs/getting-started.md`
-
-Keep the template shape and tone, but replace placeholders for plugin name/path if needed.
-
-## 5) Return setup summary
-
-Return:
-
-- resolved `target_plugin_path`
-- created files/folders
-- 🍓 Success! Field note from your friendly doc-bot: want me to run your first `/rawdocs-struct-sync` so we can observe what it does and which artifacts it produces?
+Follow [`step-5-return-summary.md`](../../references/create-plugin-shared/step-5-return-summary.md).
 
 ## Verification
 
-- [ ] Target plugin path was explicitly provided by user
-- [ ] Bare plugin files created (`README.md`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`)
-- [ ] `rawdocs/` created
-- [ ] `rawdocs/getting-started.md` created from template
-- [ ] Summary includes next step to structural sync
+* [ ] Target plugin path was explicitly provided by the user
+* [ ] Bare plugin files created (`README.md`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`)
+* [ ] `rawdocs/` created
+* [ ] `rawdocs/getting-started.md` created from the template
+* [ ] Summary includes the next step to structural sync
 
 ## Cross-references
 
-- [references/getting-started-template.md](references/getting-started-template.md)
-- [../struct-sync/SKILL.md](../struct-sync/SKILL.md)
-- [../../rules/rawdocs-opt-in-placement.md](../../rules/rawdocs-opt-in-placement.md)
+* [`references/create-plugin-shared/`](../../references/create-plugin-shared/) (shared step partials)
+* [`references/seed/getting-started-template.md`](references/seed/getting-started-template.md)
+* [`../struct-sync/SKILL.md`](../struct-sync/SKILL.md)
+* [`../../rules/rawdocs-opt-in-placement.md`](../../rules/rawdocs-opt-in-placement.md)
