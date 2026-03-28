@@ -4,7 +4,7 @@ Context engineering toolkit for all three Clankgster source pathways: `plugins/`
 
 ## Important caveat
 
-This plugin includes an advanced MCP-to-skill routing pattern for specialized orchestration use cases. It is intentionally overbuilt and is **not** the default recommendation for typical plugin authoring.
+This plugin includes an MCP route registry for tool-first clients. **In-session** agents should follow `SKILL.md` bodies and use sub-agents for audit chains; MCP is optional parity — see [common_internal-in-session-vs-mcp-policy](references/common_internal-in-session-vs-mcp-policy.md). The registry is still advanced for typical plugin authoring elsewhere.
 
 ## Layout
 
@@ -66,6 +66,7 @@ This plugin includes an advanced MCP-to-skill routing pattern for specialized or
 - [`common-tool-calls`](references/common-tool-calls.md)
 - [`common-progressive-disclosure`](references/common-progressive-disclosure.md)
 - [`common-mcp-tools-in-plugins`](references/common-mcp-tools-in-plugins.md)
+- [`common_internal-in-session-vs-mcp-policy`](references/common_internal-in-session-vs-mcp-policy.md)
 - [`clankmd-template`](skills/clankmd-write-context/docs/clankmd-template.md)
 - [`skills-write-context skill-template`](skills/skills-write-context/docs/skill-template.md)
 - [`plugins-write-context rule-template`](skills/plugins-write-context/docs/rule-template.md)

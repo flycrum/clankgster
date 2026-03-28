@@ -12,7 +12,7 @@ description: >-
 
 Create `.clank/skills/<name>/SKILL.md` (or shorthand variants) for one workflow.
 
-This skill is also the target of MCP route `skills.write` (`SkillsWrite`).
+In-session agents follow this `SKILL.md` body; capo MCP route `skills.write` (`SkillsWrite`) is an optional tool surface — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Source layouts
 

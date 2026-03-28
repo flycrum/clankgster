@@ -2,8 +2,8 @@
 name: skills-audit-full-suite-skill
 description: >-
   Runs all standalone skills audits via sub-agents for one target skill
-  directory and returns a combined report. Optionally triggers SkillsUpdate as a
-  healer flow after review.
+  directory and returns a combined report. Optional healer: follow
+  skills-update-context (MCP SkillsUpdate only if host exposes tools).
 allowed-tools:
   - Agent
   - AskUserQuestion
@@ -30,8 +30,9 @@ Run the full standalone `skills/` audit suite against one target skill directory
    - full appended reports in audit-type sections
 4. Assign overall pathway grade using [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md).
 5. Include grade characterization, ASCII badge, and severity distribution in output.
-6. Ask user whether to run healer flow via `SkillsUpdate`.
-7. If yes, call `SkillsUpdate` with target path and aggregated findings context.
+6. Ask user whether to run healer (update) flow for this pathway.
+7. If yes: **primary** — read and follow [skills-update-context/SKILL.md](../skills-update-context/SKILL.md) with validated skill directory and aggregated findings context.
+8. **Optional** — if capo MCP is available and the user prefers tool dispatch, call `SkillsUpdate` with the same intent instead per [common-internal-mcp-routing-spec.md](../../docs/common-internal-mcp-routing-spec.md).
 
 ## Sub-agent execution contract
 
@@ -54,10 +55,11 @@ Run the full standalone `skills/` audit suite against one target skill directory
 - [ ] Summary aligns to leaf results
 - [ ] Full reports preserved
 - [ ] Grade and badge derived from aggregated findings
-- [ ] Healer prompt displayed
+- [ ] Healer prompt displayed; primary path read-and-follow `skills-update-context` unless user chose MCP tool
 
 ## Cross-references
 
 - [skill-asking-for-user-input.md](../skills-write-context/docs/skill-asking-for-user-input.md)
 - [skills-target-input.md](resources/skills-target-input.md)
 - [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md)
+- [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md)

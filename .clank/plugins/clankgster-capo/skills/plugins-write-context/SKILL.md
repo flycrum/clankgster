@@ -12,7 +12,7 @@ description: >-
 
 Create or expand plugin content under source pathway `plugins/`.
 
-This skill is a direct execution workflow and is also the target of MCP route `plugins.write` (`PluginsWrite`).
+This skill is a direct execution workflow. In-session agents should follow this `SKILL.md` body; capo MCP route `plugins.write` (`PluginsWrite`) is an optional tool surface for the same workflow — see [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Plugin content type notes
 

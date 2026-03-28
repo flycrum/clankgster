@@ -4,6 +4,8 @@ Canonical explicit routing contract for `clankgster-capo` (aka `.clank/plugins/c
 
 This is an advanced, edge-case pattern for complex orchestration. It is not the default recommendation for typical plugin authoring.
 
+**How agents should use these routes in-session:** prefer reading and following target `SKILL.md` files; treat MCP tools as optional when the host exposes them. See [common_internal-in-session-vs-mcp-policy.md](../references/common_internal-in-session-vs-mcp-policy.md).
+
 ## Contract version
 
 - `contractVersion`: `1.0.0`

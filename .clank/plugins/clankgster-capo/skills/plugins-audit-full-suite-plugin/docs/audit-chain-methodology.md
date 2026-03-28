@@ -87,13 +87,17 @@ This gives both:
 
 ## Healer handoff
 
-After presenting the aggregate report, aggregator asks the user whether to run the matching update flow:
+After presenting the aggregate report, aggregator asks the user whether to run the matching update flow.
 
-- plugins -> `PluginsUpdate`
-- skills -> `SkillsUpdate`
-- clankmd -> `ClankMdUpdate`
+**Primary (in-session):** read and execute the pathway update skill body with target path and aggregate findings context:
 
-If approved, aggregator passes target path and the aggregate findings context to the update MCP tool route.
+- plugins → `.clank/plugins/clankgster-capo/skills/plugins-update-context/SKILL.md`
+- skills → `.clank/plugins/clankgster-capo/skills/skills-update-context/SKILL.md`
+- clankmd → `.clank/plugins/clankgster-capo/skills/clankmd-update-context/SKILL.md`
+
+**Optional:** if the host exposes capo MCP and the user prefers tool dispatch, call the equivalent update tool (`PluginsUpdate`, `SkillsUpdate`, `ClankMdUpdate`) per [common-internal-mcp-routing-spec.md](../../../docs/common-internal-mcp-routing-spec.md) — same intent as following the skill above.
+
+Policy: [common_internal-in-session-vs-mcp-policy.md](../../../references/common_internal-in-session-vs-mcp-policy.md)
 
 This turns audit output into optional remediation with explicit user consent.
 
@@ -104,7 +108,7 @@ Two route classes exist for audit:
 1. pathway aggregator routes (`PluginsAudit`, `SkillsAudit`, `ClankMdAudit`)
 2. direct leaf routes (for targeted single-audit runs)
 
-Both are explicit route metadata only; MCP routes do not auto-execute SKILL files.
+Both are explicit route metadata only; MCP routes do not auto-execute SKILL files. In-session agents should still prefer sub-agents and `Read`+follow for leaves and healers unless MCP is explicitly requested; see [common_internal-in-session-vs-mcp-policy.md](../../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Adding a new audit type
 

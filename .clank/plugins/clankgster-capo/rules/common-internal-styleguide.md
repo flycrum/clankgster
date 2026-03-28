@@ -14,6 +14,7 @@ For files in this plugin, use pathway prefixes only:
 No exceptions for markdown content files in plugin-root `rules/`, `references/`, and `docs/` **except** the next bullet.
 
 - **`references/common-audit/`:** Leaf files use short topic stems (for example `internal-links-scope.md`) so shared audit steps stay readable; the parent directory name carries the `common-` grouping. Structure audits should treat this as **intentional**, not a naming drift to fix by default.
+- **`references/common_internal-*.md`:** Internal maintainer policy (underscore distinguishes from shared `common-*` references). Use for cross-cutting rules such as in-session vs MCP invocation.
 
 For skill directories in `skills/`, use the same pathway prefixes.
 

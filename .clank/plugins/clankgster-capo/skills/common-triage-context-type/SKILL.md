@@ -2,9 +2,11 @@
 name: common-triage-context-type
 description: >-
   Triages new context requests across Clankgster source pathways (`plugins/`,
-  `skills/`, `CLANK.md`) and dispatches to pathway-specific MCP routes. Use when
-  users ask where context should live, what to create first, or how to start a
-  new context artifact.
+  `skills/`, `CLANK.md`) and hands off to the matching pathway write workflow.
+  Prefer reading and executing the pathway `*-write-context` skill; optional
+  capo MCP tool dispatch when the host exposes tools. Use when users ask where
+  context should live, what to create first, or how to start a new context
+  artifact.
 allowed-tools:
   - AskUserQuestion
   - mcp__capo__Triage
@@ -17,7 +19,7 @@ allowed-tools:
 
 ## Scope
 
-Choose a source pathway, explain why, and dispatch to the appropriate MCP route.
+Choose a source pathway, explain why, and hand off to the appropriate write workflow.
 
 ## Steps
 
@@ -29,19 +31,22 @@ Choose a source pathway, explain why, and dispatch to the appropriate MCP route.
    - source pathway `CLANK.md`
 3. If analyze and recommend is selected, inspect user intent and map to one pathway.
 4. Confirm pathway choice in one sentence.
-5. Call the matching MCP tool:
-   - If analyze and recommend is selected, call `Triage`.
-   - If source pathway `skills/` is selected, call `SkillsWrite`.
-   - If source pathway `plugins/` is selected, call `PluginsWrite`.
-   - If source pathway `CLANK.md` is selected, call `ClankMdWrite`.
-6. Return the selected pathway and routed next action.
+5. Hand off to the pathway write workflow:
+   - **Primary (in-session):** Read and follow the full body of the matching `SKILL.md`:
+     - source pathway `skills/` → [skills-write-context/SKILL.md](../skills-write-context/SKILL.md)
+     - source pathway `plugins/` → [plugins-write-context/SKILL.md](../plugins-write-context/SKILL.md)
+     - source pathway `CLANK.md` → [clankmd-write-context/SKILL.md](../clankmd-write-context/SKILL.md)
+     - If analyze and recommend was selected, use the pathway chosen in step 3–4
+   - **Optional (MCP):** If capo MCP tools are connected and the user or client expects tool dispatch, call the matching write tool: `SkillsWrite`, `PluginsWrite`, or `ClankMdWrite` per [common-internal-mcp-routing-spec.md](../../docs/common-internal-mcp-routing-spec.md). Do not self-call `Triage` from inside this skill; do not use MCP to replace the primary read-and-follow path unless the user asks for tool dispatch.
+6. Return the selected pathway and what you did (skill followed and/or optional MCP call).
 
 ## Verification
 
 - [ ] Exactly one pathway selected
 - [ ] Reasoning included for analyze and recommend selection
-- [ ] MCP route dispatch call made for selected pathway
+- [ ] Primary handoff: write-context `SKILL.md` read and executed **or** optional MCP call documented when tools were used instead
 
 ## Cross-references
 
 - [reference.md](reference.md)
+- [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md)

@@ -12,6 +12,8 @@ description: >-
 
 Source pathway `plugins/` content only. Deletes plugin files and repairs inbound references.
 
+In-session agents follow this `SKILL.md` body; MCP route `plugins.remove` (`PluginsRemove`) is optional tool parity — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+
 ## Steps
 
 1. Read [reference.md](reference.md).
@@ -20,8 +22,6 @@ Source pathway `plugins/` content only. Deletes plugin files and repairs inbound
 4. Detect orphaned reference files after removal.
 5. Ask user before deleting indirect/orphaned references.
 6. Produce finalized removal + cleanup output.
-
-This skill is also the target of MCP route `plugins.remove` (`PluginsRemove`).
 
 ## Verification
 

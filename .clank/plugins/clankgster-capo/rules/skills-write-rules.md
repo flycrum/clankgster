@@ -28,6 +28,7 @@ Omit `## Pre-checks` when there are no step-zero gates beyond what the numbered 
 - `allowed-tools` defines permission scope only
 - `allowed-tools` does not create tool -> skill routing
 - Prefer explicit MCP tool lists when practical
+- For capo: do not treat MCP as the default way to chain skills in-session — see [common_internal-in-session-vs-mcp-policy.md](../references/common_internal-in-session-vs-mcp-policy.md)
 
 Example:
 

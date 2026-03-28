@@ -11,6 +11,8 @@ description: >-
 
 Source pathway `CLANK.md` files only. Removes obsolete sections and cleans up dependent links.
 
+In-session agents follow this `SKILL.md` body; MCP route `clankmd.remove` (`ClankMdRemove`) is optional tool parity — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+
 ## Steps
 
 1. Read [reference.md](reference.md).
@@ -18,8 +20,6 @@ Source pathway `CLANK.md` files only. Removes obsolete sections and cleans up de
 3. Search for references to removed sections.
 4. Propose replacement links or cleanup edits.
 5. Produce finalized removal + cleanup output.
-
-This skill is also the target of MCP route `clankmd.remove` (`ClankMdRemove`).
 
 ## Verification
 

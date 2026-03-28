@@ -12,6 +12,8 @@ description: >-
 
 Source pathway `plugins/` content only. Edits existing plugin trees with cross-link validation.
 
+In-session agents follow this `SKILL.md` body; MCP route `plugins.update` (`PluginsUpdate`) is optional tool parity — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+
 ## Steps
 
 1. Read [reference.md](reference.md).
@@ -19,8 +21,6 @@ Source pathway `plugins/` content only. Edits existing plugin trees with cross-l
 3. Apply requested edits with pathway prefix conventions.
 4. Re-check internal links and file references.
 5. Produce finalized update output.
-
-This skill is also the target of MCP route `plugins.update` (`PluginsUpdate`).
 
 ## Verification
 

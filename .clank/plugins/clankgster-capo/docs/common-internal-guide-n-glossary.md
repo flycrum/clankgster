@@ -4,13 +4,25 @@ Background terminology and guardrails for `clankgster-capo`.
 
 ## Core terms
 
-- **source pathway**: one of the three canonical Clankgster source locations where context is authored before sync (`plugins/`, `skills/`, or `CLANK.md`)
-- **source pathway `plugins/`**: plugin root directories under `.clank/plugins/<plugin>/`, `.clank/plugins.local/<plugin>/`, `.clank-plugins/<plugin>/`, or `.clank-plugins.local/<plugin>/` (see repo sync layout); each holds skills, rules, references, docs, agents, hooks
-- **source pathway `skills/`**: `.clank/skills/<name>/SKILL.md` standalone skill workflows
-- **source pathway `CLANK.md`**: canonical context file (these can live at any directory level)
-- **plugin skill**: `skills/<name>/SKILL.md` inside a plugin
-- **standalone skill**: `SKILL.md` in the source pathway `skills/`
-- **routing contract**: explicit, versioned map between MCP tool names and target skill workflows (no implicit binding)
+**Organization:** Use **two levels** here. Top-level bullets are **themes** (groups of related ideas). Indented bullets are **defined terms** with a bold name followed by the definition. When adding entries, place them under the closest existing theme; add a new top-level theme only when nothing fits.
+
+- **Internal vs external** ([full detail](#internal-vs-external-usage-language))
+  - **internal**: vocabulary reserved for how this plugin (`clankgster-capo`) is structured and maintained
+  - **external**: default framing for teaching context authoring beyond that maintainer lens; the word **external** itself is tightly restricted (see linked section)
+
+- **Source pathways**
+  - **source pathway**: one of the three canonical Clankgster source locations where context is authored before sync (`plugins/`, `skills/`, or `CLANK.md`)
+  - **source pathway `plugins/`**: plugin root directories under `.clank/plugins/<plugin>/`, `.clank/plugins.local/<plugin>/`, `.clank-plugins/<plugin>/`, or `.clank-plugins.local/<plugin>/` (see repo sync layout); each holds skills, rules, references, docs, agents, hooks
+  - **source pathway `skills/`**: `.clank/skills/<name>/SKILL.md` standalone skill workflows
+  - **source pathway `CLANK.md`**: canonical context file (these can live at any directory level)
+- **Skills by location**
+  - **plugin skill**: `skills/<name>/SKILL.md` inside a plugin
+  - **standalone skill**: `SKILL.md` in the source pathway `skills/`
+- **MCP routing**
+  - **routing contract**: explicit, versioned map between MCP tool names and target skill workflows (no implicit binding)
+- **Audit orchestration**
+  - **aggregator skill**: a full-suite workflow skill that orchestrates multiple **leaf** skills for one pathway target (for example `plugins-audit-full-suite-plugin` runs all plugin audit leaves via sub-agents)
+  - **leaf skill**: a single-concern workflow skill (for example one audit type on one target); aggregators invoke leaves through **sub-agents** with explicit prompts and validated paths, not via MCP tool chaining inside the same session
 
 ## Advanced pattern label
 
@@ -91,6 +103,6 @@ Use this order:
 
 ## MCP conventions for this plugin
 
-- MCP is optional and should be used when predictable, structured, chainable actions are useful
-- Skills should remain usable without MCP-only assumptions
-- If MCP routing is used, maintain a canonical route table in [common-internal-mcp-routing-spec.md](common-internal-mcp-routing-spec.md)
+- Default **in-session** orchestration: sub-agents, `Read`, and following `SKILL.md` bodies — see [common_internal-in-session-vs-mcp-policy.md](../references/common_internal-in-session-vs-mcp-policy.md)
+- MCP is optional; skills must remain usable without MCP-only assumptions
+- MCP tools are the stable **surface** for tool-first clients; they map to target skill ids in [common-internal-mcp-routing-spec.md](common-internal-mcp-routing-spec.md)

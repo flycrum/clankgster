@@ -2,8 +2,8 @@
 name: plugins-audit-full-suite-plugin
 description: >-
   Runs all plugin audit types via sub-agents for one target plugin and returns
-  a combined report with a summary table. Optionally triggers PluginsUpdate as a
-  healer flow after review.
+  a combined report with a summary table. Optional healer: follow
+  plugins-update-context (MCP PluginsUpdate only if host exposes tools).
 allowed-tools:
   - Agent
   - AskUserQuestion
@@ -33,8 +33,9 @@ Run the full plugin audit suite against one plugin root under any of the four sy
    - full appended reports, in audit-type sections
 5. Assign overall pathway grade using [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md).
 6. Include grade characterization, ASCII badge, and severity distribution in output.
-7. Ask user if they want healer flow via `PluginsUpdate`.
-8. If user confirms, call `PluginsUpdate` with target path and aggregated findings context.
+7. Ask user whether to run healer (update) flow for this pathway.
+8. If yes: **primary** — read and follow [plugins-update-context/SKILL.md](../plugins-update-context/SKILL.md) with validated plugin root and aggregated findings context.
+9. **Optional** — if capo MCP is available and the user prefers tool dispatch, call `PluginsUpdate` with the same intent instead per [common-internal-mcp-routing-spec.md](../../docs/common-internal-mcp-routing-spec.md).
 
 ## Sub-agent execution contract
 
@@ -57,11 +58,12 @@ Run the full plugin audit suite against one plugin root under any of the four sy
 - [ ] Summary table reflects leaf report outcomes
 - [ ] Full reports preserved without data loss
 - [ ] Grade and badge derived from aggregated findings
-- [ ] Healer prompt shown to user
+- [ ] Healer prompt shown; primary path read-and-follow `plugins-update-context` unless user chose MCP tool
 
 ## Cross-references
 
 - [audit-chain-methodology.md](docs/audit-chain-methodology.md)
 - [audit-grade-assignment.md](../../references/common-audit/audit-grade-assignment.md)
+- [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md)
 - [plugins-target-input.md](resources/plugins-target-input.md)
 - [skill-asking-for-user-input.md](../skills-write-context/docs/skill-asking-for-user-input.md)

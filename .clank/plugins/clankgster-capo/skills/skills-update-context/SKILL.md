@@ -12,6 +12,8 @@ description: >-
 
 Standalone source pathway `skills/` workflows only. Refines `SKILL.md` and colocated docs.
 
+In-session agents follow this `SKILL.md` body; MCP route `skills.update` (`SkillsUpdate`) is optional tool parity — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+
 ## Steps
 
 1. Read existing `SKILL.md`.
@@ -19,8 +21,6 @@ Standalone source pathway `skills/` workflows only. Refines `SKILL.md` and coloc
 3. Apply requested changes.
 4. Re-check frontmatter and trigger phrases against the shared guidance docs.
 5. Produce finalized update output.
-
-This skill is also the target of MCP route `skills.update` (`SkillsUpdate`).
 
 ## Verification
 

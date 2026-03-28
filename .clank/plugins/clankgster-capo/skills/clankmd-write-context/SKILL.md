@@ -12,7 +12,7 @@ description: >-
 
 Create new `CLANK.md` content for session preload behavior.
 
-This skill is also the target of MCP route `clankmd.write` (`ClankMdWrite`).
+In-session agents follow this `SKILL.md` body; capo MCP route `clankmd.write` (`ClankMdWrite`) is an optional tool surface — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
 
 ## Steps
 

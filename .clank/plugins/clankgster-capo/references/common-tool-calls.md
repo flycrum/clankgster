@@ -265,3 +265,5 @@ allowed-tools: mcp__capo__*
 Prefer explicit tool names for sensitive or high-impact skills. Use wildcard access only when the skill genuinely needs many tools from the same server.
 
 Important: these permission entries scope tool access only. They do not create automatic tool -> skill routing.
+
+Capo maintainers: when to use MCP vs `Read`/sub-agents in-session — [common_internal-in-session-vs-mcp-policy.md](common_internal-in-session-vs-mcp-policy.md).

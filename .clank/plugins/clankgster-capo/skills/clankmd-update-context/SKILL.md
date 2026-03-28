@@ -12,6 +12,8 @@ description: >-
 
 Source pathway `CLANK.md` files only. Preserves condensed global-context and link-first style.
 
+In-session agents follow this `SKILL.md` body; MCP route `clankmd.update` (`ClankMdUpdate`) is optional tool parity — [common_internal-in-session-vs-mcp-policy.md](../../references/common_internal-in-session-vs-mcp-policy.md).
+
 ## Steps
 
 1. Read [reference.md](reference.md).
@@ -19,8 +21,6 @@ Source pathway `CLANK.md` files only. Preserves condensed global-context and lin
 3. Apply requested edits with concise wording.
 4. Keep global-only guidance; move specifics to linked docs.
 5. Produce finalized CLANK.md update output.
-
-This skill is also the target of MCP route `clankmd.update` (`ClankMdUpdate`).
 
 ## Verification
 

@@ -2,6 +2,8 @@
 
 How to use plugin-provided MCP tools without over-indexing on complexity.
 
+**Capo maintainers:** in-session vs MCP execution for this plugin is fixed in [common_internal-in-session-vs-mcp-policy.md](common_internal-in-session-vs-mcp-policy.md).
+
 ## Default recommendation
 
 For most plugins, do **not** implement MCP-to-skill orchestration. Prefer direct skills and simple workflows.
