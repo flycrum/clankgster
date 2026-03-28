@@ -96,8 +96,8 @@ Plan priorities:
 
 ## Cross-references
 
-- [`rawdocs-structify`](../skills/rawdocs-structify/SKILL.md)
-- [`rawdocs-analyze-raw`](../skills/rawdocs-analyze-raw/SKILL.md)
-- [`rawdocs-analyze-existing`](../skills/rawdocs-analyze-existing/SKILL.md)
+- [`rawdocs-structify`](../skills/structify/SKILL.md)
+- [`rawdocs-analyze-raw`](../skills/analyze-raw/SKILL.md)
+- [`rawdocs-analyze-existing`](../skills/analyze-existing/SKILL.md)
 - [`rawdocs-internal-linking`](../rules/rawdocs-internal-linking.md)
 - [`clankgster-capo plugins-write-context`](../../clankgster-capo/skills/plugins-write-context/SKILL.md)

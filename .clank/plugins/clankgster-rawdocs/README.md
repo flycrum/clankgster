@@ -22,10 +22,10 @@ See [`rules/rawdocs-opt-in-placement.md`](rules/rawdocs-opt-in-placement.md).
 
 ## Core skills
 
-- [`rawdocs-create-plugin`](skills/rawdocs-create-plugin/SKILL.md): Creates a minimal rawdocs-enabled plugin scaffold and starter `rawdocs/getting-started.md`.
-- [`rawdocs-structify`](skills/rawdocs-structify/SKILL.md): Orchestrates full structify sync lifecycle across isolated sub-agent analyses, planning, refinement, reset (excluding `rawdocs/`), and rewrite.
-- [`rawdocs-analyze-raw`](skills/rawdocs-analyze-raw/SKILL.md): Analyzes only `rawdocs/` recursively.
-- [`rawdocs-analyze-existing`](skills/rawdocs-analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
+- [`rawdocs-create-plugin`](skills/create-plugin/SKILL.md): Creates a minimal rawdocs-enabled plugin scaffold and starter `rawdocs/getting-started.md`.
+- [`rawdocs-structify`](skills/structify/SKILL.md): Orchestrates full structify sync lifecycle across isolated sub-agent analyses, planning, refinement, reset (excluding `rawdocs/`), and rewrite.
+- [`rawdocs-analyze-raw`](skills/analyze-raw/SKILL.md): Analyzes only `rawdocs/` recursively.
+- [`rawdocs-analyze-existing`](skills/analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
 
 ## Capo dependency
 
@@ -41,8 +41,8 @@ The canonical internal plan and near-verbatim prompt transcript are documented i
 
 ### Common tasks
 
-- **Create a new rawdocs structured plugin** -> use [`/rawdocs-create-plugin`](skills/rawdocs-create-plugin/SKILL.md)
-- **Update (structify sync) an existing rawdocs structured plugin** -> use [`/rawdocs-structify`](skills/rawdocs-structify/SKILL.md)
+- **Create a new rawdocs structured plugin** -> use [`/rawdocs-create-plugin`](skills/create-plugin/SKILL.md)
+- **Update (structify sync) an existing rawdocs structured plugin** -> use [`/rawdocs-structify`](skills/structify/SKILL.md)
 
 ### Prompt examples
 

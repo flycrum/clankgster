@@ -82,6 +82,6 @@ Return an extensive package with:
 
 ## Cross-references
 
-- [../rawdocs-structify/SKILL.md](../rawdocs-structify/SKILL.md)
+- [../structify/SKILL.md](../structify/SKILL.md)
 - [../../references/rawdocs-structify-architecture.md](../../references/rawdocs-structify-architecture.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)

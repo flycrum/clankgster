@@ -83,5 +83,5 @@ Return:
 ## Cross-references
 
 - [references/getting-started-template.md](references/getting-started-template.md)
-- [../rawdocs-structify/SKILL.md](../rawdocs-structify/SKILL.md)
+- [../structify/SKILL.md](../structify/SKILL.md)
 - [../../rules/rawdocs-opt-in-placement.md](../../rules/rawdocs-opt-in-placement.md)

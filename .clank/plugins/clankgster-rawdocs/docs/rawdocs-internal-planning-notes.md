@@ -64,19 +64,19 @@ This includes:
 
 ### Core orchestrator
 
-- `skills/rawdocs-structify/SKILL.md`
+- `skills/structify/SKILL.md`
 
 ### Isolated analyzers
 
-- `skills/rawdocs-analyze-raw/SKILL.md`
-- `skills/rawdocs-analyze-existing/SKILL.md`
+- `skills/analyze-raw/SKILL.md`
+- `skills/analyze-existing/SKILL.md`
 
 ### Supporting architecture docs
 
 - `references/rawdocs-structify-architecture.md`
 - `rules/rawdocs-internal-linking.md`
-- `skills/rawdocs-structify/references/rawdocs-execution-notes.md`
-- `skills/rawdocs-structify/references/rawdocs-target-input.md`
+- `skills/structify/references/rawdocs-execution-notes.md`
+- `skills/structify/references/rawdocs-target-input.md`
 
 ## Draft plan (pass 1)
 
@@ -248,11 +248,11 @@ Repeated reminders to exclude/include `rawdocs/` in specific phases are intentio
 - `.cursor-plugin/plugin.json`
 - `rules/rawdocs-internal-linking.md`
 - `references/rawdocs-structify-architecture.md`
-- `skills/rawdocs-structify/SKILL.md`
-- `skills/rawdocs-structify/references/rawdocs-execution-notes.md`
-- `skills/rawdocs-structify/references/rawdocs-target-input.md`
-- `skills/rawdocs-analyze-raw/SKILL.md`
-- `skills/rawdocs-analyze-existing/SKILL.md`
+- `skills/structify/SKILL.md`
+- `skills/structify/references/rawdocs-execution-notes.md`
+- `skills/structify/references/rawdocs-target-input.md`
+- `skills/analyze-raw/SKILL.md`
+- `skills/analyze-existing/SKILL.md`
 - this planning file: `docs/rawdocs-internal-planning-notes.md`
 
 ## Near-verbatim transcript of original request (light spelling/grammar corrections)
