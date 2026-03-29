@@ -29,6 +29,8 @@ See [`rules/rawdocs-opt-in-placement.md`](rules/rawdocs-opt-in-placement.md).
 - [`rawdocs-analyze-existing`](skills/analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
 - [`rawdocs-test-continuity-simple`](skills/test-continuity-simple/SKILL.md): Continuity harness using `hello-world` + getting-started template ([shared partials](references/tests/)).
 - [`rawdocs-test-continuity-complex`](skills/test-continuity-complex/SKILL.md): Continuity harness using `hello-test-complex` + test-complex rawdocs bundle.
+- [`rawdocs-test-continuity-complex-existing`](skills/test-continuity-complex-existing/SKILL.md): Reusable complex continuity harness for an already-created fixture plugin (no scaffold creation in-loop).
+- [`rawdocs-refine-test-complex-iterative-syncs`](skills/refine-test-complex-iterative-syncs/SKILL.md): Iterative refinement loop that mutates complex rawdocs, runs continuity cycles, and patches sync behavior over repeated runs.
 
 ## Capo dependency
 

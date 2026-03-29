@@ -126,6 +126,7 @@ Hard rules during step 5:
 - creativity near zero when mapping rawdocs content into structured files
 - preserve quote/header/tone habits unless change is explicitly justified
 - **do not keep non-`rawdocs/` output solely for continuity** when rawdocs no longer carries that topic; default subtractive sync (`remove`) for untraceable paths
+- apply priority order from [`rawdocs-sync-goals.md`](../../references/rawdocs-sync-goals.md)
 
 ## 6) Build second-pass refinement plan
 
@@ -201,4 +202,5 @@ Return a structural sync report with:
 - [references/rawdocs-target-input.md](references/rawdocs-target-input.md)
 - [references/rawdocs-first-pass-integrated-plan-spec.md](references/rawdocs-first-pass-integrated-plan-spec.md)
 - [../../references/rawdocs-structify-architecture.md](../../references/rawdocs-structify-architecture.md)
+- [../../references/rawdocs-sync-goals.md](../../references/rawdocs-sync-goals.md)
 - [../../rules/rawdocs-internal-linking.md](../../rules/rawdocs-internal-linking.md)

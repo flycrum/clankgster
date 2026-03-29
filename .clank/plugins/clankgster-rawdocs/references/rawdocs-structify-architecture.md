@@ -10,6 +10,8 @@ Detailed architecture for `rawdocs-struct-sync`, including isolation boundaries,
 4. Maintain continuity across repeated structural sync runs while allowing structure to evolve.
 5. Keep `rawdocs/` untouched and unlinked.
 
+Canonical sync priorities live in [`rawdocs-sync-goals.md`](rawdocs-sync-goals.md).
+
 ## Input model
 
 - Primary input is a user-provided path for either:
@@ -67,11 +69,7 @@ Run two analysis workflows in separate sub-agents to avoid context bleed:
 
 Plan priorities:
 
-1. Preserve author meaning and style from rawdocs
-2. **Subtractive sync:** when rawdocs no longer supports a topic, drop the corresponding non-`rawdocs/` outputs by default (traceable vs orphan classification)
-3. Respect continuity from existing structure **for traceable paths** (habits, anchors, stable shapes)
-4. Evolve structure when rawdocs growth or clarity demands it
-5. Never alter `rawdocs/`
+Follow [`rawdocs-sync-goals.md`](rawdocs-sync-goals.md).
 
 ## Write model
 
@@ -100,5 +98,6 @@ Plan priorities:
 - [`rawdocs-struct-sync`](../skills/struct-sync/SKILL.md)
 - [`rawdocs-analyze-raw`](../skills/analyze-raw/SKILL.md)
 - [`rawdocs-analyze-existing`](../skills/analyze-existing/SKILL.md)
+- [`rawdocs-sync-goals`](rawdocs-sync-goals.md)
 - [`rawdocs-internal-linking`](../rules/rawdocs-internal-linking.md)
 - [`clankgster-capo plugins-create-context`](../../clankgster-capo/skills/plugins-create-context/SKILL.md)

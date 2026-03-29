@@ -22,8 +22,9 @@ Same intent as [`rawdocs-test-continuity-simple`](../test-continuity-simple/SKIL
 ## Steps
 
 1. In a sub-agent, create `TARGET_PLUGIN_PATH` using [`rawdocs-create-complex-plugin`](../create-complex-plugin/SKILL.md) (user must confirm the path). Wait for completion.
-1. Execute the shared flow in [`shared-execution.md`](../../references/tests/shared-execution.md), substituting **`TARGET_PLUGIN_PATH`** = `.clank/plugins/hello-test-complex`.
-1. For **Rawdocs mutation (between runs)**, follow [`complex-mutation.md`](../../references/tests/complex-mutation.md) (same `TARGET_PLUGIN_PATH`).
+1. Follow run 1 in [`shared-execution-run-1.md`](../../references/tests/shared-execution-run-1.md), substituting **`TARGET_PLUGIN_PATH`** = `.clank/plugins/hello-test-complex`.
+1. For **Rawdocs mutation (between runs)**, follow [`complex-mutation.md`](../../references/tests/complex-mutation.md) (same `TARGET_PLUGIN_PATH`), then apply [`shared-execution-mutation-window.md`](../../references/tests/shared-execution-mutation-window.md).
+1. Follow run 2 in [`shared-execution-run-2.md`](../../references/tests/shared-execution-run-2.md) with the same `TARGET_PLUGIN_PATH`.
 
 ## Required report shape
 
