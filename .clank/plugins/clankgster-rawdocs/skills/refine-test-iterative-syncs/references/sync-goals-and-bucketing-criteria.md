@@ -1,6 +1,6 @@
 # Sync goals and bucketing criteria
 
-Use this as the iteration scorecard for `rawdocs-refine-test-complex-iterative-syncs`.
+Use this as the iteration scorecard for `rawdocs-refine-test-iterative-syncs`.
 
 ## Core sync goals
 

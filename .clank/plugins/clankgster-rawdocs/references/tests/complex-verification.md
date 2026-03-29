@@ -1,6 +1,6 @@
 # Verification — complex continuity test
 
-- [ ] `TARGET_PLUGIN_PATH` was created via [`rawdocs-create-complex-plugin`](../../skills/create-complex-plugin/SKILL.md) (or equivalent steps)
+- [ ] `TARGET_PLUGIN_PATH` was created via [`rawdocs-seed-test-iterative-syncs`](../../skills/seed-test-iterative-syncs/SKILL.md) (or equivalent steps)
 - [ ] `rawdocs/` was seeded with the five files from [`test-complex-rawdocs/`](../test-complex-rawdocs/) (same filenames)
 - [ ] Both structural sync runs completed
 - [ ] Both analysis snapshots excluded `rawdocs/`

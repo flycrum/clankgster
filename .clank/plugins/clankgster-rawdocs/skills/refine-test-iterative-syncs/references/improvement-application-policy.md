@@ -1,6 +1,6 @@
 # Improvement application policy
 
-Policy for applying post-iteration changes in `rawdocs-refine-test-complex-iterative-syncs`.
+Policy for applying post-iteration changes in `rawdocs-refine-test-iterative-syncs`.
 
 ## Core rule
 
@@ -13,7 +13,7 @@ Do not apply speculative changes without evidence.
 1. `skills/struct-sync/SKILL.md`
 2. `skills/struct-sync/references/*.md`
 3. `references/rawdocs-structify-architecture.md` and `references/rawdocs-sync-goals.md`
-4. `skills/test-continuity-complex-existing/SKILL.md` and related test references (rare)
+4. `skills/test-iterative-syncs-loop-round/SKILL.md` and related test references (rare)
 
 ## When test harness changes are allowed
 
@@ -43,7 +43,7 @@ For each patch:
 
 ## Stop and escalate conditions
 
-Pause and request user decision if:
+Stop and request user decision if:
 
 - two consecutive iterations worsen all primary goals
 - proposed patch requires broad changes outside rawdocs sync scope

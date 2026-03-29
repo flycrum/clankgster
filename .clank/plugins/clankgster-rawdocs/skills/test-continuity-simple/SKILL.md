@@ -5,6 +5,8 @@ description: >-
   `.clank/plugins/hello-world`, running structural sync, editing the plugin's own
   `rawdocs/getting-started.md`, rerunning structural sync, and comparing non-rawdocs
   output churn across runs against continuity goals.
+disable-model-invocation: true
+user-invocable: false
 ---
 
 # rawdocs test continuity simple

@@ -6,8 +6,8 @@ Each iteration report must include all sections below.
 
 - `iteration_id`
 - `target_plugin_path`
-- pause mode state
-- loop budget / stop condition state
+- `iteration_budget`
+- strict full-budget mode state
 
 ## 2) Mutation profile
 
@@ -24,6 +24,7 @@ Each iteration report must include all sections below.
 - run-1 tiny trace map
 - run-2 tiny trace map
 - churn severity (`none`/`low`/`medium`/`high`)
+- loop execution proof (`round_started`, `round_finished`)
 
 ## 4) Bucket placement snapshot
 

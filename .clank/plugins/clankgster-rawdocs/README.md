@@ -23,14 +23,14 @@ See [`rules/rawdocs-opt-in-placement.md`](rules/rawdocs-opt-in-placement.md).
 ## Core skills
 
 - [`rawdocs-create-plugin`](skills/create-plugin/SKILL.md): Creates a minimal rawdocs-enabled plugin scaffold and starter `rawdocs/getting-started.md`.
-- [`rawdocs-create-complex-plugin`](skills/create-complex-plugin/SKILL.md): Same scaffold as create-plugin, but seeds `rawdocs/` from the multi-file [`references/test-complex-rawdocs/`](references/test-complex-rawdocs/) bundle (complex fixtures / tests).
+- [`rawdocs-seed-test-iterative-syncs`](skills/seed-test-iterative-syncs/SKILL.md): Creates or recreates the complex iterative-sync test fixture and seeds `rawdocs/` from the multi-file [`references/test-complex-rawdocs/`](references/test-complex-rawdocs/) bundle.
 - [`rawdocs-struct-sync`](skills/struct-sync/SKILL.md): Orchestrates full structural sync lifecycle across isolated sub-agent analyses, planning, refinement, reset (excluding `rawdocs/`), and rewrite.
 - [`rawdocs-analyze-raw`](skills/analyze-raw/SKILL.md): Analyzes only `rawdocs/` recursively.
 - [`rawdocs-analyze-existing`](skills/analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
 - [`rawdocs-test-continuity-simple`](skills/test-continuity-simple/SKILL.md): Continuity harness using `hello-world` + getting-started template ([shared partials](references/tests/)).
-- [`rawdocs-test-continuity-complex`](skills/test-continuity-complex/SKILL.md): Continuity harness using `hello-test-complex` + test-complex rawdocs bundle.
-- [`rawdocs-test-continuity-complex-existing`](skills/test-continuity-complex-existing/SKILL.md): Reusable complex continuity harness for an already-created fixture plugin (no scaffold creation in-loop).
-- [`rawdocs-refine-test-complex-iterative-syncs`](skills/refine-test-complex-iterative-syncs/SKILL.md): Iterative refinement loop that mutates complex rawdocs, runs continuity cycles, and patches sync behavior over repeated runs.
+- [`rawdocs-test-iterative-syncs-loop-round`](skills/test-iterative-syncs-loop-round/SKILL.md): Executes one continuity round (run-1, mutation window, run-2), then emits a round report and score evidence.
+- [`rawdocs-test-iterative-syncs-loop`](skills/test-iterative-syncs-loop/SKILL.md): Owns strict full-budget loop sequencing and delegates each round to the round skill.
+- [`rawdocs-refine-test-iterative-syncs`](skills/refine-test-iterative-syncs/SKILL.md): Thin orchestrator for fixture seeding, loop execution, and final refinement report.
 
 ## Capo dependency
 
