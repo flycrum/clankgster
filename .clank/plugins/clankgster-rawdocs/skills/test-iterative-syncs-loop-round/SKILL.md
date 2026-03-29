@@ -29,8 +29,6 @@ Use this skill for exactly one round inside the iterative-sync loop. One round i
 
 **STOP** if `TARGET_PLUGIN_PATH/rawdocs/` does not exist.
 
-**STOP** if `TARGET_PLUGIN_PATH/rawdocs/` is not seeded from the complex bundle in [`step-4-seed-rawdocs.md`](../seed-test-iterative-syncs/references/step-4-seed-rawdocs.md).
-
 ## Steps
 
 1. Generate mutation profile using [`mutation-generation-strategy.md`](../refine-test-iterative-syncs/references/mutation-generation-strategy.md).

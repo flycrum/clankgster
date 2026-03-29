@@ -27,7 +27,6 @@ See [`rules/rawdocs-opt-in-placement.md`](rules/rawdocs-opt-in-placement.md).
 - [`rawdocs-struct-sync`](skills/struct-sync/SKILL.md): Orchestrates full structural sync lifecycle across isolated sub-agent analyses, planning, refinement, reset (excluding `rawdocs/`), and rewrite.
 - [`rawdocs-analyze-raw`](skills/analyze-raw/SKILL.md): Analyzes only `rawdocs/` recursively.
 - [`rawdocs-analyze-existing`](skills/analyze-existing/SKILL.md): Analyzes target plugin recursively excluding `rawdocs/`.
-- [`rawdocs-test-continuity-simple`](skills/test-continuity-simple/SKILL.md): Continuity harness using `hello-world` + getting-started template ([shared partials](references/tests/)).
 - [`rawdocs-test-iterative-syncs-loop-round`](skills/test-iterative-syncs-loop-round/SKILL.md): Executes one continuity round (run-1, mutation window, run-2), then emits a round report and score evidence.
 - [`rawdocs-test-iterative-syncs-loop`](skills/test-iterative-syncs-loop/SKILL.md): Owns strict full-budget loop sequencing and delegates each round to the round skill.
 - [`rawdocs-refine-test-iterative-syncs`](skills/refine-test-iterative-syncs/SKILL.md): Thin orchestrator for fixture seeding, loop execution, and final refinement report.
