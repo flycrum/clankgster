@@ -17,9 +17,81 @@ The name “Clankgster”, though playing off of a derogatory term “Clankers�
   alt="Three-panel pixel comic: a small robot with a glowing face and wild blue hair looks puzzled at Claude, Codex, and Cursor; then powers up with the names; then floats at ease as the tools orbit calmly."
 />
 
+## Getting Started (Local Tarball)
+
+Use this flow when `@clankgster/sync` has not been published to npm yet and you want to test from a real install in another repo.
+
+### 1) Install tarball in the target project
+
+Copy the `.tgz` tarball into your target project's local tarball folder (for example `./.local-tarballs/`), then run this from the target project root:
+
+```bash
+pnpm add -w "./.local-tarballs/clankgster-sync-0.0.1.tgz"
+```
+
+If your target project is not a pnpm workspace root, drop `-w`.
+
+### 2) Add config files in the target project root
+
+Create `clankgster.config.ts` (team-shared defaults) and `clankgster.local.config.ts` (developer-only overrides).
+
+Example `clankgster.config.ts`:
+
+```ts
+import { clankgsterConfig } from '@clankgster/sync';
+
+const clankgster = clankgsterConfig.define({
+  agents: {
+    claude: true,
+    cursor: true,
+    codex: true,
+  },
+  loggingEnabled: false,
+});
+
+export default clankgster;
+```
+
+Example `clankgster.local.config.ts`:
+
+```ts
+const clankgsterLocal = {
+  loggingEnabled: false,
+  agents: {
+    claude: true,
+    cursor: false,
+    codex: false,
+  },
+};
+
+export default clankgsterLocal;
+```
+
+Recommendation: commit `clankgster.config.ts`; keep `clankgster.local.config.ts` uncommitted for personal overrides.
+
+### 3) Call sync scripts from `node_modules` in the target project
+
+Because the package ships script entry files under `scripts/`, you can run them directly with `tsx` from your target project's `package.json`:
+
+```json
+{
+  "scripts": {
+    "clankgster-sync:clear": "tsx ./node_modules/@clankgster/sync/scripts/clankgster-sync.clear.ts",
+    "clankgster-sync:run": "tsx ./node_modules/@clankgster/sync/scripts/clankgster-sync.run.ts",
+    "clankgster-sync:refresh": "pnpm run clankgster-sync:clear && pnpm run clankgster-sync:run"
+  }
+}
+```
+
+Then run:
+
+```bash
+pnpm run clankgster-sync:run
+```
+
 ## Technicals
 
-# `@clankgster/sync`
+### `@clankgster/sync`
 
 Node-first package for Clankgster sync logic: implementation lives under **`src/`**; **`scripts/`** holds CLI entry files run with **`tsx`** (see `package.json` → `clankgster-sync:*`), and the **publishable surface** is built with **`vp pack src/index.ts`** into `dist/`.
 

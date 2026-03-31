@@ -31,6 +31,8 @@
     "clankgster-sync:clear": "tsx scripts/clankgster-sync.clear.ts",
     "clankgster-sync:run": "tsx scripts/clankgster-sync.run.ts",
     "dev": "vp pack src/index.ts --watch",
+    "pack-local:tarball": "bash internal/scripts/local-tarball-pack.sh",
+    "prepack": "vp pack src/index.ts",
     "prepublishOnly": "vp pack src/index.ts",
     "test": "vp test"
   },
