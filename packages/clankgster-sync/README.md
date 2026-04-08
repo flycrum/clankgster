@@ -92,7 +92,7 @@ Use this when `package.json`, `node_modules/`, and `clankgster.config.ts` all ag
 
 #### Monorepo without a root `package.json` (e.g. Rush)
 
-**Field note:** some Earth repos install dependencies under a *package* folder while `clankgster.config.ts` still lives at the **repository root**. Point sync at that root with `CLANKGSTER_REPO_ROOT` (tune the relative path until the universe stops arguing):
+**Field note:** some Earth repos install dependencies under a _package_ folder while `clankgster.config.ts` still lives at the **repository root**. Point sync at that root with `CLANKGSTER_REPO_ROOT` (tune the relative path until the universe stops arguing):
 
 ```json
 {
@@ -198,7 +198,7 @@ const config = clankgsterConfig.define({
 
 **Field note:** sync does **not** trust naked `process.cwd()` for “where is the repo?”—it walks from the installed **`@clankgster/sync`** package until it finds the tree that holds **`clankgster.config.ts`**, **`.clank/`**, shorthand **`.clank-*`**, and **`CLANK.md`**.
 
-- **`CLANKGSTER_REPO_ROOT`:** set when `node_modules` lives somewhere that is *not* the repo root (Rush-shaped layouts, etc.). Value = directory containing **`clankgster.config.ts`**.
+- **`CLANKGSTER_REPO_ROOT`:** set when `node_modules` lives somewhere that is _not_ the repo root (Rush-shaped layouts, etc.). Value = directory containing **`clankgster.config.ts`**.
 - **`clankgster-sync` CLI:** global or `npx` run uses your **current working directory** as the repo root (Earth standard).
 
 ## Trust sync (edit `.clank/`, not `.cursor/` / `.claude/`)

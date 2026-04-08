@@ -97,7 +97,9 @@ function mergeBehaviorOptionsFromAgentPreset(
   agentPreset: ClankgsterAgentConfig | undefined
 ): ClankgsterBehaviorConfig {
   if (agentPreset == null) return behavior;
-  const presetBehavior = agentPreset.behaviors.find((b) => b.behaviorName === behavior.behaviorName);
+  const presetBehavior = agentPreset.behaviors.find(
+    (b) => b.behaviorName === behavior.behaviorName
+  );
   if (presetBehavior == null) return behavior;
   return {
     ...behavior,

@@ -11,7 +11,7 @@
     {
       "kind": "file",
       "path": ".clank/.cache/sync-manifest.json",
-      "hash": "sha256:6278d094e50be780ef329a6ffd7b7bc2ed029d02dbeb2736022f0450eec44200"
+      "hash": "sha256:a54102ad20257cd7416357bcf327a56dcb6c0af43d1e8165a8367eaadc1f87c6"
     },
     {
       "kind": "dir",
@@ -209,11 +209,6 @@
       "kind": "file",
       "path": "AGENTS.md",
       "hash": "sha256:1438a94b6ef989eab2aefce1da7c2db80c3dc5ddc6f8f0b7ecacf261fab852cb"
-    },
-    {
-      "kind": "file",
-      "path": "AGENTS.override.md",
-      "hash": "sha256:b82d5c3659c1b6041220a353222978af31765e6fa545402b20bebc95fbaf0d5f"
     },
     {
       "kind": "file",
