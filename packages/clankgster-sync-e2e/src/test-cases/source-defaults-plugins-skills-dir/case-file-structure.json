@@ -6,6 +6,15 @@
     },
     {
       "kind": "dir",
+      "path": ".clank/.cache"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/.cache/sync-manifest.json",
+      "hash": "sha256:e1fa608344cbb729a21c7ad5adf2674f9ac7f7725e7b5d13f7d2373967af3ee7"
+    },
+    {
+      "kind": "dir",
       "path": ".clank/plugins-custom"
     },
     {
@@ -76,15 +85,6 @@
     },
     {
       "kind": "dir",
-      "path": ".clankgster-cache"
-    },
-    {
-      "kind": "file",
-      "path": ".clankgster-cache/sync-manifest.json",
-      "hash": "sha256:30db629ebeeb9fa65531bde8da5cec86efb7866ac92d2f2ff9bb68a7b56c85a7"
-    },
-    {
-      "kind": "dir",
       "path": ".claude"
     },
     {
@@ -111,7 +111,7 @@
     },
     {
       "kind": "file",
-      "path": ".claude/settings.json",
+      "path": ".claude/settings.local.json",
       "hash": "sha256:9fcc6ea648113aae492d41e7de9ac8679657fb3e9e809ab77fa508e4d32acf32"
     },
     {

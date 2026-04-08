@@ -49,7 +49,7 @@
       "options": {
         "manifestKey": "claude",
         "marketplaceName": "clankgster-sync",
-        "settingsFile": ".claude/settings.json"
+        "settingsFile": ".claude/settings.local.json"
       }
     }
   }

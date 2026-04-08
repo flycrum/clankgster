@@ -6,6 +6,15 @@
     },
     {
       "kind": "dir",
+      "path": ".clank/.cache"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/.cache/sync-manifest.json",
+      "hash": "sha256:8469d4f8e2398fd8eed51e689924701538a1e1e0a0dfb893479f927990978c25"
+    },
+    {
+      "kind": "dir",
       "path": ".clank/plugins"
     },
     {
@@ -38,15 +47,6 @@
       "kind": "file",
       "path": ".clank/plugins/root/rules/root-rule.md",
       "hash": "sha256:554022c1a9d1440c83fc6757029b377468aec0ff9edd9630ce29e53783fd6d76"
-    },
-    {
-      "kind": "dir",
-      "path": ".clankgster-cache"
-    },
-    {
-      "kind": "file",
-      "path": ".clankgster-cache/sync-manifest.json",
-      "hash": "sha256:8469d4f8e2398fd8eed51e689924701538a1e1e0a0dfb893479f927990978c25"
     },
     {
       "kind": "dir",

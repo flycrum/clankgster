@@ -211,9 +211,9 @@ const config = clankgsterConfig.define({
 
 **Clear** removes **Clankgster-managed** outputs only; it is **not** a “delete every agent file” switch. Your own skills, plans, and unrelated rules should remain.
 
-**Run** repaints the managed slice: rules, synced skills, **`.claude-plugin/marketplace.json`**, the keys sync owns in **`.claude/settings.json`**, and friends. Treat **`.claude-plugin/marketplace.json`** as **output**, not a scratchpad—edit **`.clank/`**, sync again.
+**Run** repaints the managed slice: rules, synced skills, **`.claude-plugin/marketplace.json`**, the keys sync owns in **`.claude/settings.local.json`**, and friends. Treat **`.claude-plugin/marketplace.json`** as **output**, not a scratchpad—edit **`.clank/`**, sync again.
 
-**Shared JSON:** sync merges only the keys it owns in **`.claude/settings.json`**; **clear** removes those keys and leaves the rest of your JSON intact.
+**Claude settings (local scope):** sync merges only the keys it owns in **`.claude/settings.local.json`**; **clear** removes those keys and leaves the rest of your JSON intact.
 
 **Idempotent (we checked the receipts):** from the repo root we ran **`clankgster-sync:clear`**, captured a full file list plus **SHA-256** hashes for every file under **`.claude/`**, **`.claude-plugin/`**, and **`.cursor/`**, then ran **`clankgster-sync:run`** and captured again. We ran **clear** a second time: the snapshot matched the **first clear byte-for-byte** (same paths, same hashes). We ran **run** again: snapshot matched the **first run** the same way. So: **`clear → clear`** and **`run → run`** are stable on this tree—nothing mysteriously drifted or got "cleaned up" extra.
 

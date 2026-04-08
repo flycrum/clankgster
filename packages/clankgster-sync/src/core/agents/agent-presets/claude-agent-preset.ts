@@ -26,7 +26,7 @@ export const claudeAgentPresetConstants = defineAgentConstants({
     } satisfies AgentRulesDirectorySyncPresetOptions,
     AgentSettingsSyncPreset: {
       manifestKey: 'claude',
-      settingsFile: '.claude/settings.json',
+      settingsFile: '.claude/settings.local.json',
     } satisfies AgentSettingsSyncPresetOptions,
     MarkdownContextSyncPreset: {
       targetFile: 'CLAUDE.md',

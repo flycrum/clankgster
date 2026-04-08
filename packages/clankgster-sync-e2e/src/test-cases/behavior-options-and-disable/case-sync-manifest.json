@@ -6,6 +6,8 @@
         "packages/app/CLAUDE.md"
       ],
       "options": {
+        "gitignoreComment": "\n# clankgster-sync: symlinked from CLANK.md for Claude\n",
+        "gitignoreEntry": "CLAUDE.md",
         "sourceFile": "CLANK.md",
         "targetFile": "CLAUDE.md"
       },
@@ -14,7 +16,7 @@
     "AgentMarketplaceJsonSyncPreset": {
       "options": {
         "manifestKey": "claude",
-        "marketplaceFile": ".claude/marketplace.json",
+        "marketplaceFile": ".claude-plugin/marketplace.json",
         "marketplaceName": "clankgster-sync",
         "sourceFormat": "relative"
       },
