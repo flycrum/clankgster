@@ -33,7 +33,7 @@ npm install @clankgster/sync@alpha
 
 If your project is not a pnpm workspace root, drop `-w` (pnpm is particular about where the workspace thinks it lives).
 
-
+You can pin an exact version (for example `@clankgster/sync@0.1.0-alpha.0`) or use `@latest` once stable releases are published. **Field note:** bare `npm install @clankgster/sync` tracks **`latest`**; during prereleases, **`@alpha`** (or a pinned version) is usually the honest choice.
 
 ### 2) Add config files in the target project root
 

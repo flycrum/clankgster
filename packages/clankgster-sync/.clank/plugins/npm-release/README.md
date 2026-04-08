@@ -1,11 +1,15 @@
 # npm-release plugin
 
-Guidance for publishing **@clankgster/sync** to npm. No release tool or new dependencies: use `npm version` and `npm publish` only. This plugin provides rules and a deploy wizard skill so an agent can walk the developer through version choice, dist-tag, and publish steps.
+Internal reminder for publishing **`@clankgster/sync`** to npm: no extra release tooling in-repo—use **`npm version`** (or hand-edit `package.json`) and **`npm publish`** with an explicit **dist-tag** for prereleases.
 
 ## Purpose
 
-- Version bump (major, minor, patch, prerelease) and dist-tag (e.g. `beta`, `latest`)
-- Pre-publish checklist and commands
-- Optional: test locally (e.g. pnpm link or npm pack) before publishing
+- Pick **semver** (including **`0.1.0-alpha.N`**); commit on `main` before tagging.
+- **Pre-flight:** `pnpm -F @clankgster/sync run check`, `pnpm -F @clankgster/sync run test`, then `pnpm --dir packages/clankgster-sync pack` and confirm the tarball’s `package.json` has concrete dependency ranges (no raw `catalog:`).
+- **Publish:** from `packages/clankgster-sync`, `npm publish --tag alpha` (or `beta` / omit tag when promoting **`latest`**).
+- **Git:** tag **`v<version>`** on the published commit and push the tag.
 
-See **CLANK.md** for agent-facing summary and links to rules. Use the **npm-release-deploy-wizard** skill when the user wants to release or publish the package.
+## Where humans look
+
+- Package **README** and **[CHANGELOG.md](../../../CHANGELOG.md)** in `packages/clankgster-sync/`.
+- This plugin folder does **not** ship a separate deploy skill yet; extend here if you add one, then run **Clankgster sync** so agent surfaces pick it up.
