@@ -113,7 +113,7 @@ Use `npm run` or your monorepo’s task runner if you are not on pnpm.
 
 ## What sync reads and writes
 
-**Hypothesis (still mapping edge cases):** you edit **`.clank/`**, optional shorthand siblings (**`.clank-plugins/`**, **`.clank-skills/`**), **`CLANK.md`**, and **`clankgster.config.ts`**. Sync materializes the agent-facing trees—rules, skills, marketplace JSON, the settings keys it owns—plus **`.clankgster-cache/`** for bookkeeping.
+**Hypothesis (still mapping edge cases):** you edit **`.clank/`** (nested plugins and skills, each with a **`.local`** sibling for local-only content), optional shorthand directories at the repo root (the **`-plugins`** / **`-skills`** forms and their **`.local`** siblings), **`CLANK.md`**, and **`clankgster.config.ts`**. Folder names follow **`sourceDefaults`** in `clankgster.config.ts` (defaults below match **`ResolvedSourcePath`** in `sync-source-layouts.config.ts`). Sync materializes the agent-facing trees—rules, skills, marketplace JSON, the settings keys it owns—plus **`.clankgster-cache/`** for bookkeeping.
 
 Which folders appear depends on **enabled agents** (Claude, Cursor, Codex). Table below is the **default mental model**: **left = source**, **right = generated** after **`clankgster-sync:run`**.
 
@@ -129,11 +129,15 @@ Which folders appear depends on **enabled agents** (Claude, Cursor, Codex). Tabl
 <td valign="top">
 
 <pre><code>repo-root/
-├── .clank-plugins/    … optional shorthand
-├── .clank-skills/     … optional shorthand
+├── .clank-plugins/          … shorthand regular plugins
+├── .clank-plugins.local/    … shorthand local-only plugins
+├── .clank-skills/           … shorthand regular skills
+├── .clank-skills.local/     … shorthand local-only skills
 ├── .clank/
-│   ├── plugins/
-│   └── skills/        … or nested skills layout
+│   ├── plugins/             … nested regular plugins
+│   ├── plugins.local/       … nested local-only plugins
+│   ├── skills/              … nested regular skills
+│   └── skills.local/        … nested local-only skills
 ├── CLANK.md
 └── clankgster.config.ts
 </code></pre>
