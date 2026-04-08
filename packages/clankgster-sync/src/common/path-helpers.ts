@@ -82,6 +82,18 @@ export const pathHelpers = {
     return path.resolve(repoRoot, ...segments);
   },
 
+  /**
+   * Resolves optional `syncOutputRoot` against `repoRoot` when relative so presets that call
+   * `path.resolve(outputRoot, …)` do not anchor to `process.cwd()` (e.g. `pnpm` filtered to a
+   * package while `CLANKGSTER_REPO_ROOT` points at another directory).
+   */
+  resolveSyncOutputRoot(repoRoot: string, syncOutputRoot: string | undefined): string {
+    if (syncOutputRoot == null || syncOutputRoot.length === 0) return repoRoot;
+    return path.isAbsolute(syncOutputRoot)
+      ? path.resolve(syncOutputRoot)
+      : path.resolve(repoRoot, syncOutputRoot);
+  },
+
   /** Normalizes slash style and trims duplicate separators for path comparisons. */
   normalizePathForCompare(targetPath: string): string {
     return targetPath.replace(/\\/g, '/').replace(/\/+/g, '/').replace(/\/$/g, '');

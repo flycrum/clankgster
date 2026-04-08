@@ -79,6 +79,27 @@ describe('pathHelpers', () => {
     });
   });
 
+  describe('resolveSyncOutputRoot', () => {
+    it('returns repoRoot when syncOutputRoot is undefined or empty', () => {
+      const repo = path.resolve('/workspace/repo');
+      expect(pathHelpers.resolveSyncOutputRoot(repo, undefined)).toBe(repo);
+      expect(pathHelpers.resolveSyncOutputRoot(repo, '')).toBe(repo);
+    });
+
+    it('joins relative syncOutputRoot to repoRoot', () => {
+      const repo = path.resolve('/workspace/repo');
+      expect(pathHelpers.resolveSyncOutputRoot(repo, '.sync-output-root')).toBe(
+        path.resolve(repo, '.sync-output-root')
+      );
+    });
+
+    it('normalizes absolute syncOutputRoot', () => {
+      expect(pathHelpers.resolveSyncOutputRoot('/workspace/repo', '/tmp/out')).toBe(
+        path.resolve('/tmp/out')
+      );
+    });
+  });
+
   describe('isSafeRelativePathSegments', () => {
     it('accepts normal repo-relative dirs', () => {
       expect(pathHelpers.isSafeRelativePathSegments('.cursor/skills')).toBe(true);
