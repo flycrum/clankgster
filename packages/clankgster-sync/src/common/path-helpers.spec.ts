@@ -100,6 +100,22 @@ describe('pathHelpers', () => {
     });
   });
 
+  describe('validateRepoRelativeSourceDir', () => {
+    it('accepts repo-relative source dirs without traversal', () => {
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('.clank')).not.toThrow();
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('foo/bar')).not.toThrow();
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('foo\\bar')).not.toThrow();
+    });
+
+    it('rejects absolute paths and .. segments', () => {
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('/abs')).toThrow();
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('C:\\\\Users')).toThrow();
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('../outside')).toThrow();
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('a/../b')).toThrow();
+      expect(() => pathHelpers.validateRepoRelativeSourceDir('')).toThrow();
+    });
+  });
+
   describe('isSafeRelativePathSegments', () => {
     it('accepts normal repo-relative dirs', () => {
       expect(pathHelpers.isSafeRelativePathSegments('.cursor/skills')).toBe(true);

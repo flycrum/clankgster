@@ -185,6 +185,9 @@ export const syncRunMachine = setup({
                 resolvedConfig: NonNullable<SyncRunMachineContext['resolvedConfig']>;
                 sourcesLoaded: string[];
               };
+              pathHelpers.validateRepoRelativeSourceDir(
+                output.resolvedConfig.sourceDefaults.sourceDir
+              );
               clankLogger.setLoggerContext({
                 loggingEnabled: output.resolvedConfig.loggingEnabled,
                 outputRoot: pathHelpers.resolveSyncOutputRoot(

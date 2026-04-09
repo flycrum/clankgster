@@ -128,6 +128,29 @@ export const pathHelpers = {
   },
 
   /**
+   * Validates `sourceDefaults.sourceDir` before joining under `repoRoot` / `logRoot`: rejects
+   * absolute paths and `..` segments so configured paths cannot escape the repo root.
+   */
+  validateRepoRelativeSourceDir(sourceDir: string): void {
+    if (typeof sourceDir !== 'string' || sourceDir.length === 0) {
+      throw new Error('sourceDefaults.sourceDir must be a non-empty string');
+    }
+    if (path.isAbsolute(sourceDir)) {
+      throw new Error('sourceDefaults.sourceDir must be a relative path');
+    }
+    if (path.win32.isAbsolute(sourceDir)) {
+      throw new Error('sourceDefaults.sourceDir must be a relative path');
+    }
+    const normalized = sourceDir.replace(/\\/g, '/');
+    const segments = normalized.split('/').filter((s) => s.length > 0);
+    for (const seg of segments) {
+      if (seg === '..') {
+        throw new Error('sourceDefaults.sourceDir must not contain parent directory segments (..)');
+      }
+    }
+  },
+
+  /**
    * One symlink basename under an output root: collapses `@scope/pkg`-style names and separators,
    * strips traversal segments, and restricts to a conservative character set.
    */
