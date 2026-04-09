@@ -19,7 +19,7 @@ Full package docs: [packages/clankgster-sync/README.md](../../../README.md).
 | `pnpm clankgster-sync:run`   | Run sync   |
 | `pnpm clankgster-sync:clear` | Clear mode |
 
-**Always read** `packages/clankgster-sync/package.json` for exact script names (`clankgster-sync:run`, `clankgster-sync:clear`) — they can change. Scripts delegate to `tsx` entrypoints in that package.
+**Always read** `packages/clankgster-sync/package.json` for exact script names (`clankgster-sync:run`, `clankgster-sync:clear`) — they can change. These scripts delegate to `clankgster-sync run|clear`; in this monorepo they enable source execution mode, while published consumers use the default prebuilt runtime path behind the same bin abstraction.
 
 For a consumer repo using the published CLI, run `clankgster-sync` from npm with `CLANKGSTER_REPO_ROOT` set to the project root (see package README).
 

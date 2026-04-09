@@ -25,7 +25,7 @@ pnpm clankgster-sync:run
 pnpm clankgster-sync:clear
 ```
 
-These delegate to the sync package (`tsx` entrypoints). For a published CLI consumer, run `clankgster-sync` from npm with `CLANKGSTER_REPO_ROOT` set to the target project root (see [package README](../../../README.md)).
+These delegate to `clankgster-sync run|clear` via the package bin abstraction. In this monorepo, package scripts set source execution mode for no-build TS development; for published consumers, the same bin surface defaults to prebuilt runtime entries. For npm consumers, run `clankgster-sync` with `CLANKGSTER_REPO_ROOT` set to the target project root when needed (see [package README](../../../README.md)).
 
 ## After sync
 

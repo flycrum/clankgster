@@ -1,6 +1,6 @@
 # Purpose
 
-`@clankgster/sync` is the publishable sync runtime package. **`src/`** holds the library and CLI implementation; **`scripts/`** holds thin entry files that are still shipped in `files` so consumers can execute them with `tsx` or reference paths under `node_modules`.
+`@clankgster/sync` is the publishable sync runtime package. **`src/`** holds the library and CLI implementation; runtime CLI entrypoints are prebuilt under **`dist/scripts/`** for consumers, while **`scripts/`** remains local-dev TypeScript entrypoints for source execution mode.
 
 ## Dependency Expectations
 
@@ -10,13 +10,14 @@
 
 ## Public surfaces
 
-- **`src/index.ts`** — canonical list of symbols meant for other monorepo packages and npm consumers. `vp pack src/index.ts` emits `dist/index.mjs` (and dts); `package.json` → `exports`.`"."` points at that bundle.
-- **`package.json` → `exports`** — only `"."` maps to `./dist/index.mjs` (plus `package.json`). Deep imports into `src/` are not a supported public API unless you add explicit subpaths.
+- **`src/index.ts`** — canonical list of symbols meant for other monorepo packages and npm consumers. `vp pack index.ts scripts/clankgster-sync.run.ts scripts/clankgster-sync.clear.ts` emits `dist/index.mjs` (and dts) plus prebuilt CLI runtime entrypoints under `dist/scripts/`; `package.json` → `exports`.`"."` points at `dist/index.mjs`.
+- **`package.json` → `exports`** — `"."` maps to `./dist/index.mjs`; runtime script subpaths map to prebuilt `dist/scripts` entries; `package.json` is exposed for tooling. Deep imports into `src/` are not a supported public API unless you add explicit subpaths.
 
 ## Script Contracts
 
 - `clankgster-sync:clear` runs clear mode entry script.
 - `clankgster-sync:run` runs the main sync session entry script.
+- Both scripts call the same `clankgster-sync clear|run` bin surface; package scripts set `CLANKGSTER_SYNC_EXECUTION_MODE=source` for monorepo source-path development.
 - These script names are delegated from the repository root `package.json`; keep names stable.
 - Keep `scripts`, `dependencies`, `devDependencies`, and `peerDependencies` alpha-numerically sorted.
 

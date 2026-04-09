@@ -12,7 +12,7 @@ pnpm run check
 echo " - test"
 pnpm run test
 echo " - build"
-vp pack src/index.ts
+pnpm run build
 
 echo "Packing npm tarball..."
 PACK_OUTPUT="$(pnpm pack --config.ignore-scripts=true)"

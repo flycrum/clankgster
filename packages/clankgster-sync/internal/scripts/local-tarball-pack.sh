@@ -7,7 +7,7 @@ PACKAGE_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 cd "${PACKAGE_DIR}"
 
 echo "Building @clankgster/sync package artifacts..."
-vp pack src/index.ts
+pnpm run build
 
 echo "Packing npm tarball..."
 PACK_OUTPUT="$(pnpm pack --config.ignore-scripts=true)"

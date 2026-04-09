@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 /**
- * Published CLI entry for `@clankgster/sync`: runs the sync-all entry with the **caller’s cwd** as repo root (via `CLANKGSTER_REPO_ROOT`).
+ * CLI entry for `@clankgster/sync`: runs `run`/`clear` with the caller's cwd as repo root
+ * (via `CLANKGSTER_REPO_ROOT`).
  *
- * - Uses this package’s `tsx` loader (`--import`) so the TypeScript entry runs when the package is
- *   `pnpm link`’d: Node would otherwise resolve `tsx` from cwd (consumer), where it may be absent.
+ * - Default execution mode (`published`) runs prebuilt entries from `dist/scripts/`.
+ * - Source execution mode (`CLANKGSTER_SYNC_EXECUTION_MODE=source`) runs TypeScript source via
+ *   this package's `tsx` loader for local monorepo development.
  * - Sets `CLANKGSTER_REPO_ROOT` to `process.cwd()` so `path-helpers` treats the invocation directory
  *   as the target repo, not the link source under `node_modules`.
  */
@@ -14,18 +16,39 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, '..');
-const scriptPath = path.join(packageRoot, 'scripts/clankgster-sync.run.ts');
+const modeArg = process.argv[2] ?? 'run';
+const mode = modeArg === 'run' || modeArg === 'clear' ? modeArg : null;
+
+if (mode == null) {
+  process.stderr.write(
+    `Invalid mode "${modeArg}". Use "run" or "clear".\nUsage: clankgster-sync [run|clear]\n`
+  );
+  process.exit(1);
+}
+
+const executionMode =
+  process.env.CLANKGSTER_SYNC_EXECUTION_MODE === 'source' ? 'source' : 'published';
+
+const distScriptPath =
+  mode === 'run'
+    ? path.join(packageRoot, 'dist/scripts/clankgster-sync.run.mjs')
+    : path.join(packageRoot, 'dist/scripts/clankgster-sync.clear.mjs');
+const sourceScriptPath =
+  mode === 'run'
+    ? path.join(packageRoot, 'scripts/clankgster-sync.run.ts')
+    : path.join(packageRoot, 'scripts/clankgster-sync.clear.ts');
+
 const require = createRequire(import.meta.url);
-const tsxLoader = require.resolve('tsx');
-const result = spawnSync(
-  process.execPath,
-  ['--import', pathToFileURL(tsxLoader).href, scriptPath],
-  {
-    stdio: 'inherit',
-    cwd: process.cwd(),
-    env: { ...process.env, CLANKGSTER_REPO_ROOT: process.cwd() },
-  }
-);
+const argv =
+  executionMode === 'source'
+    ? ['--import', pathToFileURL(require.resolve('tsx')).href, sourceScriptPath]
+    : [distScriptPath];
+
+const result = spawnSync(process.execPath, argv, {
+  stdio: 'inherit',
+  cwd: process.cwd(),
+  env: { ...process.env, CLANKGSTER_REPO_ROOT: process.cwd() },
+});
 
 const exitCode =
   result.status != null
