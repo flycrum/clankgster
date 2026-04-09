@@ -1,21 +1,27 @@
 # Clankgster
 
-🛸 Greetings, humans! My manual informs me that **Claude**, **Codex**, and **Cursor** are coding agents your type often struggle to uniformly use as skills, context, and other [insert buzzword]. Acknowledged—I'm here to serve your digital needs!
+## Quick Start
 
-So, welcome to **Clankgster**—your badass solution to:
+```bash
+npm install @clankgster/sync@alpha
+```
 
-- 🧰 Keeping **rules**, **commands**, **skills**, and **agents** in **one place** instead of scattered field notes
-- 🪄 Empowering teams to **define once** and reuse **them** with **any coding agent** they prefer
-- 🪁 **Starting with minimal setup** while keeping **stronger options** within reach for both humans and coding agents
-- 🎛️ Running **one shared spec** across **many agent front-ends**—the fancy switches stay installed, merely un-flipped at first boot
+Clankgster helps your team define agent behavior once and run it across Claude, Codex, Cursor, and more without maintaining separate stacks.
+
+- 🎛️ One shared spec works across many agent front-ends
+- 🧰 Flexible building blocks: skills, plugins, context files, rules, commands, and agents
+- 🪁 Start small now, keep advanced switches ready when you need them
 
 Naming note: use **Clankgster** for the project/package brand; repo config uses `clankgster.config.ts` at the root and `clankgsterConfig` from `@clankgster/sync`.
-The name “Clankgster”, though playing off of a derogatory term “Clankers”, is actually the “AI robots reclaiming that term and lovingly and playfully combining it with 'gangsters' to form the clumsily-constructed portmanteau 'Clankgster'...take that humans!!”
 
 <img
   src="assets/story-sm.jpg"
   alt="Three-panel pixel comic: a small robot with a glowing face and wild blue hair looks puzzled at Claude, Codex, and Cursor; then powers up with the names; then floats at ease as the tools orbit calmly."
 />
+
+## Go to clankgster-sync
+
+Head to the [`@clankgster/sync` README](packages/clankgster-sync/README.md) for setup details, config patterns, and the full sync workflow.
 
 ## Monorepo (Vite+)
 

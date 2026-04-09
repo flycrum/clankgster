@@ -2,6 +2,22 @@
 
 **Field note:** this file is for humans doing upgrades. SemVer applies, including **`alpha`** / **`beta`**-style prerelease labels—see [Semantic Versioning](https://semver.org/) when in doubt.
 
+## [Unreleased]
+
+## [0.1.0-alpha.2] - 2026-04-09
+
+### Runtime Contract Updates
+
+- **Runtime script contract moved to built JS**
+  - `clankgster-sync:run` / `clankgster-sync:clear` now execute Node against prebuilt files under `dist/scripts/` instead of running TypeScript via `tsx`.
+  - The published `clankgster-sync` bin now launches `dist/scripts/clankgster-sync.run.mjs` directly, so npm consumers no longer require `tsx` at runtime.
+
+### Dev-Only Workflow
+
+- **Dev-only no-build script path**
+  - `clankgster-sync:run` and `clankgster-sync:clear` now call the same `clankgster-sync run|clear` bin surface used by consumers.
+  - Package-local scripts set `CLANKGSTER_SYNC_EXECUTION_MODE=source` so monorepo development still executes TypeScript source via `tsx` without requiring prebuilds.
+
 ## [0.1.0-alpha.1] - 2026-04-09
 
 **Status:** recovery prerelease for npm consumers after `alpha.0` shipped unresolved workspace/catalog dependency specs in registry metadata.
@@ -44,5 +60,6 @@
   - **`${sourceDir}/.cache/sync-manifest.json`** keeps discovery, run, and teardown aligned (default **`sourceDir`**: **`.clank`** → **`.clank/.cache/sync-manifest.json`**).
   - **Clear** removes Clankgster-managed outputs and that cache footprint; it is **not** designed to wipe unrelated files you added beside agent folders.
 
+[0.1.0-alpha.2]: https://github.com/flycrum/clankgster/releases/tag/v0.1.0-alpha.2
 [0.1.0-alpha.1]: https://github.com/flycrum/clankgster/releases/tag/v0.1.0-alpha.1
 [0.1.0-alpha.0]: https://github.com/flycrum/clankgster/releases/tag/v0.1.0-alpha.0

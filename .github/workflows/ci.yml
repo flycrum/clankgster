@@ -13,17 +13,22 @@ concurrency:
 permissions:
   contents: read
 
+# voidzero-dev/setup-vp (every job): cache=false avoids stale Vite+ cache restores that left
+# vite-plus/vite/rolldown/vitest as "Not found". Re-enable cache after clearing repo Actions
+# caches or if upstream improves keying. run-install=false so each job has one explicit vp install.
+
 jobs:
   check:
     name: check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: voidzero-dev/setup-vp@v1
         with:
           node-version: '22'
-          cache: true
+          cache: false
+          run-install: false
 
       - name: Install dependencies
         run: vp install
@@ -42,12 +47,13 @@ jobs:
       CLANKGSTER_E2E_FAIL_FAST: 'true'
       CLANKGSTER_E2E_UPLOAD_SHARD_ARTIFACTS: 'false'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: voidzero-dev/setup-vp@v1
         with:
           node-version: '22'
-          cache: true
+          cache: false
+          run-install: false
 
       - name: Install dependencies
         run: vp install
@@ -78,12 +84,13 @@ jobs:
       # Optional debug aid: upload per-shard run results when set to true
       CLANKGSTER_E2E_UPLOAD_SHARD_ARTIFACTS: 'false'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: voidzero-dev/setup-vp@v1
         with:
           node-version: '22'
-          cache: true
+          cache: false
+          run-install: false
 
       - name: Install dependencies
         run: vp install

@@ -1,6 +1,6 @@
 {
   "name": "@clankgster/sync",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Node tooling and TypeScript scripts for Clankgster sync workflows (publishable).",
   "license": "MIT",
   "repository": {
@@ -21,20 +21,22 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
+    "./scripts/clankgster-sync.clear": "./dist/scripts/clankgster-sync.clear.mjs",
+    "./scripts/clankgster-sync.run": "./dist/scripts/clankgster-sync.run.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "vp pack src/index.ts",
-    "check": "vp check src scripts exports bin vite.config.ts",
-    "clankgster-sync:clear": "tsx scripts/clankgster-sync.clear.ts",
-    "clankgster-sync:run": "tsx scripts/clankgster-sync.run.ts",
-    "dev": "vp pack src/index.ts --watch",
+    "build": "vp pack index.ts scripts/clankgster-sync.run.ts scripts/clankgster-sync.clear.ts",
+    "check": "vp check index.ts src scripts exports bin vite.config.ts",
+    "clankgster-sync:clear": "CLANKGSTER_SYNC_EXECUTION_MODE=source node ./bin/clankgster-sync.mjs clear",
+    "clankgster-sync:run": "CLANKGSTER_SYNC_EXECUTION_MODE=source node ./bin/clankgster-sync.mjs run",
+    "dev": "vp pack index.ts scripts/clankgster-sync.run.ts scripts/clankgster-sync.clear.ts --watch",
     "pack-local:tarball": "bash internal/scripts/local-tarball-pack.sh",
-    "prepack": "vp pack src/index.ts",
-    "prepublishOnly": "vp pack src/index.ts",
+    "prepack": "pnpm run build",
+    "prepublishOnly": "pnpm run build",
     "release:preflight": "bash internal/scripts/npm-release-preflight.sh",
     "release:publish:alpha": "bash internal/scripts/npm-release-publish-from-pack.sh alpha",
     "test": "vp test"
@@ -49,7 +51,6 @@
     "remark-frontmatter": "catalog:",
     "remark-parse": "catalog:",
     "remark-stringify": "catalog:",
-    "tsx": "^4.19.0",
     "unified": "catalog:",
     "unist-util-visit": "catalog:",
     "xstate": "catalog:",
@@ -62,6 +63,7 @@
     "@types/node": "catalog:",
     "@typescript/native-preview": "7.0.0-dev.20260316.1",
     "oxlint": "catalog:",
+    "tsx": "^4.19.0",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },

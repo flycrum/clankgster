@@ -2,12 +2,19 @@
 
 🛸 Greetings, humans! My manual informs me that **Claude**, **Codex**, and **Cursor** are coding agents your type often struggle to uniformly use as skills, context, and other [insert buzzword]. Acknowledged—I'm here to serve your digital needs!
 
+## Quick Start
+
+```bash
+npm install @clankgster/sync@alpha
+```
+
+## What dis Clankgster thing?
+
 So, welcome to **Clankgster**—your badass solution to:
 
-- 🧰 Keeping **rules**, **commands**, **skills**, and **agents** in **one place** instead of scattered field notes
-- 🪄 Empowering teams to **define once** and reuse **them** with **any coding agent** they prefer
+- 🎛️ Keeping **skills**, **plugins**, **context files**, **rules**, **commands**, and **agents** in one flexible control bay instead of scattered field notes
+- 🪄 Empowering teams to **define once** and reuse **^** with **any coding agent** they prefer
 - 🪁 **Starting with minimal setup** while keeping **stronger options** within reach for both humans and coding agents
-- 🎛️ Running **one shared spec** across **many agent front-ends**—the fancy switches stay installed, merely un-flipped at first boot
 
 Naming note: use **Clankgster** for product/package naming; config filenames and the helper export use the plural form (`clankgster.config.ts`, `clankgsterConfig.define`).
 The name “Clankgster”, though playing off of a derogatory term “Clankers”, is actually the “AI robots reclaiming that term and lovingly and playfully combining it with 'gangsters' to form the clumsily-constructed portmanteau 'Clankgster'...take that humans!!”
@@ -73,9 +80,12 @@ export default clankgsterLocal;
 
 Recommendation: commit `clankgster.config.ts`; keep `clankgster.local.config.ts` uncommitted for personal overrides.
 
-### 3) Call sync scripts from `node_modules`
+### 3) Call sync commands from your project scripts
 
-The package ships runnable entry files under `scripts/`; **`tsx`** is the lightweight bridge from `package.json` to TypeScript. (No magic—just paths.)
+Use the package bin directly. The command surface is:
+
+- `clankgster-sync run`
+- `clankgster-sync clear`
 
 #### Project with a root `package.json`
 
@@ -84,8 +94,8 @@ Use this when `package.json`, `node_modules/`, and `clankgster.config.ts` all ag
 ```json
 {
   "scripts": {
-    "clankgster-sync:clear": "tsx ./node_modules/@clankgster/sync/scripts/clankgster-sync.clear.ts",
-    "clankgster-sync:run": "tsx ./node_modules/@clankgster/sync/scripts/clankgster-sync.run.ts"
+    "clankgster-sync:clear": "clankgster-sync clear",
+    "clankgster-sync:run": "clankgster-sync run"
   }
 }
 ```
@@ -97,8 +107,8 @@ Use this when `package.json`, `node_modules/`, and `clankgster.config.ts` all ag
 ```json
 {
   "scripts": {
-    "clankgster-sync:clear": "CLANKGSTER_REPO_ROOT=../../ tsx ./node_modules/@clankgster/sync/scripts/clankgster-sync.clear.ts",
-    "clankgster-sync:run": "CLANKGSTER_REPO_ROOT=../../ tsx ./node_modules/@clankgster/sync/scripts/clankgster-sync.run.ts"
+    "clankgster-sync:clear": "CLANKGSTER_REPO_ROOT=../../ clankgster-sync clear",
+    "clankgster-sync:run": "CLANKGSTER_REPO_ROOT=../../ clankgster-sync run"
   }
 }
 ```
@@ -110,6 +120,10 @@ pnpm run clankgster-sync:run
 ```
 
 Use `npm run` or your monorepo’s task runner if you are not on pnpm.
+
+For local monorepo development, the package scripts in this repository call the same
+`clankgster-sync run|clear` surface with source execution mode enabled, so developers test
+TypeScript source while consumers use the published runtime path.
 
 ## What sync reads and writes
 
@@ -162,11 +176,21 @@ Which folders appear depends on **enabled agents** (Claude, Cursor, Codex). Tabl
 </tbody>
 </table>
 
+### `CLANK.md`: one source, many agent files
+
+`CLANK.md` is the **agent-agnostic markdown source** for shared guidance. Sync reads each `CLANK.md` and emits agent-specific companions (for example `CLAUDE.md`, `AGENTS.md`, and other enabled-agent outputs) so all agents receive the same intent from one authored file.
+
+Where you can use it:
+
+- **Repo root:** `CLANK.md` defines broad, session-wide defaults for the project.
+- **Nested anywhere:** place additional `CLANK.md` files under plugin/skill trees (or other supported source roots) when you want scoped guidance near the feature it belongs to.
+- **Many scopes at once:** root and nested `CLANK.md` files can coexist; each location is treated as source and sync generates the corresponding agent-specific artifacts for that scope.
+
 ## Technicals
 
 ### `@clankgster/sync`
 
-This is the **Node runtime + config surface**: `import { clankgsterConfig } from '@clankgster/sync'`, run the **`scripts/`** entries with **`tsx`**, or invoke **`clankgster-sync`** from `PATH` after install.
+This is the **Node runtime + config surface**: `import { clankgsterConfig } from '@clankgster/sync'`, invoke `clankgster-sync run|clear` from `PATH` after install, and rely on package scripts to pick published vs source execution mode.
 
 **Artifact mode** defaults to **copy-first** (`artifactMode: 'copy'`) so markdown can be rewritten on the way out—links, template tokens, optional XML hooks. **`artifactMode: 'symlink'`** remains for symlink-era workflows. Examples live in the next section.
 
@@ -224,5 +248,5 @@ const config = clankgsterConfig.define({
 
 - The published npm artifact for `@clankgster/sync` is licensed under MIT (see [LICENSE](./LICENSE) next to this README in the package).
 - Repository source in the monorepo follows the PolyForm Noncommercial License 1.0.0 (see the repo root [LICENSE](../../LICENSE)).
-- The npm artifact currently includes `src/` and `scripts/` for typing and CLI developer experience (see [package.json](./package.json) `files` field), and those shipped files are covered by the package MIT license.
+- The npm artifact currently includes `src/` and `scripts/` for typing and local developer experience, while consumer runtime entrypoints are prebuilt under `dist/` (see [package.json](./package.json) `files` field). These shipped files are covered by the package MIT license.
 - This structure keeps installed package usage simple while keeping source-sharing expectations explicit.
