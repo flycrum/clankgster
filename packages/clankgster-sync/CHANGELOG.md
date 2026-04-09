@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.1.0-alpha.2] - 2026-04-09
+
 ### Runtime Contract Updates
 
 - **Runtime script contract moved to built JS**
@@ -58,5 +60,6 @@
   - **`${sourceDir}/.cache/sync-manifest.json`** keeps discovery, run, and teardown aligned (default **`sourceDir`**: **`.clank`** → **`.clank/.cache/sync-manifest.json`**).
   - **Clear** removes Clankgster-managed outputs and that cache footprint; it is **not** designed to wipe unrelated files you added beside agent folders.
 
+[0.1.0-alpha.2]: https://github.com/flycrum/clankgster/releases/tag/v0.1.0-alpha.2
 [0.1.0-alpha.1]: https://github.com/flycrum/clankgster/releases/tag/v0.1.0-alpha.1
 [0.1.0-alpha.0]: https://github.com/flycrum/clankgster/releases/tag/v0.1.0-alpha.0
