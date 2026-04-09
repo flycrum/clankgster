@@ -87,6 +87,29 @@ function behaviorsFromSyncBehaviorPresets(input: DefineAgentInput): ClankgsterBe
   return out;
 }
 
+/**
+ * Fills missing behavior options from the built-in agent preset matching `agentName` (e.g. string-only
+ * `behaviors: ['AgentSettingsSyncPreset']` inherits `settingsFile` from `claudeAgentPreset`). Author
+ * overrides win: `behavior.options` is spread after preset options.
+ */
+function mergeBehaviorOptionsFromAgentPreset(
+  behavior: ClankgsterBehaviorConfig,
+  agentPreset: ClankgsterAgentConfig | undefined
+): ClankgsterBehaviorConfig {
+  if (agentPreset == null) return behavior;
+  const presetBehavior = agentPreset.behaviors.find(
+    (b) => b.behaviorName === behavior.behaviorName
+  );
+  if (presetBehavior == null) return behavior;
+  return {
+    ...behavior,
+    options: {
+      ...presetBehavior.options,
+      ...behavior.options,
+    },
+  };
+}
+
 function toAgentConfig(
   agentName: string,
   entry: AgentEntryInput | undefined,
@@ -117,9 +140,18 @@ function toAgentConfig(
   const presetBehaviors = behaviorsFromSyncBehaviorPresets(entry as DefineAgentInput);
   const mergedBehaviors = [...normalizedBehaviors, ...presetBehaviors];
   const fallbackPreset = fallbackToPreset ? presetByName[agentName] : undefined;
+  const presetForOptionMerge = presetByName[agentName];
+  if (mergedBehaviors.length > 0) {
+    return {
+      enabled: entry.enabled ?? true,
+      behaviors: mergedBehaviors.map((b) =>
+        mergeBehaviorOptionsFromAgentPreset(b, presetForOptionMerge)
+      ),
+    };
+  }
   return {
     enabled: entry.enabled ?? true,
-    behaviors: mergedBehaviors.length > 0 ? mergedBehaviors : (fallbackPreset?.behaviors ?? []),
+    behaviors: fallbackPreset?.behaviors ?? [],
   };
 }
 

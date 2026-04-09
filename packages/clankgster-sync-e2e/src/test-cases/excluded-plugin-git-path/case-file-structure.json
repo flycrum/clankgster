@@ -6,6 +6,15 @@
     },
     {
       "kind": "dir",
+      "path": ".clank/.cache"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/.cache/sync-manifest.json",
+      "hash": "sha256:7ad5d31bef8a9ca533f20cc274e93238f15f4b0c39e769123b3007be4d2a2647"
+    },
+    {
+      "kind": "dir",
       "path": ".clank/plugins"
     },
     {
@@ -76,15 +85,6 @@
     },
     {
       "kind": "dir",
-      "path": ".clankgster-cache"
-    },
-    {
-      "kind": "file",
-      "path": ".clankgster-cache/sync-manifest.json",
-      "hash": "sha256:cb46bcf1d6a1450ec51725e2a5522ade762f0b86f4e28f7b4dfde8602da20f1a"
-    },
-    {
-      "kind": "dir",
       "path": ".claude"
     },
     {
@@ -102,7 +102,7 @@
     },
     {
       "kind": "file",
-      "path": ".claude/settings.json",
+      "path": ".claude/settings.local.json",
       "hash": "sha256:bb2ae648815844f61c9030f28cb35ad1b0816dba870b4122d7b513a13e0a3659"
     },
     {
@@ -187,11 +187,6 @@
       "kind": "file",
       "path": "AGENTS.md",
       "hash": "sha256:1438a94b6ef989eab2aefce1da7c2db80c3dc5ddc6f8f0b7ecacf261fab852cb"
-    },
-    {
-      "kind": "file",
-      "path": "AGENTS.override.md",
-      "hash": "sha256:b82d5c3659c1b6041220a353222978af31765e6fa545402b20bebc95fbaf0d5f"
     },
     {
       "kind": "file",

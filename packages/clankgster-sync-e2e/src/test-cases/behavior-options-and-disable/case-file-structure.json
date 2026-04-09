@@ -6,6 +6,15 @@
     },
     {
       "kind": "dir",
+      "path": ".clank/.cache"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/.cache/sync-manifest.json",
+      "hash": "sha256:da61e0b827361eecd840a8e27e53814f1683a7ee9cbfbe378d46a7441014d22c"
+    },
+    {
+      "kind": "dir",
       "path": ".clank/plugins"
     },
     {
@@ -76,20 +85,15 @@
     },
     {
       "kind": "dir",
-      "path": ".clankgster-cache"
-    },
-    {
-      "kind": "file",
-      "path": ".clankgster-cache/sync-manifest.json",
-      "hash": "sha256:ee16003eac50c7694b970938436ba09c5b85f13f16e6189b847ffb9573a63181"
-    },
-    {
-      "kind": "dir",
       "path": ".claude"
     },
     {
+      "kind": "dir",
+      "path": ".claude-plugin"
+    },
+    {
       "kind": "file",
-      "path": ".claude/marketplace.json",
+      "path": ".claude-plugin/marketplace.json",
       "hash": "sha256:d210073b4c5a5483ee8e5aed4ff0c44ec08649b6d1fe8f513e70ee96014b3156"
     },
     {

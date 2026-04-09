@@ -96,7 +96,7 @@
       "options": {
         "manifestKey": "claude",
         "marketplaceName": "my-local-market",
-        "settingsFile": ".claude/settings.json"
+        "settingsFile": ".claude/settings.local.json"
       }
     }
   }

@@ -1,6 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { clankLogger } from '../../common/logger.js';
 import type { ClankgsterSourceDefaultsConfig } from '../configs/clankgster-config.schema.js';
+import { syncSourceLayoutDiscoveryLog } from './sync-source-layout-discovery-log.constants.js';
+
+function shouldLogDiscoveryWalk(depth: number, durationMs: number): boolean {
+  return (
+    depth <= syncSourceLayoutDiscoveryLog.CAN_LOG_MAX_DEPTH ||
+    durationMs >= syncSourceLayoutDiscoveryLog.CAN_LOG_MAX_EXECUTION_MS
+  );
+}
 
 /**
  * Stable layout IDs used as map keys throughout discovery/manifest customData.
@@ -133,7 +142,8 @@ export const syncSourceLayoutsConfig = {
     const excludedSet = new Set(excluded);
     if (segments.length === 0) return [];
 
-    const walk = (dir: string): void => {
+    const walk = (dir: string, depth: number): void => {
+      const started = performance.now();
       let entries: fs.Dirent[];
       try {
         entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -149,7 +159,19 @@ export const syncSourceLayoutsConfig = {
         if (fs.existsSync(maybeSourceRoot) && fs.statSync(maybeSourceRoot).isDirectory()) {
           found.add(maybeSourceRoot);
         }
-        walk(fullPath);
+        walk(fullPath, depth + 1);
+      }
+      const durationMs = performance.now() - started;
+      if (shouldLogDiscoveryWalk(depth, durationMs)) {
+        clankLogger.getLogger().debug(
+          {
+            depth,
+            durationMs: Math.round(durationMs * 100) / 100,
+            phase: 'findSourceRoots',
+            rel: normalizeRel(path.relative(repoRoot, dir)),
+          },
+          'sync discovery walk'
+        );
       }
     };
 
@@ -157,7 +179,7 @@ export const syncSourceLayoutsConfig = {
     if (fs.existsSync(rootSource) && fs.statSync(rootSource).isDirectory()) {
       found.add(rootSource);
     }
-    walk(repoRoot);
+    walk(repoRoot, 0);
     return [...found];
   },
 
@@ -173,7 +195,8 @@ export const syncSourceLayoutsConfig = {
     const found = new Set<string>();
     if (namesSet.size === 0) return found;
 
-    const walk = (dir: string): void => {
+    const walk = (dir: string, depth: number): void => {
+      const started = performance.now();
       let entries: fs.Dirent[];
       try {
         entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -186,11 +209,23 @@ export const syncSourceLayoutsConfig = {
         if (this.isExcludedDirectory(repoRoot, fullPath, excludedSet, normalizeRel, entry.name))
           continue;
         if (namesSet.has(entry.name)) found.add(fullPath);
-        walk(fullPath);
+        walk(fullPath, depth + 1);
+      }
+      const durationMs = performance.now() - started;
+      if (shouldLogDiscoveryWalk(depth, durationMs)) {
+        clankLogger.getLogger().debug(
+          {
+            depth,
+            durationMs: Math.round(durationMs * 100) / 100,
+            phase: 'findDirsByName',
+            rel: normalizeRel(path.relative(repoRoot, dir)),
+          },
+          'sync discovery walk'
+        );
       }
     };
 
-    walk(repoRoot);
+    walk(repoRoot, 0);
     return found;
   },
 } as const;

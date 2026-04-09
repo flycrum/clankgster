@@ -89,7 +89,7 @@ export const fileStructureFixtureConfig = {
    * Relative POSIX paths (from snapshot root) whose file contents are intentionally non-deterministic between runs.
    * @remarks Matched rows omit `hash` in `buildSnapshot` and skip byte comparison so log files do not fail e2e.
    */
-  unstableFileHashPaths: new Set<string>(['.clank/logs/clankgster-sync.log']),
+  unstableFileHashPaths: new Set<string>(['.clank/.logs/clankgster-sync.log']),
 
   /**
    * When `true`, each snapshot entry includes `meta.mode` and {@link fileStructureFixture.compare} reports `meta.mode` mismatches.

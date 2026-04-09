@@ -1,6 +1,7 @@
 import { assign, createActor, fromPromise, setup } from 'xstate';
 import { actorHelpers } from '../../common/actor-helpers.js';
 import { clankLogger } from '../../common/logger.js';
+import { pathHelpers } from '../../common/path-helpers.js';
 import { syncFs } from '../../common/sync-fs.js';
 import type { AgentQueueOutcome } from '../agents/agent-queue-outcome.js';
 import { processAgentQueueMachine } from '../agents/process-agent-queue.machine.js';
@@ -184,10 +185,17 @@ export const syncRunMachine = setup({
                 resolvedConfig: NonNullable<SyncRunMachineContext['resolvedConfig']>;
                 sourcesLoaded: string[];
               };
+              pathHelpers.validateRepoRelativeSourceDir(
+                output.resolvedConfig.sourceDefaults.sourceDir
+              );
               clankLogger.setLoggerContext({
                 loggingEnabled: output.resolvedConfig.loggingEnabled,
-                outputRoot: output.resolvedConfig.syncOutputRoot,
+                outputRoot: pathHelpers.resolveSyncOutputRoot(
+                  context.input.repoRoot,
+                  output.resolvedConfig.syncOutputRoot
+                ),
                 repoRoot: context.input.repoRoot,
+                sourceDir: output.resolvedConfig.sourceDefaults.sourceDir,
               });
               clankLogger.getLogger().info({ sources: output.sourcesLoaded }, 'config resolved');
               const symlinkModeBehaviors = syncArtifactModeConfig.listSymlinkModeBehaviors(
@@ -256,7 +264,10 @@ export const syncRunMachine = setup({
           excluded: context.resolvedConfig?.excluded ?? [],
           manifest: context.manifest,
           mode: context.input.mode,
-          outputRoot: context.resolvedConfig?.syncOutputRoot ?? context.input.repoRoot,
+          outputRoot: pathHelpers.resolveSyncOutputRoot(
+            context.input.repoRoot,
+            context.resolvedConfig?.syncOutputRoot
+          ),
           repoRoot: context.input.repoRoot,
           resolvedConfig: context.resolvedConfig as NonNullable<
             SyncRunMachineContext['resolvedConfig']

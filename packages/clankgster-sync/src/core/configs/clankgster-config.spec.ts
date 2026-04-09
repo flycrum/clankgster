@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vite-plus/test';
+import { claudeAgentPresetConstants } from '../agents/agent-presets/claude-agent-preset.js';
 import { clankgsterIdentity } from '../../common/clankgster-identity.js';
 import { clankgsterConfig } from './clankgster-config.js';
 
@@ -35,6 +36,23 @@ describe('clankgsterConfig', () => {
       },
     });
     expect(config.sourceDefaults?.localMarketplaceName).toBe('my-market');
+  });
+
+  test('merges AgentSettingsSyncPreset options from built-in preset when behavior is a string', () => {
+    const config = clankgsterConfig.define({
+      agents: {
+        claude: clankgsterConfig.defineAgent({
+          name: 'claude',
+          behaviors: ['AgentSettingsSyncPreset'],
+        }),
+      },
+    });
+    const settings = config.agents?.claude?.behaviors.find(
+      (b) => b.behaviorName === 'AgentSettingsSyncPreset'
+    )?.options?.settingsFile;
+    expect(settings).toBe(
+      claudeAgentPresetConstants.BEHAVIORS.AgentSettingsSyncPreset.settingsFile
+    );
   });
 
   test('supports POC-style syncBehaviorPresets booleans in defineAgent', () => {

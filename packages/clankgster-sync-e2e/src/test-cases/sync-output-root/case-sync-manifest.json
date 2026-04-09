@@ -45,11 +45,55 @@
         }
       }
     },
+    "AgentRulesDirectorySyncPreset": {
+      "copies": [
+        ".claude/rules/root/root-rule.md"
+      ],
+      "options": {
+        "rulesDir": ".claude/rules",
+        "syncManifest": ".claude/.clankgster-claude-sync.json"
+      },
+      "symlinks": []
+    },
+    "SkillsDirectorySyncPreset": {
+      "copies": [
+        ".claude/skills/nested-nested-fake-skill/SKILL.md",
+        ".claude/skills/root-root-fake-skill/SKILL.md",
+        ".claude/skills/sample-skill/SKILL.md"
+      ],
+      "options": {
+        "nativeSkillsDir": ".claude/skills",
+        "skillsDirectorySyncEnabled": true
+      },
+      "symlinks": [],
+      "customData": {
+        "nestedRegular": {
+          "symlinks": [],
+          "copies": [
+            ".claude/skills/nested-nested-fake-skill/SKILL.md",
+            ".claude/skills/root-root-fake-skill/SKILL.md",
+            ".claude/skills/sample-skill/SKILL.md"
+          ]
+        },
+        "nestedLocal": {
+          "symlinks": [],
+          "copies": []
+        },
+        "shorthandRegular": {
+          "symlinks": [],
+          "copies": []
+        },
+        "shorthandLocal": {
+          "symlinks": [],
+          "copies": []
+        }
+      }
+    },
     "AgentSettingsSyncPreset": {
       "options": {
         "manifestKey": "claude",
         "marketplaceName": "clankgster-sync",
-        "settingsFile": ".claude/settings.json"
+        "settingsFile": ".claude/settings.local.json"
       }
     }
   }

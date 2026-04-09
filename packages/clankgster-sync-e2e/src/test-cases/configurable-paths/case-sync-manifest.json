@@ -6,8 +6,10 @@
         "packages/app/CLAUDE.md"
       ],
       "options": {
-        "sourceFile": "YOYO.md",
-        "targetFile": "CLAUDE.md"
+        "gitignoreComment": "\n# clankgster-sync: symlinked from CLANK.md for Claude\n",
+        "gitignoreEntry": "CLAUDE.md",
+        "targetFile": "CLAUDE.md",
+        "sourceFile": "YOYO.md"
       },
       "symlinks": []
     }

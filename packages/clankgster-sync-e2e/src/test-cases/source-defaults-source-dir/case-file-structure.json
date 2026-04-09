@@ -2,12 +2,16 @@
   "entries": [
     {
       "kind": "dir",
-      "path": ".clankgster-cache"
+      "path": ".clank"
+    },
+    {
+      "kind": "dir",
+      "path": ".clank/.cache"
     },
     {
       "kind": "file",
-      "path": ".clankgster-cache/sync-manifest.json",
-      "hash": "sha256:6397af00347a39aa4747035d03ff5afce904b87f01e1b8160865043c480d7ae8"
+      "path": ".clank/.cache/sync-manifest.json",
+      "hash": "sha256:33e2e774760e56166fdc6e5a381b9d84bef317ababff55068af7ce415a716e4a"
     },
     {
       "kind": "dir",
@@ -37,7 +41,7 @@
     },
     {
       "kind": "file",
-      "path": ".claude/settings.json",
+      "path": ".claude/settings.local.json",
       "hash": "sha256:9fcc6ea648113aae492d41e7de9ac8679657fb3e9e809ab77fa508e4d32acf32"
     },
     {

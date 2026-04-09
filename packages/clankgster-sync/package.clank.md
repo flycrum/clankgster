@@ -23,6 +23,7 @@
 ## Publishing Notes
 
 - `dist`, `src`, `scripts`, and `bin` ship in `files` for package consumers.
+- Release history and version intent: **[CHANGELOG.md](./CHANGELOG.md)**. Optional internal checklist: **`.clank/plugins/npm-release/README.md`**.
 
 ## Monorepo root `clankgster.config.ts`
 

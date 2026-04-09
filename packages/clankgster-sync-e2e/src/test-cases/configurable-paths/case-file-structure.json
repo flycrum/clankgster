@@ -6,6 +6,15 @@
     },
     {
       "kind": "dir",
+      "path": ".clank/.cache"
+    },
+    {
+      "kind": "file",
+      "path": ".clank/.cache/sync-manifest.json",
+      "hash": "sha256:8c9aa98bf82faee325e305ad00e31b1e179b02da59cdedccab9f9be640e3151d"
+    },
+    {
+      "kind": "dir",
       "path": ".clank/plugins"
     },
     {
@@ -73,15 +82,6 @@
       "kind": "file",
       "path": ".clank/skills/sample-skill/SKILL.md",
       "hash": "sha256:1fa8fc1128f1128ac607ccbc1ced1010ec2f1e846805172b6aab1fe9664b94bd"
-    },
-    {
-      "kind": "dir",
-      "path": ".clankgster-cache"
-    },
-    {
-      "kind": "file",
-      "path": ".clankgster-cache/sync-manifest.json",
-      "hash": "sha256:b705844da30404afe7cd364b23af03a9cc605ce7f714b0f061f10a8234322473"
     },
     {
       "kind": "file",

@@ -7,7 +7,7 @@
     {
       "kind": "file",
       "path": ".alt-cache/sync-manifest.json",
-      "hash": "sha256:4313b3e8ebd31a89cf16f45d07c2e35f4671be7f280adf7d2fbed2464aa1f43b"
+      "hash": "sha256:493946c754dd1c8045b7541a83c5f3d6e10f2731e5d157cd1e024bda5bdca52b"
     },
     {
       "kind": "dir",
@@ -111,7 +111,7 @@
     },
     {
       "kind": "file",
-      "path": ".claude/settings.json",
+      "path": ".claude/settings.local.json",
       "hash": "sha256:ba06d03914833126732bb318c6642ceb8770bea63368a3aca0227f3f4bef4857"
     },
     {
